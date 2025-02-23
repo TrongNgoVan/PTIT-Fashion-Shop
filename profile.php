@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = $_POST['phone'];
     $add = $_POST['add'];
     $email = $user['email'];
+    $id = $user['id'];
     // Handle avatar upload
     $avatar = $user['avatar']; // Default to current avatar
     if (!empty($_FILES['avatar']['name'])) {
@@ -26,13 +27,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-	$update_sql = 'UPDATE users SET name = ?  , password = ?  , phone = ? , address = ? ,avatar = ?  WHERE email = ?';
+	$update_sql = 'UPDATE users SET name = ?  , email = ?, password = ?  , phone = ? , address = ? ,avatar = ?  WHERE id = ?';
     $update_stmt = $conn->prepare($update_sql);
-    $update_stmt->bind_param('ssssss', $name, $password, $phone , $add, $avatar, $email);
+    $update_stmt->bind_param('ssssssi', $name,$email,  $password, $phone , $add, $avatar, $id);
 
 	
     if ($update_stmt->execute()) {
-        echo "User information updated successfully!";
+        $_SESSION['user'] = [
+            'id' => $id,
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+            'phone' => $phone,
+            'address' => $add,
+            'avatar' => $avatar
+        ];
+        echo "Cập nhật thông tin thành công!";
         header('Location: profile.php');
         exit();
     } else {
@@ -96,20 +106,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <form action="profile.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="FullName">Họ và Tên:</label>
-                        <input type="text" class="form-control" id="FullName" name="FullName" value="<?php echo htmlspecialchars($user['name']); ?>">
+                        <label for="name">Họ và Tên:</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>">
                     </div>
                     <div class="form-group">
                         <label for="password">Mật khẩu:</label>
                         <input type="password" class="form-control" id="password" name="password" value="<?php echo htmlspecialchars($user['password']); ?>">
                     </div>
                     <div class="form-group">
-                        <label for="dob">Số điện thoại</label>
+                        <label for="phone">Số điện thoại</label>
                         <input type="text" class="form-control" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>">
                     </div>
                     <div class="form-group">
-                        <label for="cccd">Điạ chỉ:</label>
-                        <input type="text" class="form-control" id="cccd" name="cccd" value="<?php echo htmlspecialchars($user['address']); ?>">
+                        <label for="add">Điạ chỉ:</label>
+                        <input type="text" class="form-control" id="add" name="add" value="<?php echo htmlspecialchars($user['address']); ?>">
                     </div>
                     <div class="form-group">
                         <label for="avatar">Ảnh đại diện:</label>

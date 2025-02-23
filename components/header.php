@@ -82,11 +82,13 @@
                   if (isset($_SESSION["user"])) {
                     $username = $_SESSION["user"]["name"];
                     
+                    $AVATAR =  $_SESSION["user"]["avatar"];
+                 
  
                     
                     echo '
                     <div class="pull-right">
-                        <img src="img/avt.jpg" id="icon_acount" alt="" style="border-radius: 50%; width: 55px; height: 55px; object-fit: cover;">
+                        <img src="' . $AVATAR . '" id="icon_acount" alt="" style="border-radius: 50%; width: 55px; height: 55px; object-fit: cover;">
                         <div style="padding-top: 5px; padding-right: 0px; float: right;">
                             <b><a class="logIn_signIn_button"  href="profile.php">' . $username. '</a></b>
                             <br>
