@@ -227,6 +227,7 @@
                             </li>
                             <li><a href="#">Tin tức</a></li>
                             <li><a href="#">Liên hệ</a></li>
+                            <li><a href="./list_order.php">Đơn Hàng của bạn</a></li>
                         </ul>
                     </nav>
                

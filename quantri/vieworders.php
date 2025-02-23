@@ -58,7 +58,7 @@ if (isset($_POST['btnUpdate'])) {
                                         <div class="row">
                                             <div class="col-md-3">Khách hàng:</div>
                                             <div class="col-md-9">
-                                                <?= $row['lastname'] ?>
+                                                <?= $row['name'] ?>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -70,13 +70,13 @@ if (isset($_POST['btnUpdate'])) {
                                         <div class="row">
                                             <div class="col-md-3">Số điện thoại:</div>
                                             <div class="col-md-9">
-                                                <?= $row['address'] ?>
+                                                <?= $row['phone'] ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">Email:</div>
                                             <div class="col-md-9">
-                                                <?= $row['address'] ?>
+                                                <?= $row['email'] ?>
                                             </div>
                                         </div>
                                         <div class="row">
