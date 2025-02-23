@@ -25,37 +25,16 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
 </head>
-<style>
-#header {
-   padding-top: 10px;
-   padding-bottom: 10px;
-}
-</style>
+    <style>
+            #header {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            }
+          
+    </style>
 
 <body>
-<!-- <div class="container" id="header" style="">
-        <div class="pull-left">
-            <a href="#">
-                <img src="img/lg.png" alt="">
-            </a>
-        </div>
-        <?php
-        
 
-    
-        
-            echo '
-            <div class="pull-right">
-                <img src="img/avt.jpg" id="icon_acount" alt="" style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;">
-                <div style="padding-top: 5px; padding-right: 0px; float: right;">
-                    <b><a class="my_acount_button link" href="#">Ngọ Văn Trọng</a></b>
-                    <br>
-                    <a class="my_acount_button link" id="logOut_button" href="#">Đăng xuất</a>
-                </div>
-            </div>';
-    
-        ?>
-    </div> -->
 
 
   
@@ -71,7 +50,7 @@ require_once('components/header.php');
         <div class="container">
             <div class="row">
             <div class="section-title">
-                        <h2>Danh mục sản phẩm</h2>
+                        <h2>Danh mục thời trang</h2>
                     </div>
                     
 

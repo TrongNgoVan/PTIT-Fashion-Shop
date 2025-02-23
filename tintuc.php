@@ -36,28 +36,8 @@ $result = mysqli_query($conn, $sql_str);
 $row = mysqli_fetch_assoc($result);
 $anh = $row['avatar'];
 ?>
-<!-- Blog Details Hero Begin -->
-<section class="blog-details-hero set-bg" data-setbg="img/blog/details/details-hero.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="blog__details__hero__text">
-                    <h2>
-                        <?= $row['title'] ?>
-                    </h2>
-                    <ul>
-                        <!-- <li>Vie</li> -->
-                        <li>
-                            <?= $row['created_at'] ?>
-                        </li>
-                        <li>8 Comments</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Blog Details Hero End -->
+
+
 
 <!-- Blog Details Section Begin -->
 <section class="blog-details spad">

@@ -199,7 +199,7 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all" >
                             <i class="fa fa-bars"></i>
-                            <span>Danh mục sản phẩm</span>
+                            <span>Danh mục thời trang</span>
                         </div>
                         <ul>
                             <?php
@@ -239,12 +239,12 @@
                     <?php   
     if ($is_homepage){
        ?>
- <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
+ <div class="hero__item set-bg" data-setbg="img/banner.jpg">
                         <div class="hero__text">
                             <span>Rẻ, Đẹp, Chất Lượng</span>
                             <h2>Phong Cách<br /> Sáng Tạo <br/> Khác Biệt   </h2>
                            
-                            <a href="#" class="primary-btn">SHOP NOW</a>
+                            <a href="shop.php" class="primary-btn">SHOP NOW</a>
                         </div>
                     </div>
 <?php
