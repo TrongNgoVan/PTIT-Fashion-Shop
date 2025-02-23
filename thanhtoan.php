@@ -28,15 +28,16 @@
 <?php
 session_start();
 $is_homepage = false;
-$firstname = $lastname = $phone = $email = $address = "";
+$name = $phone = $email = $address = "";
+$uid = 0;
 $cart = [];
 if (isset($_SESSION['cart'])) {
     $cart = $_SESSION['cart'];
 }
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-    $firstname = $user['name'];
-    $lastname = $user['name'];
+    $uid = $user['id'];
+    $name = $user['name'];
     $phone = $user['phone'];
     $email = $user['email'];
     $address = $user['address'];
@@ -46,14 +47,14 @@ require_once('./db/conn.php');
 if (isset($_POST['btDathang'])) {
     //lay thong tin khach hang tu form
     
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
+
+    $name = $_POST['name'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $address = $_POST['address'];
     
     //tao du lieu cho order
-    $sqli = "insert into orders values (0, 0, '$firstname', '$lastname', '$address', '$phone', '$email', 'Processing', now(), now())";
+    $sqli = "insert into orders values (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', now(), now())";
     // echo $sqli;
     //exit; // mysqli_query($conn, $sqli);
     //lay id vua duoc them vao 
@@ -108,20 +109,13 @@ require_once('components/header.php');
             <form action="#" method="post">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Họ & tên lót<span>*</span></p>
-                                    <input type="text" name="firstname" value="<?php echo $firstname; ?>">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Tên<span>*</span></p>
-                                    <input type="text" name="lastname" value="<?php echo $lastname; ?>">
-                                </div>
-                            </div>
+                       
+                            
+                        <div class="checkout__input">
+                                    <p>Họ & tên <span>*</span></p>
+                                    <input type="text" name="name" value="<?php echo $name; ?>">
                         </div>
+                            
 
                         <div class="checkout__input">
                             <p>Địa chỉ nhận hàng:<span>*</span></p>

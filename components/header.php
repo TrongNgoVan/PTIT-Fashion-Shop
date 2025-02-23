@@ -215,18 +215,18 @@
                   
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="/">Trang chủ</a></li>
-                            <li><a href="/shop.php">Cửa hàng</a></li>
+                            <li class="active"><a href="./index.php">Trang chủ</a></li>
+                            <li><a href="./shop.php">Cửa hàng</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="#">Shop Details</a></li>
+                                    <li><a href="#">Shoping Cart</a></li>
+                                    <li><a href="#">Check Out</a></li>
+                                    <li><a href="#">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Tin tức</a></li>
-                            <li><a href="./contact.html">Liên hệ</a></li>
+                            <li><a href="#">Tin tức</a></li>
+                            <li><a href="#">Liên hệ</a></li>
                         </ul>
                     </nav>
                
