@@ -61,7 +61,7 @@ require_once('components/header.php');
                     while ($row = mysqli_fetch_assoc($result)){
                 ?>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
+                        <div class="categories__item set-bg" data-setbg="<?= $row['img'] ?>" >
                             <h5><a href="#"><?=$row['name']?></a></h5>
                         </div>
                     </div>
