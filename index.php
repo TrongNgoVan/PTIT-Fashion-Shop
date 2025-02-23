@@ -164,7 +164,7 @@ require_once('components/header.php');
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                                        <img src="img/latest-product/lp1.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -173,7 +173,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
+                                        <img src="img/latest-product/lp2.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -182,7 +182,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
+                                        <img src="img/latest-product/lp3.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -193,7 +193,7 @@ require_once('components/header.php');
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                                        <img src="img/latest-product/lp1.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -202,7 +202,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
+                                        <img src="img/latest-product/lp2.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -211,7 +211,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
+                                        <img src="img/latest-product/lp3.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -229,7 +229,7 @@ require_once('components/header.php');
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                                        <img src="img/latest-product/lp1.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -238,7 +238,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
+                                        <img src="img/latest-product/lp2.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -247,7 +247,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
+                                        <img src="img/latest-product/lp3.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -258,7 +258,7 @@ require_once('components/header.php');
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                                        <img src="img/latest-product/lp1.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -267,7 +267,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
+                                        <img src="img/latest-product/lp2.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -276,7 +276,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
+                                        <img src="img/latest-product/lp3.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -294,7 +294,7 @@ require_once('components/header.php');
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                                        <img src="img/latest-product/lp1.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -303,7 +303,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
+                                        <img src="img/latest-product/lp2.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -312,7 +312,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
+                                        <img src="img/latest-product/lp3.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -323,7 +323,7 @@ require_once('components/header.php');
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
+                                        <img src="img/latest-product/lp1.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -332,7 +332,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
+                                        <img src="img/latest-product/lp2.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -341,7 +341,7 @@ require_once('components/header.php');
                                 </a>
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
+                                        <img src="img/latest-product/lp3.jpg" alt="">
                                     </div>
                                     <div class="latest-product__item__text">
                                         <h6>Crab Pool Security</h6>
@@ -382,7 +382,7 @@ require_once('components/header.php');
                         </div>
                         <div class="blog__item__text">
                             <ul>
-                                <li><i class="fa fa-calendar-o"></i> <?=$row['created_at']?></li>
+                                <li><i class="fa fa-calendar-o"></i> <?=$row['updated_at']?></li>
                                 <li><i class="fa fa-comment-o"></i> 5</li>
                             </ul>
                             <h5><a href="tintuc.php?id=<?=$row['id']?>"><?=$row['title']?></a></h5>
