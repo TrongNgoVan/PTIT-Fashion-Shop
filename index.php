@@ -128,9 +128,14 @@ require_once('components/header.php');
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="<?="quantri/".$anh_arr[0]?>">
                             <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li>
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                                    
+                                </li>
+
+
                             </ul>
                         </div>
                         <div class="featured__item__text">
@@ -436,6 +441,23 @@ require_once('components/footer.php');
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                let productId = this.getAttribute('data-id');
+
+                fetch('add_to_cart.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'id=' + productId
+                })
+                .then(response => response.text())
+                .then(data => alert('Đã thêm vào giỏ hàng!'))
+                .catch(error => console.error("Lỗi:", error));
+            });
+        });
+    </script>
 
 
 

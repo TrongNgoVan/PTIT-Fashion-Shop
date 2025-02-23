@@ -152,8 +152,10 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="./cart.php"><i class="fa fa-shopping-bag"></i> <span>
+                            <!-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> -->
+                            <li><a><b>Giỏ Hàng</b></a></li>
+
+                            <li><a href="./cart.php"><i class="fa fa-shopping-cart"></i> <span>
                                 <?php
                                     $cart = [];
                                     if (isset($_SESSION['cart'])) {

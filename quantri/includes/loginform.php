@@ -33,7 +33,43 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <style>
+        .bg-gradient-primary {
+            position: relative;
+            background: url('../img/ptitnen.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
 
+/* Tạo lớp phủ */
+       .bg-gradient-primary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(117, 116, 116, 0.3); /* Màu đỏ nhạt (pha lên trên) */
+            backdrop-filter: blur(5px); /* Làm mờ hình nền */
+            z-index: -1; 
+             }
+             .container {
+                max-width: 650px; /* Điều chỉnh chiều rộng theo ý muốn */
+                width: 100%; /* Để giữ form linh hoạt */
+                margin: auto; /* Căn giữa form */
+            }
+       
+            header{
+                justify-content: center;
+                display: flex;
+                margin-bottom: 20px;
+            }
+            .header-img{
+                max-width: 100%; /* Giúp ảnh không bị vỡ */
+                height: auto;
+            }
+             
+    </style>
 </head>
 
 <body class="bg-gradient-primary">
@@ -43,16 +79,20 @@
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-12 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-8  offset-lg-2">
+                                <div class="header">
+                                    <img src="../img/logo2.jpg" alt="PTIT Fashion" class="header-img">
+                                </div>
                                 <div class="p-5">
+                                    
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login Form</h1>
+                                        <!-- <h1 class="h4 text-gray-900 mb-4">Login Form</h1> -->
                                         <?php echo "<h4 class='alert alert-danger'>$errorMsg</h4>" ?>
                                     </div>
                                     <form class="user" method="post">
