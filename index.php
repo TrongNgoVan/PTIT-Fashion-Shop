@@ -135,7 +135,7 @@ require_once('components/header.php');
     <!-- Featured Section End -->
 
     <!-- Banner Begin -->
-    <div class="banner">
+    <!-- <div class="banner">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -150,7 +150,7 @@ require_once('components/header.php');
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Banner End -->
 
     <!-- Latest Product Section Begin -->

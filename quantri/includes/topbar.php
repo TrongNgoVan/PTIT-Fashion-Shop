@@ -1,3 +1,45 @@
+<style>
+  .btn-primary {
+    background-color: rgb(185, 7, 7) !important; /* Đổi màu nền thành đỏ */
+    border-color: rgb(186, 4, 4) !important
+  }
+  .dropdown-header{
+    background-color: rgb(185, 7, 7) !important; /* Đổi màu nền thành đỏ */
+    border-color: rgb(186, 4, 4) !important
+
+  }
+  body {
+    font-size: 18px; /* Điều chỉnh kích thước theo mong muốn */
+  }
+
+  /* Tăng kích thước của các biểu tượng */
+  .fas, .fa {
+    font-size: 1.7rem !important; /* Điều chỉnh kích thước theo mong muốn */
+  }
+
+  /* Tăng kích thước biểu tượng trong menu dropdown */
+  .dropdown-item i {
+    font-size: 1.7rem !important;
+  }
+
+  /* Tăng kích thước icon trên thanh navbar */
+  .navbar-nav .nav-link i {
+    font-size: 1.4rem !important;
+  }
+
+  /* Tăng kích thước ảnh đại diện */
+  .img-profile {
+    
+    width: 55px !important;
+    height: 55px !important;
+}
+.text-gray-600 {
+    font-size: 18px; /* Điều chỉnh kích thước chữ */
+    font-weight: bold; /* In đậm nếu muốn */
+}
+
+</style>
+
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
   <!-- Sidebar Toggle (Topbar) -->
   <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -110,10 +152,9 @@
           </div>
           <div class="font-weight-bold">
             <div class="text-truncate">
-              Hi there! I am wondering if you can help me with a
-              problem I've been having.
+               Chào, kinh doanh thời trang ổn không?
             </div>
-            <div class="small text-gray-500">Emily Fowler · 58m</div>
+            <div class="small text-gray-500">Quyết Lê Duy· 58m</div>
           </div>
         </a>
         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -123,10 +164,9 @@
           </div>
           <div>
             <div class="text-truncate">
-              I have the photos that you ordered last month, how would
-              you like them sent to you?
+              Tao thấy áo Polo bán có vẻ không chạy?
             </div>
-            <div class="small text-gray-500">Jae Chun · 1d</div>
+            <div class="small text-gray-500">Tuấn Trịnh · 1d</div>
           </div>
         </a>
         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -136,25 +176,22 @@
           </div>
           <div>
             <div class="text-truncate">
-              Last month's report looks great, I am very happy with
-              the progress so far, keep up the good work!
+              Mặt hàng Jacket nên được đẩy mạnh hơn!
             </div>
-            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+            <div class="small text-gray-500">Thanh Tâm · 2d</div>
           </div>
         </a>
         <a class="dropdown-item d-flex align-items-center" href="#">
           <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="..." />
+            <img class="rounded-circle" src="img/undraw_profile.svg" alt="..." />
             <div class="status-indicator bg-success"></div>
           </div>
           <div>
             <div class="text-truncate">
-              Am I a good boy? The reason I ask is because someone
-              told me that people say this to all dogs, even if they
-              aren't good...
+              Nên đầu tư hơn vào chiến lược quảng cáo, khuyến mãi!
             </div>
             <div class="small text-gray-500">
-              Chicken the Dog · 2w
+                Vĩnh Tiến, Trương .
             </div>
           </div>
         </a>
@@ -171,11 +208,11 @@
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
           <?php
           $user = $_SESSION['admin'];
-          // $cart = $_SESSION['cart'];
           echo $user['name'];
           ?>
         </span>
-        <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+        <img class="img-profile rounded-circle" src="img/anhthe.jpg" width="150" height="150" />
+
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

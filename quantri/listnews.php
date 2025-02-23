@@ -12,12 +12,34 @@ function anhdaidien($arrstr,$height){
 
 <div>
 
+<style>
+    .btn-danger { 
+    color: white !important;  
+    background-color: rgb(178, 5, 5) !important;  
+    border-color: rgb(178, 5, 5) !important;
+}
 
+    .btn-warning{  
+        color: white !important;  
+        background-color: rgb(31, 91, 222) !important;  
+        border-color: rgb(37, 57, 242) !important;
+    }
+    .btn-warning:hover{
+        color: black !important;  
+        background-color: rgb(41, 105, 243) !important;  
+        border-color: rgb(59, 78, 250) !important;
+    }
+    .btn-danger:hover{ 
+    color: black !important;  
+    background-color: rgb(209, 4, 4) !important;  
+    border-color: rgb(178, 5, 5) !important;
+}
+</style>
     
 
 <div class="card shadow mb-4">
 <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Blog</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Tin Tức</h6>
 </div>
 <div class="card-body">
     <div class="table-responsive">
@@ -32,16 +54,7 @@ function anhdaidien($arrstr,$height){
                     <th>Hành động</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                <th>STT</th>
-                    <th>Tiêu đề</th>
-                    <th>Ảnh đại diện</th>
-                    <th>Danh mục</th>
-                   
-                    <th>Hành động</th>
-                </tr>
-            </tfoot>
+         
             <tbody>
             <?php 
     require('../db/conn.php');

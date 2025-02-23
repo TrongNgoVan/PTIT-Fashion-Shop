@@ -1,12 +1,39 @@
 <?php 
 require('includes/header.php');
+    function anhdaidien($arr,$height){
+  
+       
+        return "<img src='/$arr' height='$height' />";
+    }
 ?>
 
 
 
 <div>
 
+<style>
+    .btn-danger { 
+    color: white !important;  
+    background-color: rgb(178, 5, 5) !important;  
+    border-color: rgb(178, 5, 5) !important;
+}
 
+    .btn-warning{  
+        color: white !important;  
+        background-color: rgb(31, 91, 222) !important;  
+        border-color: rgb(37, 57, 242) !important;
+    }
+    .btn-warning:hover{
+        color: black !important;  
+        background-color: rgb(41, 105, 243) !important;  
+        border-color: rgb(59, 78, 250) !important;
+    }
+    .btn-danger:hover{ 
+    color: black !important;  
+    background-color: rgb(209, 4, 4) !important;  
+    border-color: rgb(178, 5, 5) !important;
+}
+</style>
     
 
 <div class="card shadow mb-4">
@@ -21,19 +48,11 @@ require('includes/header.php');
                                             <th>Name</th>
                                             <th>Slug</th>
                                             
-                                            <th>Status</th>
+                                            <th>Image</th>
                                             <th>Operation</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Slug</th>
-                                            
-                                            <th>Status</th>
-                                            <th>Operation</th>
-                                        </tr>
-                                    </tfoot>
+
                                     <tbody>
                                     <?php 
     require('../db/conn.php');
@@ -46,7 +65,8 @@ require('includes/header.php');
             <tr>
                 <td><?=$row['name']?></td>
                 <td><?=$row['slug']?></td>
-                <td><?=$row['status']?></td>
+                
+                <td><?=anhdaidien($row['img'], "100px")?></td>
                 <td>
                     <a class="btn btn-warning" href="editcategory.php?id=<?=$row['id']?>">Edit</a>  
                     <a class="btn btn-danger" 

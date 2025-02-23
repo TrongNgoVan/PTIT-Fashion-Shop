@@ -22,6 +22,16 @@ require('includes/header.php');
     .Cancelled{
         background-color: red;
     }
+    .btn-warning{  
+        color: white !important;  
+        background-color: rgb(206, 7, 7) !important;  
+        border-color: rgb(201, 13, 13) !important;
+    }
+    .btn-warning:hover{
+        color: black !important;  
+        background-color: rgb(237, 19, 26) !important;  
+        border-color: rgb(216, 10, 10) !important;
+    }
 </style>
 <div>
 
@@ -30,7 +40,7 @@ require('includes/header.php');
 
 <div class="card shadow mb-4">
 <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Blog</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Đơn Hàng</h6>
 </div>
 <div class="card-body">
     <div class="table-responsive">
@@ -44,15 +54,7 @@ require('includes/header.php');
                     <th>Xem</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                <th>STT</th>
-                    <th>Mã đơn hàng</th>
-                    <th>Ngày đặt</th>
-                    <th>Trạng thái</th>                   
-                    <th>Hành động</th>
-                </tr>
-            </tfoot>
+            
             <tbody>
             <?php 
     require('../db/conn.php');

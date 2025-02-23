@@ -11,7 +11,30 @@ function anhdaidien($arrstr,$height){
 ?>
 
 
+<style>
+    .btn-danger { 
+    color: white !important;  
+    background-color: rgb(178, 5, 5) !important;  
+    border-color: rgb(178, 5, 5) !important;
+}
 
+    .btn-warning{  
+        color: white !important;  
+        background-color: rgb(31, 91, 222) !important;  
+        border-color: rgb(37, 57, 242) !important;
+    }
+    .btn-warning:hover{
+        color: black !important;  
+        background-color: rgb(41, 105, 243) !important;  
+        border-color: rgb(59, 78, 250) !important;
+    }
+    .btn-danger:hover{ 
+    color: black !important;  
+    background-color: rgb(209, 4, 4) !important;  
+    border-color: rgb(178, 5, 5) !important;
+}
+
+</style>
 <div>
 
 
@@ -34,16 +57,7 @@ function anhdaidien($arrstr,$height){
                     <th>Hành động</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Ảnh đại diện</th>
-                    <th>Danh mục</th>
-                    <th>Thương hiệu</th>                    
-                    <th>Trạng thái</th>
-                    <th>Hành động</th>
-                </tr>
-            </tfoot>
+        
             <tbody>
             <?php 
     require('../db/conn.php');
