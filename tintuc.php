@@ -112,36 +112,7 @@ $anh = $row['avatar'];
                     <img src="<?='quantri/'.$row['avatar']?>" alt="">
                     <?=$row['description']?>
                 </div>
-                <!-- <div class="blog__details__content">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="blog__details__author">
-                                <div class="blog__details__author__pic">
-                                    <img src="img/blog/details/details-author.jpg" alt="">
-                                </div>
-                                <div class="blog__details__author__text">
-                                    <h6>Michael Scofield</h6>
-                                    <span>Admin</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="blog__details__widget">
-                                <ul>
-                                    <li><span>Categories:</span> Food</li>
-                                    <li><span>Tags:</span> All, Trending, Cooking, Healthy Food, Life Style</li>
-                                </ul>
-                                <div class="blog__details__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-linkedin"></i></a>
-                                    <a href="#"><i class="fa fa-envelope"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+    
             </div>
         </div>
     </div>
