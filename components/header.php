@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -50,6 +49,79 @@
     text-decoration: none; /* Bỏ gạch chân */
 
 }
+.hero__text {
+    animation: fadeInUp 2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.hero__item {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    text-align: left; /* Căn chỉnh văn bản sang trái */
+    padding: 100px 50px;
+}
+
+.hero__text {
+    color: white;
+    max-width: 500px;
+}
+
+.hero__text span {
+    color:rgb(209, 6, 6); /* Màu vàng sáng */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.hero__text h2 {
+    font-size: 48px;
+    font-weight: bold;
+    color :  rgba(16, 1, 1, 0.93);
+}
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    font-size: 30px;
+    margin-top: 10px;
+    color:rgb(1, 0, 0); /* Màu cam đỏ rực rỡ */
+    font-weight: bold; /* Chữ đậm hơn */
+    text-shadow: 2px 2px 5px rgba(12, 2, 2, 0.93); /* Đổ bóng giúp nổi bật */
+    display: flex;
+    align-items: center;
+}
+
+.marquee p {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marqueeScroll 4s linear infinite;
+}
+
+@keyframes marqueeScroll {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+.primary-btn:hover {
+    background-color:rgb(226, 7, 18); /* Đổi màu khi hover */
+    color: #000;
+}
+
+
+
 
 
 </style>
@@ -239,13 +311,17 @@
                     <?php   
     if ($is_homepage){
        ?>
- <div class="hero__item set-bg" data-setbg="img/banner.jpg">
+                    <div class="hero__item set-bg" data-setbg="img/banner.jpg">
                         <div class="hero__text">
                             <span>Rẻ, Đẹp, Chất Lượng</span>
-                            <h2>Phong Cách<br /> Sáng Tạo <br/> Khác Biệt   </h2>
+                            <h2>Phong Cách<br /> Sáng Tạo <br/> Khác Biệt</h2>
                            
                             <a href="shop.php" class="primary-btn">SHOP NOW</a>
+                            <div class="marquee">
+                                <p>🔥 Giảm giá 50% cho đơn hàng đầu tiên! 🚀 Mua ngay kẻo lỡ! 🎁</p>
+                            </div>
                         </div>
+                        
                     </div>
 <?php
     }

@@ -1,5 +1,5 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "ecommerceshop");
+$conn = mysqli_connect("localhost", "root", "", "ptit_shop");
 
 ?>
