@@ -54,7 +54,14 @@ if (isset($_POST['btDathang'])) {
     $address = $_POST['address'];
     
     //tao du lieu cho order
-    $sqli = "insert into orders values (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', now(), now())";
+    
+    $total_end = 0.0;
+    foreach ($cart as $item) {
+       
+        $total_end +=  $item['qty'] * $item['disscounted_price'];
+    }
+    $sqli = "insert into orders values (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', now(), now(),$total_end, 'Vận Chuyển Thường' , 'Thanh toán khi nhận hàng', 'Chưa thanh toán')";
+
     // echo $sqli;
     //exit; // mysqli_query($conn, $sqli);
     //lay id vua duoc them vao 
