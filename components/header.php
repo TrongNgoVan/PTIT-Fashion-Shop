@@ -50,7 +50,7 @@
 
 }
 .hero__text {
-    animation: fadeInUp 2s ease-in-out;
+    animation: fadeInUp 3s ease-in-out;
 }
 
 @keyframes fadeInUp {
@@ -92,11 +92,6 @@
     overflow: hidden;
     white-space: nowrap;
     position: relative;
-    font-size: 30px;
-    margin-top: 10px;
-    color:rgb(1, 0, 0); /* Màu cam đỏ rực rỡ */
-    font-weight: bold; /* Chữ đậm hơn */
-    text-shadow: 2px 2px 5px rgba(12, 2, 2, 0.93); /* Đổ bóng giúp nổi bật */
     display: flex;
     align-items: center;
 }
@@ -104,7 +99,12 @@
 .marquee p {
     display: inline-block;
     padding-left: 100%;
-    animation: marqueeScroll 4s linear infinite;
+    animation: marqueeScroll 6s linear infinite;
+    margin: 0;
+    color:rgb(247, 247, 245) !important; /* Màu đỏ tươi nổi bật */
+    font-size: 25px;
+    margin-top: 15px;
+    font-weight: bold; /* Chữ đậm */
 }
 
 @keyframes marqueeScroll {
@@ -115,6 +115,7 @@
         transform: translateX(-100%);
     }
 }
+
 .primary-btn:hover {
     background-color:rgb(226, 7, 18); /* Đổi màu khi hover */
     color: #000;

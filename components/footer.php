@@ -11,6 +11,7 @@
                         <li>📞 <strong>Số điện thoại:</strong> (024) 38.544.451 </li>
                         <li>📧 <strong>Email:</strong> <a href="mailto:PTITFashion@ptit.edu.vn" style="color: #FFD700; text-decoration: none;">PTITFashion@ptit.edu.vn</a></li>
                         <li>🔵 <strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61573071766498" target="_blank" style="color: #FFD700; text-decoration: none;">PTITFashion</a></li>
+                        <li>🔵 <strong>My Facebook:</strong> <a href="https://www.facebook.com/ngovantrong1308" target="_blank" style="color: #FFD700; text-decoration: none;">Ngọ Văn Trọng</a></li>
                        
 
                     </ul>
