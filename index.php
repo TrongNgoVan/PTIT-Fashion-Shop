@@ -397,14 +397,15 @@ require_once('components/header.php');
     </section>
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-    <df-messenger
-      intent="WELCOME"
-      chat-title="Tư Vấn Tìm Phòng"
-      agent-id="64413262-5f38-4669-b5c3-03978e880987"
-      language-code="en">
-    </df-messenger>
-    
-    </div>      
+            <df-messenger
+            intent="WELCOME"
+            chat-title="tuvanbanhang"
+            agent-id="64413262-5f38-4669-b5c3-03978e880987"
+            language-code="en"
+            ></df-messenger>
+            
+    </div>   
+
    
 <?php
 

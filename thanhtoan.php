@@ -126,6 +126,32 @@ require_once('components/header.php');
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phương thức vận chuyển:<span>*</span></p>
+                                    <select name="shipping_method">
+                                        <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
+                                        <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
+                                        <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
+                                    </select>
+                                </div>`
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phương thức thanh toán:<span>*</span></p>
+                                    <select name="payment_method">
+                                        <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
+                            
+                                        <option value="Thanh toán Online">Thanh toán Online</option>
+                                    </select
+                                </div>
+                            </div>
+                        </div>
+                            
+
+                           
+
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
@@ -164,9 +190,8 @@ require_once('components/header.php');
         </div>
     </div>
 </section>
-<!-- Checkout Section End -->
 
-<!-- Footer Section Begin -->
+
 <?php
 
 require_once('components/footer.php');
