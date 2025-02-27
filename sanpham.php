@@ -78,6 +78,13 @@
     $result = mysqli_query($conn, $sql_str);
     $row = mysqli_fetch_assoc($result);
     $anh_arr = explode(';', $row['images']);
+
+
+                                      
+    $sql_reviews = "SELECT * FROM reviews WHERE product_id = $idsp ORDER BY created_at DESC";
+    $result_reviews = mysqli_query($conn, $sql_reviews);
+    
+
     ?>
     
 
@@ -174,10 +181,20 @@
                             </div>
 
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
+
                                 <div class="product__details__tab__desc">
-                                    <h6>Đánh giá sản phẩm (reviews)</h6>
-                                    
-                                </div>
+                                    <h6>Đánh giá sản phẩm</h6>
+                                    <?php while ($review = mysqli_fetch_assoc($result_reviews)) { ?>
+                                        <div class="review">
+                                            <strong>Ngọ Văn Trọng</strong> 
+                                             <span><?= $review['rating'] ?>/5 ★</span>
+                                            <p><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
+                                            <small><?= $review['created_at'] ?></small>
+                                            <hr>
+                                        </div>
+                                    <?php } ?>             
+                            </div>
+
                             </div>
                         </div>
                     </div>
@@ -186,7 +203,7 @@
         </div>
     </section>
     <!-- Product Details Section End -->
-
+    <!-- <?= htmlspecialchars($review['user_name']) ?> -->
     <!-- Related Product Section Begin -->
     <section class="related-product">
         <div class="container">
@@ -199,13 +216,13 @@
             </div>
             <div class="row">
             <?php
-//tim cac san pham lien quan cung category_id voi san pham nay
-$dmid = $row['category_id'];
-$sql2 = "select * from products where category_id=$dmid  and id <> $idsp";
-$result2 = mysqli_query($conn, $sql2);
-while($row2 = mysqli_fetch_assoc($result2)) {
-    $arrs = explode(";", $row2["images"]);
-            ?>
+            //tim cac san pham lien quan cung category_id voi san pham nay
+            $dmid = $row['category_id'];
+            $sql2 = "select * from products where category_id=$dmid  and id <> $idsp";
+            $result2 = mysqli_query($conn, $sql2);
+            while($row2 = mysqli_fetch_assoc($result2)) {
+                $arrs = explode(";", $row2["images"]);
+                        ?>
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="<?="quantri/".$arrs[0]?>">

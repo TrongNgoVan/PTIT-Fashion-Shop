@@ -1,13 +1,12 @@
 <?php 
 require('includes/header.php');
-    function anhdaidien($arr,$height){
-  
-       
-        return "<img src='/$arr' height='$height' />";
-    }
+
+function anhdaidien($arrstr,$height){
+
+    $arr = explode(';', $arrstr);
+    return "<img src='$arr[0]' height='$height' />";
+}
 ?>
-
-
 
 <div>
 
@@ -64,8 +63,7 @@ require('includes/header.php');
         
             <tr>
                 <td><?=$row['name']?></td>
-                <td><?=$row['slug']?></td>
-                
+                <td><?=$row['slug']?></td> 
                 <td><?=anhdaidien($row['img'], "100px")?></td>
                 <td>
                     <a class="btn btn-warning" href="editcategory.php?id=<?=$row['id']?>">Edit</a>  
