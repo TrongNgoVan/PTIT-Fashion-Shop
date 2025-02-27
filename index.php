@@ -30,6 +30,48 @@
             padding-top: 10px;
             padding-bottom: 10px;
             }
+             /* Hiệu ứng rung nhẹ */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-2px); }
+        50% { transform: translateX(2px); }
+        75% { transform: translateX(-2px); }
+    }
+
+    /* Hiệu ứng nhấp nháy */
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* Hiệu ứng nổi lên khi hover */
+    .contact-icon {
+        display: block;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-icon:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Áp dụng hiệu ứng */
+    .contact-icon.shake {
+        animation: shake 0.4s infinite alternate;
+    }
+
+    .contact-icon.blink {
+        animation: blink 1.5s infinite;
+    }
+
+    /* Vị trí cố định */
+    .contact-box {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        z-index: 1000;
+        text-align: center;
+    }
           
     </style>
 
@@ -44,7 +86,7 @@ $is_homepage = true;
 
 require_once('components/header.php');
 ?>
-    <!-- Categories Section Begin -->
+   
 
     <section class="categories">
         <div class="container">
@@ -71,9 +113,7 @@ require_once('components/header.php');
             </div>
         </div>
     </section>
-    <!-- Categories Section End -->
 
-    <!-- Featured Section Begin -->
     <section class="featured spad">
         <div class="container">
             <div class="row">
@@ -132,28 +172,7 @@ require_once('components/header.php');
             </div>
         </div>
     </section>
-    <!-- Featured Section End -->
 
-    <!-- Banner Begin -->
-    <!-- <div class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="img/banner/banner-1.jpg" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="banner__pic">
-                        <img src="img/banner/banner-2.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Banner End -->
-
-    <!-- Latest Product Section Begin -->
     <section class="latest-product spad">
         <div class="container">
             <div class="row">
@@ -355,9 +374,8 @@ require_once('components/header.php');
             </div>
         </div>
     </section>
-    <!-- Latest Product Section End -->
 
-    <!-- Blog Section Begin -->
+
     <section class="from-blog spad">
         <div class="container">
             <div class="row">
@@ -395,6 +413,26 @@ require_once('components/header.php');
             </div>
         </div>
     </section>
+    
+    <div class="contact-box">
+            <!-- Nút Zalo -->
+            <a href="https://zalo.me/0904708498" target="_blank">
+                <img src="img/zalo.png" 
+                    alt="Zalo" width="50" height="50" 
+                    class="contact-icon shake" 
+                    style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+            </a>
+
+            <br>
+
+            <!-- Nút gọi điện -->
+            <a href="tel:0904708498">
+                <img src="https://cdn-icons-png.flaticon.com/128/724/724664.png" 
+                    alt="Gọi điện" width="50" height="50" 
+                    class="contact-icon blink" 
+                    style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+            </a>
+    </div>
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
             <df-messenger

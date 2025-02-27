@@ -83,34 +83,8 @@
                                       
     $sql_reviews = "SELECT * FROM reviews WHERE product_id = $idsp ORDER BY created_at DESC";
     $result_reviews = mysqli_query($conn, $sql_reviews);
-//  xử lý comment
-  
-    if (isset($_POST['rating'])&& isset($_POST['comment'])) {
-        if (isset($_SESSION['user'])) { // Kiểm tra xem user đã đăng nhập chưa
-            $user_id = $_SESSION['user']['id'];
-            $rating = $_POST['rating'];
-            $comment = mysqli_real_escape_string($conn, $_POST['comment']);
-    
-            $sql_insert = "INSERT INTO reviews (user_id, product_id, rating, comment, created_at) 
-                           VALUES ('$user_id', '$idsp', '$rating', '$comment', NOW())";
-            
-            if (mysqli_query($conn, $sql_insert)) {
-                // Sau khi thêm, load lại trang để cập nhật đánh giá mới
-                
-                header("Location: sanpham.php?id=".$idsp);
-                exit();
-            } else {
-                echo "Lỗi: " . mysqli_error($conn);
-            }
-            
-        } else {
-            echo "<script>alert('Bạn cần đăng nhập để đánh giá!');</script>";
-        }
-    }
     
 
-
-   
     ?>
     
 
@@ -210,37 +184,16 @@
 
                                 <div class="product__details__tab__desc">
                                     <h6>Đánh giá sản phẩm</h6>
-                                    <?php while ($review = mysqli_fetch_assoc($result_reviews)) {
-                                          $sql_users = "SELECT * FROM users WHERE id = $review[user_id]";
-                                          $result_user = mysqli_query($conn, $sql_users);
-                                          $user = mysqli_fetch_assoc($result_user);
-                                           ?>
+                                    <?php while ($review = mysqli_fetch_assoc($result_reviews)) { ?>
                                         <div class="review">
-                                            <strong><?= $user['name']?></strong> 
+                                            <strong>Ngọ Văn Trọng</strong> 
                                              <span><?= $review['rating'] ?>/5 ★</span>
                                             <p><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
                                             <small><?= $review['created_at'] ?></small>
                                             <hr>
                                         </div>
-                                    <?php } ?>   
-                                    <h6>Viết đánh giá của bạn</h6>
-                                    <form action="" method="POST">
-                                        <div class="form-group">
-                                            <label for="rating">Đánh giá:</label>
-                                            <select name="rating" id="rating" required>
-                                                <option value="5">5 ★</option>
-                                                <option value="4">4 ★</option>
-                                                <option value="3">3 ★</option>
-                                                <option value="2">2 ★</option>
-                                                <option value="1">1 ★</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="comment">Nhận xét:</label>
-                                            <textarea name="comment" id="comment" rows="3" required></textarea>
-                                        </div>
-                                        <button type="submit">Gửi đánh giá</button>
-                                    </form>
+                                    <?php } ?>             
+                            </div>
 
                             </div>
                         </div>
@@ -249,7 +202,9 @@
             </div>
         </div>
     </section>
-
+    <!-- Product Details Section End -->
+    <!-- <?= htmlspecialchars($review['user_name']) ?> -->
+    <!-- Related Product Section Begin -->
     <section class="related-product">
         <div class="container">
             <div class="row">

@@ -135,7 +135,7 @@ require_once('components/header.php');
                                         <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
                                         <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
                                     </select>
-                                </div>`
+                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
@@ -144,14 +144,12 @@ require_once('components/header.php');
                                         <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
                             
                                         <option value="Thanh toán Online">Thanh toán Online</option>
-                                    </select
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                            
 
-                           
-
+            
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
