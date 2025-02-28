@@ -64,11 +64,11 @@
 
                     <div class="row">
                         <!-- Thông tin khách hàng -->
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="card p-4 border-0 shadow-sm">
                                 <h5 class="mb-3">Thông tin khách hàng</h5>
                                 <div class="row mb-2">
-                                    <div class="col-4 fw-bold">Khách hàng:</div>
+                                    <div class="col-4 fw-bold">Họ Tên:</div>
                                     <div class="col-8"><?= $row['name'] ?></div>
                                 </div>
                                 <div class="row mb-2">
@@ -76,7 +76,7 @@
                                     <div class="col-8"><?= $row['address'] ?></div>
                                 </div>
                                 <div class="row mb-2">
-                                    <div class="col-4 fw-bold">Số điện thoại:</div>
+                                    <div class="col-4 fw-bold">Phone:</div>
                                     <div class="col-8"><?= $row['phone'] ?></div>
                                 </div>
                                 <div class="row mb-2">
@@ -84,7 +84,7 @@
                                     <div class="col-8"><?= $row['email'] ?></div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="col-6 fw-bold">Trạng thái đơn hàng:</div>
+                                    <div class="col-6 fw-bold">Trạng thái đơn:</div>
                                     <div class="col-6">
                                         <span class="badge bg-<?= ($row['status'] == 'Confirmed' ? 'success' : 'danger') ?>">
                                             <?= $row['status'] ?>
@@ -96,17 +96,18 @@
                         </div>
 
                         <!-- Chi tiết đơn hàng -->
-                        <div class="col-md-7">
+                        <div class="col-md-8">
                             <div class="card p-4 border-0 shadow-sm">
                                 <h5 class="mb-3">Chi tiết đơn hàng</h5>
                                 <table class="table table-bordered">
                                     <thead class="table-dark text-center">
                                         <tr>
                                             <th>STT</th>
+                                            <th></th>
                                             <th>Sản phẩm</th>
                                             <th>Giá</th>
                                             <th>Số lượng</th>
-                                            <th>Tiền</th>
+                                            <th>Thành Tiền</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,6 +124,10 @@
                                         ?>
                                             <tr>
                                                 <td class="text-center"><?= ++$stt ?></td>
+                                                <td>
+                                                    <img src="quantri/<?=$row['images'] ?>" style="max-width: 100px;">
+                                                    
+                                                </td>
                                                 <td><?= $row['pname'] ?></td>
                                                 <td class="text-end"><?= number_format($row['oprice'], 0, '', '.') ?> VNĐ</td>
                                                 <td class="text-center"><?= $row['qty'] ?></td>

@@ -60,7 +60,9 @@ require_once('components/header.php');
                         <table class="table">
                             <tr>
                                 <th>STT</th>
+                                <th></th>
                                 <th>Tên sản phẩm</th>
+
                                 <th>Đơn giá</th>
                                 <th>Số lượng</th>
                                 <th>Thành tiền</th>
@@ -84,8 +86,13 @@ require_once('components/header.php');
                                             <?= ++$count ?>
                                         </td>
                                         <td>
+                                            <!-- Giả sử đường dẫn hình ảnh được lưu trong $item['image'] -->
+                                            <img src="quantri/<?=$item['images'] ?>" style="max-width: 100px;">
+                                        </td>
+                                        <td>
                                             <?= $item['name'] ?>
                                         </td>
+                                        
                                         <td>
                                             <?= number_format($item['disscounted_price'], 0, '', '.') . " VNĐ" ?>
                                         </td>
