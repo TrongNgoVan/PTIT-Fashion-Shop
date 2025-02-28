@@ -205,44 +205,253 @@
                                     <?= $row['description'] ?>
                                 </div>
                             </div>
-
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__tab__desc review-container">
+                                    
+                                    
+                                    <!-- Phần form viết đánh giá -->
+                                    <div class="write-review-section">
+                                 
+                                        <form id="reviewForm" action="" method="POST">
+                                            <div class="form-row">
+                                                <div class="rating-select">
+                                                    <select name="rating" id="rating" required>
+                                                        <option value="5">5 <span class="gold-star">★</span></option>
+                                                        <option value="4">4 <span class="gold-star">★</span></option>
+                                                        <option value="3">3 <span class="gold-star">★</span></option>
+                                                        <option value="2">2 <span class="gold-star">★</span></option>
+                                                        <option value="1">1 <span class="gold-star">★</span></option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <button type="submit" class="submit-review-btn">Gửi đánh giá</button>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <textarea name="comment" id="comment" rows="3" placeholder="Chia sẻ cảm nhận của bạn về sản phẩm..." required></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="reviews-divider"></div>
+                                    
+                                    <!-- Phần danh sách đánh giá -->
+                                    <div class="reviews-list">
+                                       
+                                        
+                                        <?php while ($review = mysqli_fetch_assoc($result_reviews)) {
+                                            $sql_users = "SELECT * FROM users WHERE id = $review[user_id]";
+                                            $result_user = mysqli_query($conn, $sql_users);
+                                            $user = mysqli_fetch_assoc($result_user);
+                                        ?>
+                                            <div class="review-item">
+                                                <div class="review-header">
+                                                    <div class="user-info">
+                                                            <td>  
+                                                                                             
+                                                            <img src="<?=$user['avatar'] ?>" style="border-radius: 50%; width: 55px; height: 55px; object-fit: cover;">
 
-                                <div class="product__details__tab__desc">
-                                    <h6>Đánh giá sản phẩm</h6>
-                                    <?php while ($review = mysqli_fetch_assoc($result_reviews)) {
-                                          $sql_users = "SELECT * FROM users WHERE id = $review[user_id]";
-                                          $result_user = mysqli_query($conn, $sql_users);
-                                          $user = mysqli_fetch_assoc($result_user);
-                                           ?>
-                                        <div class="review">
-                                            <strong><?= $user['name']?></strong> 
-                                             <span><?= $review['rating'] ?>/5 ★</span>
-                                            <p><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
-                                            <small><?= $review['created_at'] ?></small>
-                                            <hr>
-                                        </div>
-                                    <?php } ?>   
-                                    <h6>Viết đánh giá của bạn</h6>
-                                    <form action="" method="POST">
-                                        <div class="form-group">
-                                            <label for="rating">Đánh giá:</label>
-                                            <select name="rating" id="rating" required>
-                                                <option value="5">5 ★</option>
-                                                <option value="4">4 ★</option>
-                                                <option value="3">3 ★</option>
-                                                <option value="2">2 ★</option>
-                                                <option value="1">1 ★</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="comment">Nhận xét:</label>
-                                            <textarea name="comment" id="comment" rows="3" required></textarea>
-                                        </div>
-                                        <button type="submit">Gửi đánh giá</button>
-                                    </form>
-
+                                                            </td>
+                                        
+                                                        <strong class="user-name"><?= $user['name']?></strong>
+                                                        <span class="rating-stars"><?= $review['rating'] ?>/5 <span class="gold-star">★</span></span>
+                                                    </div>
+                                                    <small class="review-date"><?= $review['created_at'] ?></small>
+                                                </div>
+                                                <div class="review-content">
+                                                    <p><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
+
+<style>
+/* Định dạng chung */
+.review-container {
+    font-family: 'Cairo', sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.review-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Phần form đánh giá */
+.write-review-section {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.form-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #444;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.rating-select select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+    width: 100px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    resize: vertical;
+    font-family: inherit;
+    min-height: 80px;
+    transition: border-color 0.2s ease;
+}
+
+.form-group textarea:focus {
+    border-color:rgb(17, 28, 227);
+    outline: none;
+}
+
+.submit-review-btn {
+    background-color:rgb(181, 7, 7);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+}
+
+.submit-review-btn:hover {
+    background-color:rgb(237, 26, 26);
+}
+
+/* Phân cách giữa form và danh sách */
+.reviews-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 20px 0;
+}
+
+/* Danh sách đánh giá */
+.reviews-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.reviews-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.review-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.rating-stars {
+    color: #555;
+}
+
+.gold-star {
+    color: #FFD700;
+    text-shadow: 0 0 1px #FFA500;
+}
+
+.review-date {
+    color: #999;
+    font-size: 14px;
+}
+
+.review-content p {
+    margin: 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Tối ưu cho thiết bị di động */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .rating-select {
+        margin-bottom: 10px;
+    }
+    
+    .submit-review-btn {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Thêm ngôi sao vàng vào tùy chọn đánh giá
+    const ratingSelect = document.getElementById('rating');
+    const options = ratingSelect.options;
+    
+    for(let i = 0; i < options.length; i++) {
+        const stars = '★'.repeat(parseInt(options[i].value));
+        options[i].innerHTML = options[i].value + ' ' + stars;
+    }
+    
+    // Đảm bảo tất cả ngôi sao đều có màu vàng
+    const allStars = document.querySelectorAll('.gold-star');
+    allStars.forEach(star => {
+        star.style.color = '#FFD700';
+    });
+});
+</script>
                         </div>
                     </div>
                 </div>

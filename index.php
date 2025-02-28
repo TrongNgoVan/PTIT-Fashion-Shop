@@ -72,6 +72,9 @@
         z-index: 1000;
         text-align: center;
     }
+   
+    
+
           
     </style>
 
@@ -433,6 +436,7 @@ require_once('components/header.php');
                     style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
             </a>
     </div>
+    
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
             <df-messenger
