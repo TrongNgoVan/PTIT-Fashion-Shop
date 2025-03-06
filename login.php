@@ -34,8 +34,16 @@ if(isset($_POST['btSubmit']))
             //kiem tra so luong record trả về: > 0: đăng nhập thành công
             if (mysqli_num_rows($result) > 0) {
                 // echo "<h4>Dang nhap thanh cong</h4>";
-                //luu tru thong tin dang nha
+                //luu tru thong tin dang nhap
                 $row = mysqli_fetch_assoc($result);
+
+                //Kiểm tra email đã xác minh chưa
+                if ($user['status'] === 'Inactive') { // Kiểm tra cột xác minh email
+                    $errorMsg = "Email chưa được xác minh. Vui lòng kiểm tra email để xác nhận.";
+                    require_once("loginform.php");
+                    exit();
+                }
+                
                 $_SESSION['user'] = $row;
                 // print_r($_SESSION['user']);
                 // exit;

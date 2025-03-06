@@ -159,7 +159,7 @@ if ($order_status === "Cancelled") {
                     <div class="row">
                         <!-- Thông tin khách hàng -->
                         <div class="col-md-4">
-                            <0div class="card p-4 border-0 shadow-sm">
+                            <div class="card p-4 border-0 shadow-sm">
                                 <h5 class="mb-3">Thông tin khách hàng</h5>
                                 <div class="row mb-2">
                                     <div class="col-4 fw-bold">Họ Tên:</div>
@@ -186,7 +186,7 @@ if ($order_status === "Cancelled") {
                                     </div>
                                 </div>
                                 <a href="list_order.php" class="btn btn-danger px-4">Quay lại</a>
-                            </0div>
+                            </div>
                         </div>
 
                         <!-- Chi tiết đơn hàng -->
