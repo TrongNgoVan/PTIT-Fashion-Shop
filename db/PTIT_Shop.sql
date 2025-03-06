@@ -1,11 +1,31 @@
-
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th3 06, 2025 lúc 10:51 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Cơ sở dữ liệu: `ptit_shop`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `admins`
+--
 
 CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
@@ -148,13 +168,13 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `title`, `avatar`, `slug`, `sumary`, `description`, `newscategory_id`, `created_at`, `updated_at`) VALUES
-(6, 'Thông báo chương trình khuyến mãi tháng 1', 'uploads/news/67bb80d1e58f3THONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i-th-ng-1', 'Khuyến mãi 10% mặt hàng quần Jean\r\n                                                                                                                                                ', '                                                Thông báo chương trình khuyến mãi\r\n                                                                                                                                                ', 1, '2025-02-24 03:44:10', '2025-02-24 03:56:20'),
-(7, 'Thông báo chương trình khuyến mãi tháng 2', 'uploads/news/67bb80e2e5c2eTHONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i-th-ng-2', 'Khuyến mãi 20% thời trang Áo Jacket-Bomber-Varsity', '                        Thông báo chương trình khuyến mãi\r\n                                                                                                ', 3, '2025-02-24 03:44:10', '2025-02-24 03:57:10'),
-(8, 'Thông báo chương trình khuyến mãi tháng 3', 'uploads/news/67bb80efd536fTHONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i-th-ng-3', 'Khuyến mãi 15% khi mua combo 2 áo SƠ MI trở lên\r\n                                                                                                                        ', '                        Thông báo chương trình khuyến mãi\r\n                                                                                                                        ', 4, '2025-02-24 03:44:10', '2025-02-24 03:57:55'),
-(9, 'Thông báo chương trình khuyến mãi', 'uploads/news/67bb80f7e0109THONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i', 'Thông báo chương trình khuyến mãi\r\n                                                                        ', 'Thông báo chương trình khuyến mãi', 3, '2025-02-24 03:44:10', '2025-02-24 03:44:39'),
-(10, 'Thông báo chương trình khuyến mãi', 'uploads/news/67bb81001bf8eTHONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i', 'Thông báo chương trình khuyến mãi\r\n                                                                        ', 'Thông báo chương trình khuyến mãi\r\n                                                                        ', 1, '2025-02-24 03:44:10', '2025-02-24 03:44:49'),
-(11, 'Thông báo chương trình khuyến mãi', 'uploads/news/67bb810889a04THONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i', 'Thông báo chương trình khuyến mãi', 'Thông báo chương trình khuyến mãi', 4, '2025-02-24 03:44:10', '2025-02-24 03:45:01'),
-(12, 'Thông báo chương trình khuyến mãi', 'uploads/news/67bb8110b2387THONGBAO.jpg', 'th-ng-b-o-ch-ng-tr-nh-khuy-n-m-i', 'Thông báo chương trình khuyến mãi', 'Thông báo chương trình khuyến mãi', 3, '2025-02-24 03:44:10', '2025-02-24 03:45:12');
+(6, '20 Cách phối màu quần áo nam, nữ theo nguyên tắc bảng màu', 'uploads/news/67c030a76238bScreenshot 2025-02-27 162950.png', '20-c-ch-ph-i-m-u-qu-n-o-nam-n-theo-nguy-n-t-c-b-ng-m-u', '                                                Bạn sẽ mất bao lâu vào buổi sáng để chọn một bộ trang phục phù hợp với phong cách của mình để đón ngày mới? Nếu bạn đang băn khoăn không biết phối màu như thế nào để set đồ của mình hài hòa và ấn tượng thì hãy tham khảo ngay những cách phối màu quần áo dưới đây nhé!                                                ', '                                                Bánh xe màu sắc là gì?\r\nBánh xe màu sắc là một vòng tròn mô tả mối liên kết rõ ràng nhất giữa các màu cấp 1 (màu cơ bản), màu cấp 2 và cấp 3. \r\n\r\nVòng tròn màu được tạo thành từ 12 màu cơ bản. Nếu kết hợp bất kỳ hai màu nào trong số chúng sẽ tạo ra một màu mới. Đây là điểm xuất phát cho việc tạo ra tất cả các màu bổ sung.\r\n\r\nBánh xe màu gồm 12 ô màu, với mỗi ô vuông đại diện cho một màu cơ bản và được chia thành các nan đều nhau. Mỗi vòng cung màu có 8 cấp độ màu từ đậm đến nhạt.\r\nCấu tạo của bánh xe màu sắc\r\nMàu cơ bản (màu cấp 1)\r\nĐỏ, vàng và xanh (xanh dương) là những màu cơ bản. Đây là ba màu cơ bản tạo nên tất cả các màu hiện nay. Chúng được “trộn” với nhau theo một tỷ lệ nhất định để tạo ra các màu sắc khác. Đây cũng được coi là ba tông màu “dữ dội” nhất và đáng chú ý nhất, khó pha trộn và khó kết hợp với các tông màu khác.\r\nMàu cấp 2\r\nMàu cấp 2 bao gồm 3 màu: Cam, Xanh lá và Tím. Màu phụ được tạo ra bằng cách kết hợp hai màu cơ bản (màu cấp 1) theo đúng tỷ lệ: màu cam là sự kết hợp giữa màu đỏ và vàng, màu tím là sự kết hợp giữa màu xanh lam và màu đỏ, còn màu xanh lá cây là từ màu xanh lam và màu vàng. Các màu cấp 2 do là sự pha trộn nên sắc độ của chúng nhẹ nhàng hơn. \r\n\r\nMàu cấp 3\r\nBánh xe màu sắc có sáu màu cấp 3: Cam vàng, cam đỏ, Tím đỏ, Tím lam, Lục vàng và cuối cùng là lục lam. \r\n\r\nMàu cấp 3 được tạo ra bằng cách kết hợp màu cấp 1 với màu cấp 2 với tỷ lệ 1:1. Màu thứ ba, giống như màu thứ cấp, được xen kẽ giữa các màu, do đó độ lệch nhẹ hơn đáng kể.                                                ', 4, '2025-02-24 03:44:10', '2025-02-24 03:56:20'),
+(7, 'Chương trình khuyến mãi tháng 2 – Valentine ngọt ngào 💖', 'uploads/news/67c3a796827f5Screenshot 2025-03-02 073240.png', 'ch-ng-tr-nh-khuy-n-m-i-th-ng-2-valentine-ng-t-ng-o-', '                        Giảm 14% cho đơn hàng từ 200K vào ngày 14/02                        ', '                        🌹 Thời gian áp dụng: 01/02 - 14/02\r\n🎁 Áp dụng cho tất cả khách hàng\r\n\r\n🎀 ƯU ĐÃI ĐẶC BIỆT CHO CẶP ĐÔI\r\n❤️ Mua 1 tặng 1 cho các sản phẩm đôi (áo đôi, cốc đôi, trang sức đôi, v.v.)\r\n💑 Giảm 14% cho đơn hàng từ 214K vào ngày 14/02\r\n\r\n💝 QUÀ TẶNG YÊU THƯƠNG\r\n🎁 Đơn hàng từ 500K: Tặng thiệp Valentine kèm lời nhắn miễn phí\r\n🎁 Đơn hàng từ 1 triệu: Nhận ngay hộp socola cao cấp\r\n\r\n🚚 MIỄN PHÍ VẬN CHUYỂN\r\n🚀 Freeship toàn quốc cho đơn hàng từ 200K\r\n\r\n🔥 Lưu ý: Chương trình có thể kết thúc sớm nếu số lượng quà tặng và ưu đãi hết hạn.\r\n\r\n💌 Nhanh tay đặt hàng ngay để chuẩn bị món quà hoàn hảo cho người thương!                        ', 1, '2025-02-24 03:44:10', '2025-02-24 03:57:10'),
+(8, 'Chương Trình Khuyến Mãi Tháng 4 - Rộn Ràng Đón Hè, Ưu Đãi Cực Đã! ☀️', 'uploads/news/67c3a6b081cd7Screenshot 2025-03-02 072901.png', 'ch-ng-tr-nh-khuy-n-m-i-th-ng-4---r-n-r-ng-n-h-u-i-c-c-', '                                                                        Giảm đến 60% cho mỗi đơn hàng\r\n                                                                                                                                                                                                ', '                                                Thời gian áp dụng: 01/04 - 30/04\r\n\r\nTháng 4 về mang theo những chương trình ưu đãi siêu khủng! Cơ hội tuyệt vời để bạn sắm sửa cho mùa hè sôi động với giá cực sốc!\r\n\r\n🔥 Chương trình ưu đãi tháng 4:\r\n✅ Flash Sale mỗi ngày - Giảm đến 60% từ 12h - 14h.\r\n✅ Nhập mã \"HE2024\" giảm 15% cho đơn hàng từ 400K.\r\n✅ Mua combo - giá hời: Combo 2 sản phẩm giảm thêm 10%.\r\n✅ Tặng quà giá trị cho 100 khách hàng đầu tiên mỗi tuần.\r\n\r\n💥 Ưu đãi đặc biệt dịp 30/4 - 1/5:\r\n🎁 Quay số trúng thưởng với hóa đơn từ 1 triệu đồng.\r\n🚚 Miễn phí vận chuyển toàn quốc không giới hạn giá trị đơn hàng!\r\n\r\n📌 Mua sắm ngay tại [Tên Shop] để không bỏ lỡ các ưu đãi HOT nhất tháng 4!                                                ', 1, '2025-02-24 03:44:10', '2025-02-24 03:57:55'),
+(9, 'Bộ sưu tập mới dành cho sinh viên – Đẹp, chất, giá sinh viên! 🎉', 'uploads/news/67c3a9588c6f0Screenshot 2025-03-02 074148.png', 'b-s-u-t-p-m-i-d-nh-cho-sinh-vi-n-p-ch-t-gi-sinh-vi-n-', '                        Phong cách trẻ trung, năng động, phù hợp cho mọi hoàn cảnh – từ đi học, đi chơi đến dạo phố.                        ', '👕 1. Áo thun basic – Must-have item!\r\n✔ Form rộng thoải mái, chất liệu cotton thoáng mát.\r\n✔ Đa dạng màu sắc dễ phối đồ, phù hợp mọi phong cách.\r\n✔ Mix & match cực dễ với quần jeans, quần jogger hay chân váy.\r\n\r\n🧥 2. Áo khoác trendy – Thời trang & tiện lợi\r\n✔ Áo khoác gió, hoodie, cardigan… vừa giữ ấm, vừa nâng tầm phong cách.\r\n✔ Thiết kế trẻ trung, phù hợp cả nam và nữ.\r\n✔ Có túi rộng đựng điện thoại, ví tiền tiện lợi.\r\n\r\n👖 3. Quần jeans, jogger – Cá tính & năng động\r\n✔ Quần jeans baggy, ống rộng, skinny phù hợp mọi dáng người.\r\n✔ Quần jogger thoải mái, dễ phối đồ, chuẩn style sinh viên.\r\n✔ Chất vải bền đẹp, mặc lâu không sờn, không bai nhão.\r\n\r\n🎀 4. Phụ kiện thời trang – Hoàn thiện outfit\r\n✔ Mũ lưỡi trai, túi tote, vớ cao cổ… giúp outfit thêm nổi bật.\r\n✔ Giá siêu mềm, dễ dàng sắm ngay mà không cần đắn đo.\r\n✔ Mẫu mã hot trend, theo kịp xu hướng.\r\n\r\n🔥 Ưu đãi đặc biệt dành cho sinh viên:\r\n✅ Giảm ngay 10% khi nhập mã STUDENT10.\r\n✅ Freeship toàn quốc cho đơn hàng từ 300K.\r\n✅ Mua ngay - Nhận quà hấp dẫn (Áp dụng cho 100 đơn hàng đầu tiên).\r\n\r\n📌 Sắm ngay hôm nay để không bỏ lỡ những item hot nhất mùa này! 🚀', 3, '2025-02-24 03:44:10', '2025-02-24 03:44:39'),
+(10, 'Chương Trình Khuyến Mãi Tháng 3- Mua Sắm Tưng Bừng, Nhận Ngàn Ưu Đãi! 🎉', 'uploads/news/67c3a69f55c9eScreenshot 2025-03-02 073007.png', 'ch-ng-tr-nh-khuy-n-m-i-th-ng-3--mua-s-m-t-ng-b-ng-nh-n-ng-n-u-i-', '                                                       Giảm giá đến 50% cho hàng trăm sản phẩm hot.                                    ', '                                                Chào tháng 3 với hàng loạt ưu đãi siêu hấp dẫn! Đừng bỏ lỡ cơ hội mua sắm tiết kiệm và nhận nhiều quà tặng giá trị.\r\n  Thời gian áp dụng: 01/03 - 31/03   \r\n🔥 Ưu đãi HOT trong tháng 3:\r\n✅ Giảm giá đến 50% cho hàng trăm sản phẩm hot.\r\n✅ Mua 1 tặng 1 áp dụng cho các sản phẩm thời trang, phụ kiện.\r\n✅ Tặng voucher 100K khi đơn hàng từ 500K.\r\n✅ Freeship toàn quốc cho đơn từ 299K.\r\n\r\n💥 Ưu đãi đặc biệt vào ngày 8/3:\r\n🎁 Quà tặng đặc biệt cho khách hàng nữ khi mua sắm trong ngày Quốc tế Phụ nữ.\r\n💳 Tặng mã giảm 10% cho đơn hàng từ 300K trở lên.\r\n\r\n📌 Nhanh tay săn deal ngay tại [Tên Shop] để không bỏ lỡ!                                                ', 1, '2025-02-24 03:44:10', '2025-02-24 03:44:49'),
+(11, 'Mẹo chọn sản phẩm thời trang cho sinh viên – Đẹp, tiện lợi, tiết kiệm! 💡', 'uploads/news/67c3aa8a75f2cScreenshot 2025-03-02 074655.png', 'm-o-ch-n-s-n-ph-m-th-i-trang-cho-sinh-vi-n-p-ti-n-l-i-ti-t-ki-m-', 'mẹo chọn đồ giúp bạn luôn tự tin với phong cách của mình mà không tốn quá nhiều chi phí!', '👕 1. Ưu tiên những món đồ basic – Dễ phối, không lỗi mốt\r\n🔹 Áo thun trơn, sơ mi đơn giản, quần jeans luôn là lựa chọn hàng đầu.\r\n🔹 Những item này dễ phối với mọi phong cách, giúp bạn tiết kiệm khi không cần mua quá nhiều đồ.\r\n🔹 Màu sắc trung tính như trắng, đen, xám, xanh navy rất dễ kết hợp với các món đồ khác.\r\n\r\n🎯 2. Chọn đồ theo mục đích sử dụng – Không mua theo cảm hứng\r\n🔹 Đừng mua chỉ vì thấy đẹp, hãy cân nhắc xem nó có phù hợp với nhu cầu hàng ngày không.\r\n🔹 Đi học: Ưu tiên áo thun, quần jeans, balo tiện dụng.\r\n🔹 Đi chơi, đi làm thêm: Sơ mi, áo khoác nhẹ, quần âu giúp bạn trông chỉn chu hơn.\r\n🔹 Tập thể dục: Chọn đồ thể thao co giãn, thoải mái để dễ vận động.\r\n\r\n🛍 3. Mua đồ theo set – Tiết kiệm & dễ phối hơn\r\n🔹 Mua một bộ trang phục đã được phối sẵn giúp bạn tiết kiệm thời gian suy nghĩ.\r\n🔹 Set đồ thường có giá tốt hơn so với mua lẻ từng món.\r\n🔹 Có thể kết hợp chéo giữa các set để tạo ra nhiều outfit khác nhau.\r\n\r\n💰 4. Cân đối ngân sách – Không cần đồ đắt, chỉ cần phù hợp\r\n🔹 Hãy đặt ngân sách cụ thể cho việc mua sắm, tránh chi tiêu quá tay.\r\n🔹 Tận dụng các chương trình giảm giá, ưu đãi sinh viên để mua được đồ chất lượng với giá rẻ hơn.\r\n🔹 Đầu tư vào những món đồ chất lượng tốt thay vì mua nhiều đồ rẻ nhưng nhanh hỏng.\r\n\r\n🎀 5. Đừng quên phụ kiện – Điểm nhấn cho outfit\r\n🔹 Một chiếc túi tote, mũ lưỡi trai, đồng hồ đơn giản có thể giúp bạn trông phong cách hơn.\r\n🔹 Giày sneaker trắng, giày lười hoặc sandal là những lựa chọn phù hợp cho sinh viên vì dễ phối đồ và thoải mái.\r\n🔹 Chỉ cần một vài món phụ kiện nhỏ, bạn có thể biến đổi hoàn toàn set đồ của mình.\r\n\r\n🔥 Tóm lại: Hãy chọn đồ đơn giản, dễ phối, phù hợp với mục đích sử dụng, cân đối ngân sách và tận dụng ưu đãi để mua được những sản phẩm thời trang đẹp – tiện lợi – tiết kiệm nhất!\r\n\r\n📌 Áp dụng ngay những mẹo này để có tủ đồ chuẩn sinh viên mà vẫn chất lừ nhé! 🚀', 4, '2025-02-24 03:44:10', '2025-02-24 03:45:01'),
+(12, 'Bộ sưu tập mới: Thời trang cho sinh viên đi làm – Thanh lịch & năng động! ✨', 'uploads/news/67c3ab429b7abScreenshot 2025-03-02 074957.png', 'b-s-u-t-p-m-i-th-i-trang-cho-sinh-vi-n-i-l-m-thanh-l-ch-n-ng-ng-', 'Bộ sưu tập mới lần này mang đến những item phù hợp cho môi trường làm việc mà vẫn giúp bạn tự tin thể hiện phong cách! ', '👔 1. Sơ mi thanh lịch – Lịch sự nhưng không cứng nhắc\r\n✔ Chất vải cotton thoáng mát, không nhăn, phù hợp mặc cả ngày dài.\r\n✔ Thiết kế basic, dễ phối với quần jeans, quần tây hoặc chân váy.\r\n✔ Màu sắc nhã nhặn như trắng, xanh pastel, be giúp tạo cảm giác chuyên nghiệp.\r\n\r\n🧥 2. Blazer nhẹ – Nâng tầm phong cách\r\n✔ Không quá cứng nhắc như vest, blazer form rộng mang đến vẻ ngoài thanh lịch nhưng vẫn trẻ trung.\r\n✔ Phối dễ dàng với áo thun, sơ mi, hoặc váy để phù hợp mọi hoàn cảnh.\r\n✔ Chất vải nhẹ, dễ mặc, không tạo cảm giác gò bó khi di chuyển.\r\n\r\n👖 3. Quần âu & quần kaki – Thoải mái nhưng vẫn chuyên nghiệp\r\n✔ Quần ống suông, quần baggy giúp che khuyết điểm và tạo cảm giác thon gọn.\r\n✔ Chất vải mềm, co giãn nhẹ, phù hợp để di chuyển cả ngày mà không gây khó chịu.\r\n✔ Dễ phối với giày sneaker hoặc giày lười để tạo vẻ ngoài năng động.\r\n\r\n🎀 4. Phụ kiện tinh tế – Hoàn thiện diện mạo\r\n✔ Túi tote hoặc túi xách nhỏ gọn, tiện dụng cho laptop & tài liệu.\r\n✔ Đồng hồ tối giản giúp tăng thêm nét thanh lịch, chuyên nghiệp.\r\n✔ Giày loafer, giày mules hoặc sneaker trắng giúp outfit trở nên trẻ trung hơn.\r\n\r\n🔥 Ưu đãi đặc biệt dành cho sinh viên đi làm:\r\n✅ Giảm ngay 10% khi nhập mã WORK10.\r\n✅ Freeship toàn quốc cho đơn hàng từ 300K.\r\n✅ Mua ngay - Nhận quà hấp dẫn (Áp dụng cho 100 đơn hàng đầu tiên).\r\n\r\n📌 Sẵn sàng để tự tin đi làm với diện mạo hoàn hảo? Cập nhật ngay tủ đồ của bạn với bộ sưu tập mới này nhé! 🚀', 3, '2025-02-24 03:44:10', '2025-02-24 03:45:12');
 
 -- --------------------------------------------------------
 
@@ -213,7 +233,9 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `phone`, `email`, `sta
 (15, 1, 'Ngọ Văn Trọng', '22 Thôn Ngọ Hạ ,Thăng Bình, Nông Cống ,Thanh Hóa', '0352987324', 'vantrongngo1607@gmail.com', 'Confirmed', '2025-02-23 07:13:03', '2025-02-23 07:13:03', 198000, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
 (16, 1, 'Ngọ Văn Trọng', 'Thăng Bình, Nông Cống ,Thanh Hóa', '0352987324', 'vantrongngo1607@gmail.com', 'Confirmed', '2025-02-23 08:48:40', '2025-02-23 08:48:40', 180000, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
 (17, 1, 'Ngọ Văn Trọng', 'Số nhà 24 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', '0352987324', 'vantrongngo1607@gmail.com', 'Confirmed', '2025-02-23 19:30:22', '2025-02-23 19:30:22', 900, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(18, 1, 'Phạm Thị Nga', 'Số nhà 22 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', '090708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-02-24 18:23:47', '2025-02-24 18:23:47', 200000, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán');
+(18, 1, 'Phạm Thị Nga', 'Số nhà 22 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', '090708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-02-24 18:23:47', '2025-02-24 18:23:47', 200000, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(19, 1, 'Trịnh Tuấn', 'Số nhà 22 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', '0352987324', 'vantrongngo1607@gmail.com', 'Processing', '2025-02-28 19:16:36', '2025-02-28 19:16:36', 988888, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(20, 1, 'Ngọ Văn Trọng', 'Số nhà 22 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', '0352987324', 'vantrongngo1607@gmail.com', 'Confirmed', '2025-03-06 08:26:05', '2025-03-06 08:26:05', 1395000, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán');
 
 -- --------------------------------------------------------
 
@@ -244,7 +266,12 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `qty`, `to
 (11, 15, 16, 99000, 2, 198000, '2025-02-23 07:13:03', '2025-02-23 07:13:03'),
 (12, 16, 13, 45000, 4, 180000, '2025-02-23 08:48:40', '2025-02-23 08:48:40'),
 (13, 17, 30, 300, 3, 900, '2025-02-23 19:30:22', '2025-02-23 19:30:22'),
-(14, 18, 23, 100000, 2, 200000, '2025-02-24 18:23:47', '2025-02-24 18:23:47');
+(14, 18, 23, 100000, 2, 200000, '2025-02-24 18:23:47', '2025-02-24 18:23:47'),
+(15, 19, 23, 100000, 1, 100000, '2025-02-28 19:16:36', '2025-02-28 19:16:36'),
+(16, 19, 21, 888888, 1, 888888, '2025-02-28 19:16:36', '2025-02-28 19:16:36'),
+(17, 20, 25, 1000000, 1, 1000000, '2025-03-06 08:26:05', '2025-03-06 08:26:05'),
+(18, 20, 20, 35000, 1, 35000, '2025-03-06 08:26:05', '2025-03-06 08:26:05'),
+(19, 20, 28, 120000, 3, 360000, '2025-03-06 08:26:05', '2025-03-06 08:26:05');
 
 -- --------------------------------------------------------
 
@@ -341,12 +368,29 @@ CREATE TABLE `reviews` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+--
+-- Đang đổ dữ liệu cho bảng `reviews`
+--
+
 INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `comment`, `rating`, `created_at`, `updated_at`) VALUES
 (1, 1, 20, 'quần đẹp, vừa form', 5, '2025-02-27 04:45:09', NULL),
 (2, 2, 25, 'đúng áo của học viên hoàng gia có khác, mặc vào như vua', 4, '2025-02-26 04:48:00', NULL),
 (3, 3, 25, 'áo đẹp, không mỏng cũng k quá dày, form vừa vặn', 5, '2025-02-25 04:49:05', NULL),
-(4, 1, 25, 'không còn gì để bàn cãi, đúng chất hoàng gia', 5, '2025-02-24 04:49:48', NULL);
+(4, 1, 25, 'không còn gì để bàn cãi, đúng chất hoàng gia', 5, '2025-02-24 04:49:48', NULL),
+(5, 0, 0, 'oke', 4, '2025-02-27 18:10:21', NULL),
+(6, 1, 25, 'oke đấy', 4, '2025-02-27 18:12:10', NULL),
+(7, 1, 21, 'đẹp đó', 4, '2025-02-27 18:15:37', NULL),
+(8, 1, 21, 'đẹp đó', 4, '2025-02-27 18:16:26', NULL),
+(9, 1, 21, 'tuyệt', 5, '2025-02-27 18:16:57', NULL),
+(10, 1, 20, 'uầy áo đẹp vãi chưởng', 1, '2025-02-27 18:19:05', NULL),
+(11, 1, 20, 'sao lại có cái áo đép thế này', 3, '2025-02-27 18:21:35', NULL),
+(15, 1, 23, 'tuyệt', 5, '2025-02-27 19:13:28', NULL),
+(17, 1, 23, 'TẠM', 3, '2025-02-27 19:28:52', NULL),
+(18, 1, 25, 'được', 4, '2025-02-28 08:37:59', NULL),
+(19, 1, 23, 'hi', 4, '2025-02-28 20:48:38', NULL),
+(20, 1, 23, 'bực', 1, '2025-02-28 20:50:09', NULL);
+
+-- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `users`
@@ -359,16 +403,23 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `phone` varchar(30) NOT NULL,
   `address` text NOT NULL,
-  `avatar` varchar(255) DEFAULT 'Không'
+  `avatar` varchar(255) DEFAULT 'img/icon-account.png',
+  `activation_code` varchar(255) DEFAULT NULL,
+  `status` enum('Active','Inactive') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `avatar`) VALUES
-(1, 'Ngọ Văn Trọng', 'vantrongngo1607@gmail.com', '123', '0352987324', 'Số nhà 22 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', 'avt/anhthe.jpg'),
-(2, 'Nguyễn Hoàng Hải', 'hainh123@gmail.com', '123', '0352987645', '21 Quang Trung, Thành Phố TH, Tỉnh Thanh Hóa', 'Không');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `avatar`, `activation_code`, `status`) VALUES
+(1, 'Ngọ Văn Trọng', 'vantrongngo1607@gmail.com', '123', '0352987324', 'Số nhà 22 Thôn Ngọ Hạ, Thăng Bình, Nông Cống, Thanh Hóa', 'avt/anhthe.jpg', NULL, 'Active'),
+(2, 'Nguyễn Hoàng Hải', 'hainh123@gmail.com', '123', '0352987645', '21 Quang Trung, Thành Phố TH, Tỉnh Thanh Hóa', 'img/icon-account.png', NULL, 'Active'),
+(3, 'Phạm Thị Nga', 'ngapt@gmail.com', '123', '0352987324', 'Thôn Ngọ Hạ, Thăng Bình Nông Cống Thanh Hóa', 'img/icon-account.png', NULL, 'Active'),
+(4, 'Tạ Kiều Yến', 'tkyen@gmail.com', '123', '0234567123', 'Hà Đông, Hà Nội', 'img/icon-account.png', NULL, 'Active'),
+(5, 'Trong ngo', 'ngovantrong1308@gmail.com', '123', '0987654321', 'Thanh Hóa', 'img/icon-account.png', NULL, 'Active'),
+(6, 'Phạm Nga', 'TrongNV.B21CN726@stu.ptit.edu.vn', '123', '0876543123', 'Thanh', 'img/icon-account.png', '8b6b054282542a527c3e669ccc2cac13', 'Inactive'),
+(7, 'trọng2808', 'vantrongngo2808@gmail.com', '123', '0987345123', 'Thanh', 'img/icon-account.png', '01af1456b69da869e2f743dec78a950e', 'Inactive');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -523,13 +574,13 @@ ALTER TABLE `newscategories`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
@@ -547,13 +598,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -572,13 +623,6 @@ ALTER TABLE `order_details`
 ALTER TABLE `products`
   ADD CONSTRAINT `products_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
   ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
-
---
--- Các ràng buộc cho bảng `reviews`
---
-ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `reviews_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
