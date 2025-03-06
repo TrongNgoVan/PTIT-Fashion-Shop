@@ -57,6 +57,69 @@
        
            
         ?>
+        <div class="container mt-4">
+    <div class="card shadow-lg border-0 p-4">
+        <div class="d-flex justify-content-between align-items-center text-center">
+            <div class="step completed">
+                <div class="icon"><i class="fa fa-file-text"></i></div>
+                <p>Đơn Hàng Đã Đặt</p>
+                <small>11:08 20-02-2025</small>
+            </div>
+            <div class="line"></div>
+            <div class="step completed">
+                <div class="icon"><i class="fa fa-dollar"></i></div>
+                <p>Đã Xác Nhận Thanh Toán</p>
+                <small>11:38 20-02-2025</small>
+            </div>
+            <div class="line"></div>
+            <div class="step completed">
+                <div class="icon"><i class="fa fa-truck"></i></div>
+                <p>Đã Giao Cho ĐVVC</p>
+                <small>18:23 20-02-2025</small>
+            </div>
+            <div class="line"></div>
+            <div class="step completed">
+                <div class="icon"><i class="fa fa-dropbox"></i></div>
+                <p>Đã Nhận Được Hàng</p>
+                <small>13:24 21-02-2025</small>
+            </div>
+            <div class="line"></div>
+            <div class="step completed">
+                <div class="icon"><i class="fa fa-star"></i></div>
+                <p>Đánh Giá</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 120px;
+    }
+    .icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #28a745;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+    .line {
+        flex: 1;
+        height: 4px;
+        background-color: #28a745;
+        margin: 0 10px;
+    }
+    .completed .icon {
+        background-color: #28a745;
+    }
+</style>
 
         <div class="container mt-4">
             <div class="card shadow-lg border-0">
