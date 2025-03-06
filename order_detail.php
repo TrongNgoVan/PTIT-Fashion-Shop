@@ -57,37 +57,65 @@
        
            
         ?>
-        <div class="container mt-4">
+
+<?php
+// Danh sách trạng thái hiển thị
+$status_steps = [
+    "Đơn Hàng Đã Đặt",
+    "Đã Xác Nhận Thanh Toán",
+    "Đã Giao Cho ĐVVC",
+    "Đã Nhận Được Hàng",
+    "Đánh Giá"
+];
+
+// Ánh xạ trạng thái CSDL -> trạng thái giao diện
+$map_status = [
+    "Processing" => "Đơn Hàng Đã Đặt",
+    "Confirmed"  => "Đã Xác Nhận Thanh Toán",
+    "Shipping"   => "Đã Giao Cho ĐVVC",
+    "Delivered"  => "Đã Nhận Được Hàng"
+];
+
+// Lấy trạng thái và ngày từ CSDL
+$order_status = $row['status']; 
+$status_dates = [
+    "Đơn Hàng Đã Đặt"        => $row['created_at'] ?? null,
+    "Đã Xác Nhận Thanh Toán" => $row['updated_at'] ?? null,
+    "Đã Giao Cho ĐVVC"       => $row['updated_at'] ?? null,
+    "Đã Nhận Được Hàng"      => $row['updated_at'] ?? null
+];
+
+// Nếu đơn hàng bị hủy, không tô màu xanh
+if ($order_status === "Cancelled") {
+    $status_index = -1;
+} else {
+    $status_index = array_search($map_status[$order_status], $status_steps);
+}
+?>
+
+<div class="container mt-4">
     <div class="card shadow-lg border-0 p-4">
         <div class="d-flex justify-content-between align-items-center text-center">
-            <div class="step completed">
-                <div class="icon"><i class="fa fa-file-text"></i></div>
-                <p>Đơn Hàng Đã Đặt</p>
-                <small>11:08 20-02-2025</small>
-            </div>
-            <div class="line"></div>
-            <div class="step completed">
-                <div class="icon"><i class="fa fa-dollar"></i></div>
-                <p>Đã Xác Nhận Thanh Toán</p>
-                <small>11:38 20-02-2025</small>
-            </div>
-            <div class="line"></div>
-            <div class="step completed">
-                <div class="icon"><i class="fa fa-truck"></i></div>
-                <p>Đã Giao Cho ĐVVC</p>
-                <small>18:23 20-02-2025</small>
-            </div>
-            <div class="line"></div>
-            <div class="step completed">
-                <div class="icon"><i class="fa fa-dropbox"></i></div>
-                <p>Đã Nhận Được Hàng</p>
-                <small>13:24 21-02-2025</small>
-            </div>
-            <div class="line"></div>
-            <div class="step completed">
-                <div class="icon"><i class="fa fa-star"></i></div>
-                <p>Đánh Giá</p>
-            </div>
+            <?php 
+            for ($i = 0; $i < count($status_steps); $i++): 
+                // Nếu đơn chưa bị hủy và trạng thái này đã hoàn thành => màu xanh
+                $completed = ($status_index !== -1 && $i <= $status_index) ? "completed" : "";
+                $date_text = isset($status_dates[$status_steps[$i]]) ? date("H:i d-m-Y", strtotime($status_dates[$status_steps[$i]])) : "";
+            ?>
+                <div class="step <?= $completed ?>">
+                    <div class="icon"><i class="fa 
+                        <?= $i == 0 ? 'fa-file-text' : 
+                            ($i == 1 ? 'fa-dollar' : 
+                            ($i == 2 ? 'fa-truck' : 
+                            ($i == 3 ? 'fa-dropbox' : 'fa-star'))) ?>"></i>
+                    </div>
+                    <p><?= $status_steps[$i] ?></p>
+                    <small class="date"><?= $date_text ?></small>
+                </div>
+                <?php if ($i < count($status_steps) - 1): ?>
+                    <div class="line <?= $completed ?>"></div>
+                <?php endif; ?>
+            <?php endfor; ?>
         </div>
     </div>
 </div>
@@ -103,7 +131,7 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: #28a745;
+        background-color: #ccc; /* Mặc định màu xám */
         color: white;
         display: flex;
         align-items: center;
@@ -113,14 +141,17 @@
     .line {
         flex: 1;
         height: 4px;
-        background-color: #28a745;
+        background-color: #ccc; /* Mặc định màu xám */
         margin: 0 10px;
     }
-    .completed .icon {
-        background-color: #28a745;
+    .completed .icon, .completed + .line {
+        background-color: #28a745; /* Màu xanh khi hoàn thành */
+    }
+    .date {
+        font-size: 12px;
+        color: gray;
     }
 </style>
-
         <div class="container mt-4">
             <div class="card shadow-lg border-0">
                 <div class="card-body">
@@ -128,7 +159,7 @@
                     <div class="row">
                         <!-- Thông tin khách hàng -->
                         <div class="col-md-4">
-                            <div class="card p-4 border-0 shadow-sm">
+                            <0div class="card p-4 border-0 shadow-sm">
                                 <h5 class="mb-3">Thông tin khách hàng</h5>
                                 <div class="row mb-2">
                                     <div class="col-4 fw-bold">Họ Tên:</div>
@@ -155,7 +186,7 @@
                                     </div>
                                 </div>
                                 <a href="list_order.php" class="btn btn-danger px-4">Quay lại</a>
-                            </div>
+                            </0div>
                         </div>
 
                         <!-- Chi tiết đơn hàng -->
