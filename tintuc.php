@@ -23,6 +23,42 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
 </head>
+<style>
+    /* Giảm khoảng cách giữa menu và phần tin tức */
+.blog-details {
+    padding-top: 10px !important;
+    margin-top: 0px !important;
+}
+
+/* Kiểm soát khoảng cách tổng thể của container */
+.container {
+    margin-top: 0px !important;
+    padding-top: 10px !important;
+}
+
+/* Nếu có khoảng trắng do padding */
+.header {
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+.news-header {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa ảnh và tiêu đề */
+}
+
+.news-header img {
+    width: 200px; /* Điều chỉnh kích thước avatar */
+    height: 200px;
+    flex-shrink: 0; /* Đảm bảo ảnh không bị co lại */
+}
+
+.news-header h2 {
+    margin: 0; /* Loại bỏ khoảng trắng thừa */
+    font-size: 26px;
+    font-weight: bold;
+}
+</style>
 <body>
 <?php
 session_start();
@@ -108,10 +144,14 @@ $anh = $row['avatar'];
                 </div>
             </div>
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
-                <div class="blog__details__text">
-                    <img src="<?='quantri/'.$row['avatar']?>" alt="">
-                    <?=$row['description']?>
-                </div>
+            <div class="blog__details__text">
+    <div class="news-header">
+        <img src="<?='quantri/'.$row['avatar']?>" alt="">
+        <h2><?=$row['title']?></h2>
+    </div>
+    <p><?=$row['description']?></p>
+</div>
+
     
             </div>
         </div>
