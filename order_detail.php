@@ -62,7 +62,7 @@
 // Danh sách trạng thái hiển thị
 $status_steps = [
     "Đơn Hàng Đã Đặt",
-    "Đã Xác Nhận Thanh Toán",
+    "Đã Xác Nhận Đơn Hàng",
     "Đã Giao Cho ĐVVC",
     "Đã Nhận Được Hàng",
     "Đánh Giá"
@@ -71,7 +71,7 @@ $status_steps = [
 // Ánh xạ trạng thái CSDL -> trạng thái giao diện
 $map_status = [
     "Processing" => "Đơn Hàng Đã Đặt",
-    "Confirmed"  => "Đã Xác Nhận Thanh Toán",
+    "Confirmed"  => "Đã Xác Nhận Đơn Hàng",
     "Shipping"   => "Đã Giao Cho ĐVVC",
     "Delivered"  => "Đã Nhận Được Hàng"
 ];
@@ -80,7 +80,7 @@ $map_status = [
 $order_status = $row['status']; 
 $status_dates = [
     "Đơn Hàng Đã Đặt"        => $row['created_at'] ?? null,
-    "Đã Xác Nhận Thanh Toán" => $row['updated_at'] ?? null,
+    "Đã Xác Nhận Đơn Hàng" => $row['updated_at'] ?? null,
     "Đã Giao Cho ĐVVC"       => $row['updated_at'] ?? null,
     "Đã Nhận Được Hàng"      => $row['updated_at'] ?? null
 ];
