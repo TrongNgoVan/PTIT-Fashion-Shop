@@ -1,4 +1,7 @@
+<!-- Nhận xét về tốc độ hệ thống:
+code rất loạn, logic các thứ đang rất rối loạn, không theo 1 kiến trúc nào cả , có nhiều phần lặp đi lặp lại,thừa, hệ thống chậm hẳn, khó cho việc maintain bảo trì và phát triển. 
 
+-->
 
 <!DOCTYPE html>
 <html lang="zxx">
