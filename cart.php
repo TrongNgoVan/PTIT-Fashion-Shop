@@ -136,13 +136,13 @@
                                 <!-- Hai nút: Xóa mục đã chọn (ban đầu ẩn) & Thanh toán -->
                                 <div class="d-flex justify-content-between mt-3">
                                     <!-- name=\"deleteSelected\" => phân biệt trên server -->
-                                    <button type="submit"
-                                        name="deleteSelected"
+                                    <button type="button"
                                         class="btn btn-danger"
                                         id="deleteSelected"
                                         style="display: none;">
                                         Xóa mục đã chọn
                                     </button>
+
 
                                     <!-- name=\"thanhtoan\" => phân biệt trên server -->
                                     <button type="submit"
@@ -274,6 +274,53 @@
                 });
                 console.log('updateCartAjax() được gọi với:', productId, newQty);
             }
+            $(document).ready(function() {
+                // Khi bấm nút “Xóa mục đã chọn”
+                $('#deleteSelected').click(function() {
+                    // 1) Thu thập các ID được check
+                    let selectedIds = [];
+                    $('.checkItem:checked').each(function() {
+                        selectedIds.push($(this).val()); // val() = $item['id']
+                    });
+
+                    // Nếu không có sản phẩm nào được check => thoát
+                    if (selectedIds.length === 0) return;
+
+                    // 2) Gửi AJAX sang file xóa
+                    $.ajax({
+                        url: 'xoacart.php', // file xử lý server
+                        type: 'POST',
+                        data: {
+                            ids: selectedIds
+                        }, // gửi mảng ID
+                        success: function(response) {
+                            let res = JSON.parse(response);
+                            if (res.status === 'success') {
+                                // 3) Server đã xóa session => ta xóa dòng trên giao diện
+                                $('.checkItem:checked').each(function() {
+                                    $(this).closest('tr').remove();
+                                });
+                                // 4) Cập nhật lại tổng tiền
+                                updateTotal();
+                                // Ẩn nút nếu không còn item check
+                                toggleDeleteButton();
+                            } else {
+                                console.log('Lỗi xóa:', res.message);
+                            }
+                        },
+                        error: function() {
+                            console.log('Lỗi kết nối server khi xóa');
+                        }
+                    });
+                });
+
+                // Nút “Thanh toán” => tùy bạn xử lý (AJAX hoặc chuyển trang):
+                $('#thanhtoanBtn').click(function() {
+                    window.location.href = 'thanhtoan.php';
+                    // hoặc AJAX
+                });
+            });
+
 
 
             // Khởi tạo
