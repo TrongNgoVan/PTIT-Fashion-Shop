@@ -26,25 +26,46 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
-    <style>
-            #header {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            }
-             /* Hiệu ứng rung nhẹ */
+<style>
+    #header {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    /* Hiệu ứng rung nhẹ */
     @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-2px); }
-        50% { transform: translateX(2px); }
-        75% { transform: translateX(-2px); }
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-2px);
+        }
+
+        50% {
+            transform: translateX(2px);
+        }
+
+        75% {
+            transform: translateX(-2px);
+        }
     }
 
     /* Hiệu ứng nhấp nháy */
     @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
     }
 
     /* Hiệu ứng nổi lên khi hover */
@@ -75,46 +96,42 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
         z-index: 1000;
         text-align: center;
     }
-   
-    
-
-          
-    </style>
+</style>
 
 <body>
 
 
 
-  
-<?php
-session_start();
-$is_homepage = true;
 
-require_once('components/header.php');
-?>
-   
+    <?php
+    session_start();
+    $is_homepage = true;
+
+    require_once('components/header.php');
+    ?>
+
 
     <section class="categories">
         <div class="container">
             <div class="row">
-            <div class="section-title">
-                        <h2>Danh mục thời trang</h2>
-                    </div>
-                    
+                <div class="section-title">
+                    <h2>Danh mục thời trang</h2>
+                </div>
+
 
                 <div class="categories__slider owl-carousel">
-                <?php
-                 $sql_str = "select * from categories order by name";
-                 $result = mysqli_query($conn, $sql_str);
-                    while ($row = mysqli_fetch_assoc($result)){
-                ?>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="<?= $row['img'] ?>" >
-                            <h5><a href="#"><?=$row['name']?></a></h5>
+                    <?php
+                    $sql_str = "select * from categories order by name";
+                    $result = mysqli_query($conn, $sql_str);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
+                        <div class="col-lg-3">
+                            <div class="categories__item set-bg" data-setbg="<?= $row['img'] ?>">
+                                <h5><a href="#"><?= $row['name'] ?></a></h5>
+                            </div>
                         </div>
-                    </div>
-                <?php } ?>
-                    
+                    <?php } ?>
+
                 </div>
             </div>
         </div>
@@ -131,50 +148,50 @@ require_once('components/header.php');
                         <ul>
                             <li class="active" data-filter="*">All</li>
                             <?php
-                 $sql_str = "select * from categories order by name";
-                 $result = mysqli_query($conn, $sql_str);
-                    while ($row = mysqli_fetch_assoc($result)){
-                ?>
-                            <li data-filter=".<?=$row['slug']?>"><?=$row['name']?></li>
-                    <?php } ?>
-                           
+                            $sql_str = "select * from categories order by name";
+                            $result = mysqli_query($conn, $sql_str);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                <li data-filter=".<?= $row['slug'] ?>"><?= $row['name'] ?></li>
+                            <?php } ?>
+
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="row featured__filter">
-            <?php
-                 $sql_str = "select products.id as pid, products.name as pname, images, price,disscounted_price, categories.slug as cslug from products, categories where products.category_id=categories.id; ";
-                 $result = mysqli_query($conn, $sql_str);
-                    while ($row = mysqli_fetch_assoc($result)){
-                        $anh_arr = explode(';', $row['images']);
+                <?php
+                $sql_str = "select products.id as pid, products.name as pname, images, price,disscounted_price, categories.slug as cslug from products, categories where products.category_id=categories.id; ";
+                $result = mysqli_query($conn, $sql_str);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $anh_arr = explode(';', $row['images']);
                 ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix <?=$row['cslug']?>">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="<?="quantri/".$anh_arr[0]?>">
-                            <ul class="featured__item__pic__hover">
-                                <li>
-                                <a href="#">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </a>
-                                    
-                                </li>
-
-
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="sanpham.php?id=<?=$row['pid']?>"><?=$row['pname']?></a></h6>
-                            <div class="prices">
-                                <span class="old"><?=$row['price']?></span>
-                                <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mix <?= $row['cslug'] ?>">
+                        <div class="featured__item">
+                            <div class="featured__item__pic set-bg" data-setbg="<?= "quantri/" . $anh_arr[0] ?>">
+                                <ul class="featured__item__pic__hover">
+                                    <li>
+                                        <!-- Thay thẻ <a> để thêm data-id -->
+                                        <a
+                                            class="add-to-cart"
+                                            data-id="<?= $row['pid'] ?>">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="featured__item__text">
+                                <h6><a href="sanpham.php?id=<?= $row['pid'] ?>"><?= $row['pname'] ?></a></h6>
+                                <div class="prices">
+                                    <span class="old"><?= $row['price'] ?></span>
+                                    <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php } ?>
 
-                
+
             </div>
         </div>
     </section>
@@ -392,70 +409,69 @@ require_once('components/header.php');
                 </div>
             </div>
             <div class="row">
-                <?php 
+                <?php
 
-                $sql_str="select * from news order by created_at desc limit 0, 3";
-            $result = mysqli_query($conn, $sql_str);
-            while ($row = mysqli_fetch_assoc($result)){
+                $sql_str = "select * from news order by created_at desc limit 0, 3";
+                $result = mysqli_query($conn, $sql_str);
+                while ($row = mysqli_fetch_assoc($result)) {
 
                 ?>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="<?='quantri/'.$row['avatar']?>" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> <?=$row['updated_at']?></li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="tintuc.php?id=<?=$row['id']?>"><?=$row['title']?></a></h5>
-                            <p><?=$row['sumary']?></p>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="blog__item">
+                            <div class="blog__item__pic">
+                                <img src="<?= 'quantri/' . $row['avatar'] ?>" alt="">
+                            </div>
+                            <div class="blog__item__text">
+                                <ul>
+                                    <li><i class="fa fa-calendar-o"></i> <?= $row['updated_at'] ?></li>
+                                    <li><i class="fa fa-comment-o"></i> 5</li>
+                                </ul>
+                                <h5><a href="tintuc.php?id=<?= $row['id'] ?>"><?= $row['title'] ?></a></h5>
+                                <p><?= $row['sumary'] ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php } ?>               
-                
+                <?php } ?>
+
             </div>
         </div>
     </section>
-    
+
     <div class="contact-box">
-            <!-- Nút Zalo -->
-            <a href="https://zalo.me/0904708498" target="_blank">
-                <img src="img/zalo.png" 
-                    alt="Zalo" width="50" height="50" 
-                    class="contact-icon shake" 
-                    style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
-            </a>
+        <!-- Nút Zalo -->
+        <a href="https://zalo.me/0904708498" target="_blank">
+            <img src="img/zalo.png"
+                alt="Zalo" width="50" height="50"
+                class="contact-icon shake"
+                style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+        </a>
 
-            <br>
+        <br>
 
-            <!-- Nút gọi điện -->
-            <a href="tel:0904708498">
-                <img src="https://cdn-icons-png.flaticon.com/128/724/724664.png" 
-                    alt="Gọi điện" width="50" height="50" 
-                    class="contact-icon blink" 
-                    style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
-            </a>
+        <!-- Nút gọi điện -->
+        <a href="tel:0904708498">
+            <img src="https://cdn-icons-png.flaticon.com/128/724/724664.png"
+                alt="Gọi điện" width="50" height="50"
+                class="contact-icon blink"
+                style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+        </a>
     </div>
-    
+
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-            <df-messenger
+        <df-messenger
             intent="WELCOME"
             chat-title="tuvanbanhang"
             agent-id="64413262-5f38-4669-b5c3-03978e880987"
-            language-code="en"
-            ></df-messenger>
-            
-    </div>   
+            language-code="en"></df-messenger>
 
-   
-<?php
+    </div>
 
-require_once('components/footer.php');
-?>
+
+    <?php
+
+    require_once('components/footer.php');
+    ?>
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -466,23 +482,72 @@ require_once('components/footer.php');
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                let productId = this.getAttribute('data-id');
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
-                fetch('add_to_cart.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'id=' + productId
-                })
-                .then(response => response.text())
-                .then(data => alert('Đã thêm vào giỏ hàng!'))
-                .catch(error => console.error("Lỗi:", error));
+    <script>
+        $(document).ready(function() {
+            // Bắt sự kiện click vào link .add-to-cart
+            $('.add-to-cart').click(function(e) {
+                e.preventDefault(); // Chặn nhảy trang (href="#")
+
+                // Lấy ID sản phẩm từ data-id
+                let pid = $(this).data('id');
+                let qty = 1;
+
+                // Gửi AJAX đến file xử lý, ví dụ add_to_cart.php
+                $.ajax({
+                    url: 'add_to_cart.php',
+                    type: 'POST',
+                    data: {
+                        pid: pid,
+                        qty: qty
+                    },
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            // Gọi SweetAlert2
+                            Swal.fire({
+                                toast: true,
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Thêm thành công!',
+                                text: 'Sản phẩm đã được thêm vào Giỏ hàng!',
+                                showConfirmButton: false,
+                                timer: 1000 
+                            });
+                            // Cập nhật số lượng giỏ (nếu có)
+                            // $('#cartCount').text(res.cartCount);
+                        } else {
+                            // Thông báo lỗi
+                            Swal.fire({
+                                toast: true,
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Không thể thêm sản phẩm!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    },
+                    error: function() {
+                        // Thông báo lỗi kết nối
+                        Swal.fire({
+                            toast: true,
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Kết nối thất bại!',
+                            text: 'Vui lòng kiểm tra lại đường truyền mạng.',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                });
             });
         });
     </script>
+
 
 
 
