@@ -95,11 +95,19 @@
                                                 </td>
                                                 <td>
                                                     <div class="quantity-controls d-flex align-items-center">
-                                                        <button type="button" class="btn btn-outline-secondary minus-btn" style="width: 32px;">-</button>
+                                                        <button type="button"
+                                                            class="btn btn-outline-secondary minus-btn"
+                                                            style="width: 32px;"
+                                                            data-id="<?= $item['id'] ?>">-</button>
+
                                                         <span class="mx-2 quantity-label" style="min-width: 20px; text-align: center;">
                                                             <?= $item['qty'] ?>
                                                         </span>
-                                                        <button type="button" class="btn btn-outline-secondary plus-btn" style="width: 32px;">+</button>
+
+                                                        <button type="button"
+                                                            class="btn btn-outline-secondary plus-btn"
+                                                            style="width: 32px;"
+                                                            data-id="<?= $item['id'] ?>">+</button>
 
                                                         <!-- Input ẩn để lưu giá trị số lượng (qty) -->
                                                         <input type="hidden"
@@ -107,6 +115,7 @@
                                                             value="<?= $item['qty'] ?>" />
                                                     </div>
                                                 </td>
+
                                                 <!-- Cột Thành tiền của mỗi sản phẩm -->
                                                 <td class="subTotalCell">
                                                     <?= number_format($subTotal, 0, '', '.') . " VNĐ" ?>
@@ -177,15 +186,17 @@
                 let parent = $(this).closest('.quantity-controls');
                 let qtyInput = parent.find('input[type=\"hidden\"]');
                 let qtyLabel = parent.find('.quantity-label');
-
+                let productId = $(this).data('id');
                 let currentVal = parseInt(qtyInput.val()) || 1;
                 if (currentVal > 1) {
                     let newVal = currentVal - 1;
                     qtyInput.val(newVal);
                     qtyLabel.text(newVal);
                 }
+
                 updateSubtotalRow($(this));
                 updateTotal();
+                updateCartAjax(productId, newVal);
             });
 
             // Nút "+"
@@ -193,14 +204,17 @@
                 let parent = $(this).closest('.quantity-controls');
                 let qtyInput = parent.find('input[type=\"hidden\"]');
                 let qtyLabel = parent.find('.quantity-label');
+                let productId = $(this).data('id');
 
                 let currentVal = parseInt(qtyInput.val()) || 1;
                 let newVal = currentVal + 1;
                 qtyInput.val(newVal);
                 qtyLabel.text(newVal);
 
+
                 updateSubtotalRow($(this));
                 updateTotal();
+                updateCartAjax(productId, newVal);
             });
 
             // 1) Hàm ẩn/hiện nút Xóa mục đã chọn
@@ -236,6 +250,31 @@
                 });
                 $('#totalPrice').text(sum.toLocaleString('vi-VN') + ' VNĐ');
             }
+
+            function updateCartAjax(productId, newQty) {
+                $.ajax({
+                    url: 'updatecart.php', // Tên file PHP trên
+                    type: 'POST',
+                    data: {
+                        id: productId, // key phải là 'id' để khớp PHP
+                        qty: newQty // key phải là 'qty'
+                    },
+                    success: function(response) {
+                        // parse JSON
+                        let res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            console.log('Cập nhật thành công');
+                        } else {
+                            console.log('Lỗi:', res.message);
+                        }
+                    },
+                    error: function() {
+                        console.log('Lỗi kết nối');
+                    }
+                });
+                console.log('updateCartAjax() được gọi với:', productId, newQty);
+            }
+
 
             // Khởi tạo
             toggleDeleteButton(); // Ẩn nút Xóa nếu chưa tích

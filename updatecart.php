@@ -1,20 +1,26 @@
 <?php
 session_start();
-$idsp = $_GET['id'];
-$qty = $_POST['qty'];
 
-$cart = [];
-if (isset($_SESSION['cart'])) {
-    $cart = $_SESSION['cart'];
-}
-for ($i = 0; $i < count($cart); $i++) {
-    if ($cart[$i]['id'] == $idsp) {
-        $cart[$i]['qty'] = $qty;
-        break;
+if (isset($_POST['id']) && isset($_POST['qty'])) {
+    $id = $_POST['id'];
+    $qty = (int)$_POST['qty'];
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
     }
+
+    // Tìm sp trong cart
+    foreach ($_SESSION['cart'] as &$item) {
+        if ($item['id'] == $id) {
+            $item['qty'] = $qty; // set qty mới
+            break;
+        }
+    }
+
+    echo json_encode(['status'=>'success']);
+    exit;
 }
 
-//update session
-$_SESSION['cart'] = $cart;
+echo json_encode(['status'=>'error','message'=>'Missing id or qty']);
+exit;
 
-header("Location: cart.php");
