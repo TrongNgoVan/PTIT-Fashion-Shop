@@ -1,37 +1,57 @@
-<!-- <?php
+<?php
 session_start();
+require_once('db/conn.php');
 
-// Kiểm tra nếu dữ liệu được gửi đi
-if (!isset($_POST['id']) ) {
-    header("Location: cart.php");
-    exit();
-}
+// Kiểm tra tham số pid và qty
+if (isset($_POST['pid']) && isset($_POST['qty'])) {
+    $id = $_POST['pid'];
+    $qty = (int)$_POST['qty']; // ép kiểu sang int
+    if ($qty < 1) $qty = 1;
 
-$idsp = $_POST['id'];
-$qty = 1;
+    // Lấy giỏ hàng hiện tại
+    $cart = $_SESSION['cart'] ?? [];
 
-// Lấy giỏ hàng từ session (nếu có)
-$cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-
-
-for ($i = 0; $i < count($cart); $i++) {
-    if ($cart[$i]['id'] == $idsp) {
-        $cart[$i]['qty'] += $qty; // Cộng dồn số lượng
-        $found = true;
-        break;
+    $isFound = false;
+    for ($i = 0; $i < count($cart); $i++) {
+        if ($cart[$i]['id'] == $id) {
+            // Nếu tìm thấy sp này => cộng dồn số lượng
+            $cart[$i]['qty'] += $qty;
+            $isFound = true;
+            break;
+        }
     }
+
+    // Nếu chưa có sp này => lấy từ DB
+    if (!$isFound) {
+        $sql_str = "SELECT * FROM products WHERE id = $id";
+        $result = mysqli_query($conn, $sql_str);
+        $product = mysqli_fetch_assoc($result);
+
+        // Gán thêm trường qty
+        $product['qty'] = $qty; 
+        $cart[] = $product;
+    }
+
+    // Cập nhật session
+    $_SESSION['cart'] = $cart;
+
+    // Tính lại tổng số lượng sản phẩm
+    $cartCount = 0;
+    foreach ($cart as $p) {
+        $cartCount += $p['qty'];
+    }
+
+    // Trả về JSON
+    echo json_encode([
+        'status'    => 'success',
+        'cartCount' => $cartCount
+    ]);
+    exit;
 }
 
-// Nếu chưa có sản phẩm trong giỏ thì thêm mới
-if (!$found) {
-    $cart[] = ['id' => $idsp, 'qty' => $qty];
-}
-
-
-// Lưu lại vào session
-$_SESSION['cart'] = $cart;
-
-// Chuyển hướng về trang chủ
-header("Location: cart.php");
-exit();
-?> -->
+// Nếu thiếu param => báo lỗi
+echo json_encode([
+    'status'  => 'error',
+    'message' => 'Missing pid or qty'
+]);
+exit;
