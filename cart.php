@@ -147,7 +147,9 @@
                                   
                                     <button type="submit"
                                         name="thanhtoan"
-                                        class="btn btn-success">
+                                        class="btn btn-success"
+                                        id="thanhtoanSelected"
+                                        style="display: none;">
                                         Thanh toán
                                     </button>
                                 </div>
@@ -172,12 +174,14 @@
             $('#checkAll').click(function() {
                 $('.checkItem').prop('checked', $(this).prop('checked'));
                 toggleDeleteButton();
+                toggleThanhtoanButton();
                 updateTotal();
             });
 
             // Khi check/uncheck từng sản phẩm
             $('.checkItem').change(function() {
                 toggleDeleteButton();
+                toggleThanhtoanButton();
                 updateTotal();
             });
 
@@ -226,6 +230,16 @@
                 } else {
                     // Không có => ẩn nút Xóa
                     $('#deleteSelected').hide();
+                }
+            }
+            function toggleThanhtoanButton() {
+                let anyChecked = $('.checkItem:checked').length > 0;
+                if (anyChecked) {
+                    // Nếu có sản phẩm nào được check => hiển thị nút Xóa
+                    $('#thanhtoanSelected').show();
+                } else {
+                    // Không có => ẩn nút Xóa
+                    $('#thanhtoanSelected').hide();
                 }
             }
 

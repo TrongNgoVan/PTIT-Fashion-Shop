@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+$is_homepage = false;
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit(); 
+}
+
 // Nếu người dùng bấm nút “Thanh toán”
 if (isset($_POST['thanhtoan'])) {
     // Lấy mảng ID sản phẩm được check
