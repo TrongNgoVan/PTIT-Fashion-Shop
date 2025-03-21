@@ -160,10 +160,9 @@
                             <div class="product__details__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <!-- Ô nhập số lượng hiển thị cho người dùng -->
+                                        
                                         <input type="text" value="1" class="qty-text" />
-                                        <!-- Ô hidden này nếu muốn, 
-                     hoặc bạn có thể lấy giá trị từ .qty-text bằng JS -->
+                                        
                                         <input type="hidden" value="1" name="qty" />
                                     </div>
                                     <!-- Hidden chứa ID sản phẩm -->
@@ -517,6 +516,8 @@
 
     <script>
         $(document).ready(function() {
+            
+
             $('#addCartForm').submit(function(e) {
                 e.preventDefault(); // Ngăn form submit reload trang
 
