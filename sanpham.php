@@ -536,7 +536,7 @@
                                 title: 'Thêm thành công!',
                                 text: 'Sản phẩm đã được thêm vào Giỏ hàng!',
                                 showConfirmButton: false,
-                                timer: 1000 
+                                timer: 1000
                             });
                             // Cập nhật số lượng giỏ (nếu có)
                             // $('#cartCount').text(res.cartCount);

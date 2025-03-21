@@ -21,13 +21,13 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 <style>
-#header {
-   padding-top: 10px;
-   padding-bottom: 10px;
-}
+    #header {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 </style>
 
 <body>
@@ -58,10 +58,10 @@
                         <div class="product__details__pic__slider owl-carousel">
                             <?php
                             for ($i = 0; $i < count($anh_arr); $i++) {
-                                ?>
+                            ?>
                                 <img data-imgbigurl="<?= "quantri/" . $anh_arr[$i] ?>"
                                     src="<?= "quantri/" . $anh_arr[$i] ?>">
-                                <?php
+                            <?php
                             }
                             ?>
 
@@ -134,7 +134,7 @@
                                     <?= $row['description'] ?>
                                 </div>
                             </div>
-                       
+
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Đánh giá sản phẩm (reviews)</h6>
@@ -160,36 +160,36 @@
                 </div>
             </div>
             <div class="row">
-            <?php
-//tim cac san pham lien quan cung category_id voi san pham nay
-$dmid = $row['category_id'];
-$sql2 = "select * from products where category_id=$dmid  and id <> $idsp";
-$result2 = mysqli_query($conn, $sql2);
-while($row2 = mysqli_fetch_assoc($result2)) {
-    $arrs = explode(";", $row2["images"]);
-            ?>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="<?="quantri/".$arrs[0]?>">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="sanpham.php?id=<?=$row2['id']?>"><?=$row2['name']?></a></h6>
-                            <h5><?=$row2['disscounted_price']?></h5>
+                <?php
+                //tim cac san pham lien quan cung category_id voi san pham nay
+                $dmid = $row['category_id'];
+                $sql2 = "select * from products where category_id=$dmid  and id <> $idsp";
+                $result2 = mysqli_query($conn, $sql2);
+                while ($row2 = mysqli_fetch_assoc($result2)) {
+                    $arrs = explode(";", $row2["images"]);
+                ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="<?= "quantri/" . $arrs[0] ?>">
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="sanpham.php?id=<?= $row2['id'] ?>"><?= $row2['name'] ?></a></h6>
+                                <h5><?= $row2['disscounted_price'] ?></h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-<?php } ?>                
+                <?php } ?>
             </div>
         </div>
     </section>
     <!-- Related Product Section End -->
-<?php require_once('components/footer.php'); ?>
-<script src="js/jquery-3.3.1.min.js"></script>
+    <?php require_once('components/footer.php'); ?>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

@@ -3,29 +3,23 @@ session_start();
 $errorMsg = "";
 
 
-if(isset($_POST['btSubmit']))
-{
-    
+if (isset($_POST['btSubmit'])) {
+
     $email = $_POST["email"];
     $password = $_POST['password'];
     $captcha    = $_POST['g-recaptcha-response'];
-    if(!$email || !$password)
-    {
+    if (!$email || !$password) {
         $errorMsg = "vui lòng nhập đầy đủ thông tin";
         require_once("loginform.php");
     }
-    if($email == $password)
-    {
+    if ($email == $password) {
         $errorMsg = "vui lòng không nhập trùng email và password";
         require_once("loginform.php");
-    }
-    else
-    {
-        $secret = '6LdbgN4qAAAAALFtqIb3ZHosGd1C5HugFY6s_FO6'; 
-        $verify_response = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$captcha);
+    } else {
+        $secret = '6LdbgN4qAAAAALFtqIb3ZHosGd1C5HugFY6s_FO6';
+        $verify_response = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $captcha);
         $response_data = json_decode($verify_response);
-        if($response_data->success)
-        {
+        if ($response_data->success) {
             require_once("db/conn.php");
             //cau lenh truy van
             $sql = "select * from users where email='$email' and password='$password'";
@@ -43,7 +37,7 @@ if(isset($_POST['btSubmit']))
                     require_once("loginform.php");
                     exit();
                 }
-                
+
                 $_SESSION['user'] = $row;
                 // print_r($_SESSION['user']);
                 // exit;
@@ -53,19 +47,11 @@ if(isset($_POST['btSubmit']))
                 $errorMsg = "Không tìm thấy thông tin tài khoản trong hệ thống";
                 require_once("loginform.php");
             }
-        }
-        else
-        {
+        } else {
             $errorMsg = "Bạn chưa xác minh repcatcha thành công";
             require_once("loginform.php");
-            
         }
-        
     }
-
-}
-
-else {
+} else {
     require_once("loginform.php");
 }
-?>

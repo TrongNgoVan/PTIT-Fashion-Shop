@@ -21,41 +21,42 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
+
 <body>
-<?php
-session_start();
-$is_homepage = false;
+    <?php
+    session_start();
+    $is_homepage = false;
 
-require_once('./db/conn.php');
-
-
-
-require_once('components/header.php');
-?>
+    require_once('./db/conn.php');
 
 
-<!-- Checkout Section Begin -->
-<section class="checkout spad">
-    <div class="container">
-        <div class="checkout__form">
-            <h4 style="text-align: center;">Cảm ơn bạn đã đặt hàng trên hệ thống của chúng tôi<br>Chúng tôi sẽ sớm liên
-                hệ với bạn để chốt đơn hàng!
-            </h4>
+
+    require_once('components/header.php');
+    ?>
 
 
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4 style="text-align: center;">Cảm ơn bạn đã đặt hàng trên hệ thống của chúng tôi<br>Chúng tôi sẽ sớm liên
+                    hệ với bạn để chốt đơn hàng!
+                </h4>
+
+
+            </div>
         </div>
-    </div>
-</section>
-<!-- Checkout Section End -->
+    </section>
+    <!-- Checkout Section End -->
 
-<?php
+    <?php
 
-require_once('components/footer.php');
-?>
+    require_once('components/footer.php');
+    ?>
 
-<script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

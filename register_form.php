@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
- 
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-   
-    <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
+
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-   <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
 
@@ -32,7 +32,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
     <style>
         .bg-gradient-primary {
             position: relative;
@@ -40,35 +40,41 @@
             background-size: cover;
         }
 
-/* Tạo lớp phủ */
-       .bg-gradient-primary::before {
+        /* Tạo lớp phủ */
+        .bg-gradient-primary::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(116, 114, 114, 0.3); /* Màu đỏ nhạt (pha lên trên) */
-            backdrop-filter: blur(5px); /* Làm mờ hình nền */
-            z-index: -1; 
-             }
+            background: rgba(116, 114, 114, 0.3);
+            /* Màu đỏ nhạt (pha lên trên) */
+            backdrop-filter: blur(5px);
+            /* Làm mờ hình nền */
+            z-index: -1;
+        }
 
-             .container {
-                max-width: 800px; /* Điều chỉnh chiều rộng theo ý muốn */
-                width: 100%; /* Để giữ form linh hoạt */
-                margin: auto; /* Căn giữa form */
-            }
-       
-            header{
-                justify-content: center;
-                display: flex;
-                margin-bottom: 20px;
-            }
-            .header-img{
-                max-width: 100%; /* Giúp ảnh không bị vỡ */
-                height: auto;
-            }
-             
+        .container {
+            max-width: 800px;
+            /* Điều chỉnh chiều rộng theo ý muốn */
+            width: 100%;
+            /* Để giữ form linh hoạt */
+            margin: auto;
+            /* Căn giữa form */
+        }
+
+        header {
+            justify-content: center;
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .header-img {
+            max-width: 100%;
+            /* Giúp ảnh không bị vỡ */
+            height: auto;
+        }
     </style>
 
 </head>
@@ -92,14 +98,14 @@
                                     <div class="header">
                                         <img src="img/logo2.jpg" alt="PTIT Fashion" class="header-img">
                                     </div>
-                                    
+
                                     <div class="text-center">
-                                           
-                                            <?php 
-                                                if (!empty($errorMsg)) { // Kiểm tra nếu $errorMsg không rỗng thì mới hiển thị
-                                                    echo "<h4 class='alert alert-danger'>$errorMsg</h4>"; 
-                                                }
-                                            ?>
+
+                                        <?php
+                                        if (!empty($errorMsg)) { // Kiểm tra nếu $errorMsg không rỗng thì mới hiển thị
+                                            echo "<h4 class='alert alert-danger'>$errorMsg</h4>";
+                                        }
+                                        ?>
                                     </div>
 
                                     <form class="user" method="post">
@@ -129,8 +135,8 @@
                                                 placeholder="Password">
                                         </div>
                                         <div class="form-group">
-                                        <input type="password" name="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            <input type="password" name="password" class="form-control form-control-user"
+                                                id="exampleRepeatPassword" placeholder="Repeat Password">
                                         </div>
                                         <button name="btSubmit" class="btn btn-primary btn-user btn-block">
                                             Register

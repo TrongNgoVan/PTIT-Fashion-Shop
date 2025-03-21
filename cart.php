@@ -144,7 +144,7 @@
                                     </button>
 
 
-                                  
+
                                     <button type="submit"
                                         name="thanhtoan"
                                         class="btn btn-success"
@@ -232,6 +232,7 @@
                     $('#deleteSelected').hide();
                 }
             }
+
             function toggleThanhtoanButton() {
                 let anyChecked = $('.checkItem:checked').length > 0;
                 if (anyChecked) {
@@ -278,6 +279,7 @@
                         let res = JSON.parse(response);
                         if (res.status === 'success') {
                             console.log('Cập nhật thành công');
+
                         } else {
                             console.log('Lỗi:', res.message);
                         }
@@ -287,6 +289,7 @@
                     }
                 });
                 console.log('updateCartAjax() được gọi với:', productId, newQty);
+
             }
             $(document).ready(function() {
                 // Khi bấm nút “Xóa mục đã chọn”
@@ -318,6 +321,7 @@
                                 updateTotal();
                                 // Ẩn nút nếu không còn item check
                                 toggleDeleteButton();
+                                toggleThanhtoanButton();
                             } else {
                                 console.log('Lỗi xóa:', res.message);
                             }
@@ -328,7 +332,7 @@
                     });
                 });
 
-   
+
 
             });
 
@@ -336,6 +340,7 @@
 
             // Khởi tạo
             toggleDeleteButton(); // Ẩn nút Xóa nếu chưa tích
+            toggleThanhtoanButton();
             updateTotal(); // Cập nhật tổng tiền (nếu có sẵn checkbox check)
         });
     </script>

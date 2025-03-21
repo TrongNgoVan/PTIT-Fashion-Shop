@@ -17,10 +17,9 @@ if (isset($_POST['id']) && isset($_POST['qty'])) {
         }
     }
 
-    echo json_encode(['status'=>'success']);
+    echo json_encode(['status' => 'success']);
     exit;
 }
 
-echo json_encode(['status'=>'error','message'=>'Missing id or qty']);
+echo json_encode(['status' => 'error', 'message' => 'Missing id or qty']);
 exit;
-

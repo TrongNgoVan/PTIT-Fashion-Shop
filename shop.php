@@ -21,16 +21,17 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
-<body>
-<?php
-session_start();
-$is_homepage = false;
-require_once('components/header.php');
-?>
 
-  
+<body>
+    <?php
+    session_start();
+    $is_homepage = false;
+    require_once('components/header.php');
+    ?>
+
+
 
     <!-- Product Section Begin -->
     <section class="product spad">
@@ -41,15 +42,15 @@ require_once('components/header.php');
                         <div class="sidebar__item">
                             <h4>Danh mục sản phẩm</h4>
                             <ul>
-                <?php
-                require('./db/conn.php');
-                 $sql_str = "select * from categories order by name";
-                 $result = mysqli_query($conn, $sql_str);
-                    while ($row = mysqli_fetch_assoc($result)){
-                ?>
-                    <li><a href="#"><?=$row['name']?></a></li>
-                <?php } ?>
-                                
+                                <?php
+                                require('./db/conn.php');
+                                $sql_str = "select * from categories order by name";
+                                $result = mysqli_query($conn, $sql_str);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <li><a href="#"><?= $row['name'] ?></a></li>
+                                <?php } ?>
+
                             </ul>
                         </div>
                         <div class="sidebar__item">
@@ -140,51 +141,51 @@ require_once('components/header.php');
                                 <h4>Sản phẩm mới nhất</h4>
                                 <div class="latest-product__slider owl-carousel">
                                     <div class="latest-prdouct__slider__item">
-<?php
-$sql_str = "SELECT * FROM `products` order by created_at desc limit 0, 3";
-$result = mysqli_query($conn, $sql_str);
-while ($row = mysqli_fetch_assoc($result)){
-    $anh_arr = explode(';', $row['images']);
-?>
-                                        <a href="sanpham.php?id=<?=$row['id']?>" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="<?="quantri/".$anh_arr[0]?>" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6><?=$row['name']?></h6>
-                                                <!-- <span><?=$row['price']?></span> -->
-                                                <div class="prices">
-                                                    <span class="old"><?=$row['price']?></span>
-                                                    <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                                        <?php
+                                        $sql_str = "SELECT * FROM `products` order by created_at desc limit 0, 3";
+                                        $result = mysqli_query($conn, $sql_str);
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $anh_arr = explode(';', $row['images']);
+                                        ?>
+                                            <a href="sanpham.php?id=<?= $row['id'] ?>" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="<?= "quantri/" . $anh_arr[0] ?>" alt="">
                                                 </div>
-                                            </div>
-                                        </a>
-<?php
-}
-?>
-                                        
+                                                <div class="latest-product__item__text">
+                                                    <h6><?= $row['name'] ?></h6>
+                                                    <!-- <span><?= $row['price'] ?></span> -->
+                                                    <div class="prices">
+                                                        <span class="old"><?= $row['price'] ?></span>
+                                                        <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        <?php
+                                        }
+                                        ?>
+
                                     </div>
                                     <div class="latest-prdouct__slider__item">
-<?php
-$sql_str = "SELECT * FROM `products` order by created_at desc limit 3, 3";
-$result = mysqli_query($conn, $sql_str);
-while ($row = mysqli_fetch_assoc($result)){
-    $anh_arr = explode(';', $row['images']);
-?>
-                                        <a href="sanpham.php?id=<?=$row['id']?>" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="<?="quantri/".$anh_arr[0]?>" alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6><?=$row['name']?></h6>
-                                                <div class="prices">
-                                                    <span class="old"><?=$row['price']?></span>
-                                                    <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                                        <?php
+                                        $sql_str = "SELECT * FROM `products` order by created_at desc limit 3, 3";
+                                        $result = mysqli_query($conn, $sql_str);
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $anh_arr = explode(';', $row['images']);
+                                        ?>
+                                            <a href="sanpham.php?id=<?= $row['id'] ?>" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="<?= "quantri/" . $anh_arr[0] ?>" alt="">
                                                 </div>
-                                            </div>
-                                        </a>
-                                    <?php } ?>
-                                       
+                                                <div class="latest-product__item__text">
+                                                    <h6><?= $row['name'] ?></h6>
+                                                    <div class="prices">
+                                                        <span class="old"><?= $row['price'] ?></span>
+                                                        <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        <?php } ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -198,36 +199,36 @@ while ($row = mysqli_fetch_assoc($result)){
                         </div>
                         <div class="row">
                             <div class="product__discount__slider owl-carousel">
-                            <?php
-$sql_str = "SELECT products.id as pid, products.name as pname, categories.name as cname, round((price - disscounted_price)/price*100) as discount, images, price, disscounted_price  FROM `products`, `categories` where products.category_id=categories.id order by discount desc limit 0, 6 ";
-$result = mysqli_query($conn, $sql_str);
-while ($row = mysqli_fetch_assoc($result)){
-    $anh_arr = explode(';', $row['images']);
-?>                                
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                            data-setbg="<?="quantri/".$anh_arr[0]?>">
-                                            <div class="product__discount__percent">-<?=$row['discount']?>%</div>
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span><?=$row['cname']?></span>
-                                            <h5><a href="sanpham.php?id=<?=$row['pid']?>"><?=$row['pname']?></a></h5>
-                                            <!-- <div class="product__item__price"><?=$row['disscounted_price']?> <span><?=$row['price']?></span></div> -->
-                                            <div class="prices">
-                                                    <span class="old"><?=$row['price']?></span>
+                                <?php
+                                $sql_str = "SELECT products.id as pid, products.name as pname, categories.name as cname, round((price - disscounted_price)/price*100) as discount, images, price, disscounted_price  FROM `products`, `categories` where products.category_id=categories.id order by discount desc limit 0, 6 ";
+                                $result = mysqli_query($conn, $sql_str);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $anh_arr = explode(';', $row['images']);
+                                ?>
+                                    <div class="col-lg-4">
+                                        <div class="product__discount__item">
+                                            <div class="product__discount__item__pic set-bg"
+                                                data-setbg="<?= "quantri/" . $anh_arr[0] ?>">
+                                                <div class="product__discount__percent">-<?= $row['discount'] ?>%</div>
+                                                <ul class="product__item__pic__hover">
+                                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__discount__item__text">
+                                                <span><?= $row['cname'] ?></span>
+                                                <h5><a href="sanpham.php?id=<?= $row['pid'] ?>"><?= $row['pname'] ?></a></h5>
+                                                <!-- <div class="product__item__price"><?= $row['disscounted_price'] ?> <span><?= $row['price'] ?></span></div> -->
+                                                <div class="prices">
+                                                    <span class="old"><?= $row['price'] ?></span>
                                                     <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
                                                 </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-<?php } ?>
-                               
+                                <?php } ?>
+
                             </div>
                         </div>
                     </div>
@@ -242,14 +243,14 @@ while ($row = mysqli_fetch_assoc($result)){
                                     </select>
                                 </div>
                             </div>
- <?php
-    $sql_str = "select * from products order by name";
-    $result = mysqli_query($conn, $sql_str);
-    
-?>
+                            <?php
+                            $sql_str = "select * from products order by name";
+                            $result = mysqli_query($conn, $sql_str);
+
+                            ?>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6>Có <span><?=mysqli_num_rows($result)?></span> sản phẩm</h6>
+                                    <h6>Có <span><?= mysqli_num_rows($result) ?></span> sản phẩm</h6>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-3">
@@ -261,30 +262,30 @@ while ($row = mysqli_fetch_assoc($result)){
                         </div>
                     </div>
                     <div class="row">
-<?php
-while ($row = mysqli_fetch_assoc($result)){
-    $anh_arr = explode(';', $row['images']);
-?>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?="quantri/".$anh_arr[0]?>">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="sanpham.php?id=<?=$row['id']?>"><?=$row['name']?></a></h6>
-                                    <!-- <h5><?=$row['price']?></h5> -->
-                                    <div class="prices">
-                                        <span class="old"><?=$row['price']?></span>
-                                        <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                        <?php
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $anh_arr = explode(';', $row['images']);
+                        ?>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="<?= "quantri/" . $anh_arr[0] ?>">
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="sanpham.php?id=<?= $row['id'] ?>"><?= $row['name'] ?></a></h6>
+                                        <!-- <h5><?= $row['price'] ?></h5> -->
+                                        <div class="prices">
+                                            <span class="old"><?= $row['price'] ?></span>
+                                            <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-<?php } ?>
+                        <?php } ?>
 
                     </div>
                     <div class="product__pagination">
@@ -301,10 +302,10 @@ while ($row = mysqli_fetch_assoc($result)){
 
     <?php
 
-require_once('components/footer.php');
-?>
+    require_once('components/footer.php');
+    ?>
 
-<script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

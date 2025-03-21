@@ -19,5 +19,5 @@ if (!empty($_POST['ids']) && isset($_SESSION['cart'])) {
 }
 
 // Nếu không có 'ids' hoặc giỏ rỗng => báo lỗi
-echo json_encode(['status'=>'error','message'=>'No ids or no cart']);
+echo json_encode(['status' => 'error', 'message' => 'No ids or no cart']);
 exit;

@@ -21,181 +21,181 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
+
 <body>
 
-<?php
-session_start();
-$is_homepage = false;
-$name = $phone = $email = $address = "";
-$uid = 0;
-$thanhtoan = [];
-if (isset($_SESSION['thanhtoan'])) {
-    $thanhtoan = $_SESSION['thanhtoan'];
-}
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-    $uid = $user['id'];
-    $name = $user['name'];
-    $phone = $user['phone'];
-    $email = $user['email'];
-    $address = $user['address'];
-}
-require_once('./db/conn.php');
-
-if (isset($_POST['btDathang'])) {
-    //lay thong tin khach hang tu form
-    
-
-    $name = $_POST['name'];
-    $phone = $_POST['phone'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    
-    //tao du lieu cho order
-    
-    $total_end = 0.0;
-    foreach ($thanhtoan as $item) {
-       
-        $total_end +=  $item['qty'] * $item['disscounted_price'];
+    <?php
+    session_start();
+    $is_homepage = false;
+    $name = $phone = $email = $address = "";
+    $uid = 0;
+    $thanhtoan = [];
+    if (isset($_SESSION['thanhtoan'])) {
+        $thanhtoan = $_SESSION['thanhtoan'];
     }
-    $sqli = "insert into orders values (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', now(), now(),$total_end, 'Vận Chuyển Thường' , 'Thanh toán khi nhận hàng', 'Chưa thanh toán')";
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        $uid = $user['id'];
+        $name = $user['name'];
+        $phone = $user['phone'];
+        $email = $user['email'];
+        $address = $user['address'];
+    }
+    require_once('./db/conn.php');
 
-    // echo $sqli;
-    //exit; // mysqli_query($conn, $sqli);
-    //lay id vua duoc them vao 
-    if (mysqli_query($conn, $sqli)) {
-        $last_order_id = mysqli_insert_id($conn);
-        //sau do them vao orer detail
+    if (isset($_POST['btDathang'])) {
+        //lay thong tin khach hang tu form
+
+
+        $name = $_POST['name'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $address = $_POST['address'];
+
+        //tao du lieu cho order
+
+        $total_end = 0.0;
         foreach ($thanhtoan as $item) {
-            $masp = $item['id'];
-            $disscounted_price = $item['disscounted_price'];
-            $qty = $item['qty'];
-            $total = $item['qty'] * $item['disscounted_price'];
-            $sqli2 = "insert into order_details values 
-            (0, $last_order_id, $masp,  $disscounted_price, $qty, $total, now(), now())";
-            // echo $sqli2, exit;
-            mysqli_query($conn, $sqli2);
+
+            $total_end +=  $item['qty'] * $item['disscounted_price'];
         }
+        $sqli = "insert into orders values (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', now(), now(),$total_end, 'Vận Chuyển Thường' , 'Thanh toán khi nhận hàng', 'Chưa thanh toán')";
+
+        // echo $sqli;
+        //exit; // mysqli_query($conn, $sqli);
+        //lay id vua duoc them vao 
+        if (mysqli_query($conn, $sqli)) {
+            $last_order_id = mysqli_insert_id($conn);
+            //sau do them vao orer detail
+            foreach ($thanhtoan as $item) {
+                $masp = $item['id'];
+                $disscounted_price = $item['disscounted_price'];
+                $qty = $item['qty'];
+                $total = $item['qty'] * $item['disscounted_price'];
+                $sqli2 = "insert into order_details values 
+            (0, $last_order_id, $masp,  $disscounted_price, $qty, $total, now(), now())";
+                // echo $sqli2, exit;
+                mysqli_query($conn, $sqli2);
+            }
+        }
+
+        //xoa thanhtoan
+        unset($_SESSION["thanhtoan"]);
+        header("Location: thankyou.php");
     }
 
-    //xoa thanhtoan
-    unset($_SESSION["thanhtoan"]);
-    header("Location: thankyou.php");
 
-}
+    require_once('components/header.php');
+    ?>
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+
+            <div class="checkout__form">
+                <h4>Thông tin Khách hàng</h4>
+                <form action="#" method="post">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
 
 
-require_once('components/header.php');
-?>
+                            <div class="checkout__input">
+                                <p>Họ & tên <span>*</span></p>
+                                <input type="text" name="name" value="<?php echo $name; ?>">
+                            </div>
 
-<!-- Checkout Section Begin -->
-<section class="checkout spad">
-    <div class="container">
 
-        <div class="checkout__form">
-            <h4>Thông tin Khách hàng</h4>
-            <form action="#" method="post">
-                <div class="row">
-                    <div class="col-lg-8 col-md-6">
-                       
-                            
-                        <div class="checkout__input">
-                                    <p>Họ & tên <span>*</span></p>
-                                    <input type="text" name="name" value="<?php echo $name; ?>">
-                        </div>
-                            
+                            <div class="checkout__input">
+                                <p>Địa chỉ nhận hàng:<span>*</span></p>
+                                <input type="text" placeholder="Địa chỉ" class="checkout__input__add" name="address" value="<?php echo $address; ?>">
+                            </div>
 
-                        <div class="checkout__input">
-                            <p>Địa chỉ nhận hàng:<span>*</span></p>
-                            <input type="text" placeholder="Địa chỉ" class="checkout__input__add" name="address" value="<?php echo $address; ?>">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Số điện thoại:<span>*</span></p>
-                                    <input type="text" name="phone" value="<?php echo $phone; ?>">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Số điện thoại:<span>*</span></p>
+                                        <input type="text" name="phone" value="<?php echo $phone; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email:<span>*</span></p>
+                                        <input type="text" name="email" value="<?php echo $email; ?>">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Email:<span>*</span></p>
-                                    <input type="text" name="email" value="<?php echo $email; ?>">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phương thức vận chuyển:<span>*</span></p>
+                                        <select name="shipping_method">
+                                            <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
+                                            <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
+                                            <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Phương thức vận chuyển:<span>*</span></p>
-                                    <select name="shipping_method">
-                                        <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
-                                        <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
-                                        <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Phương thức thanh toán:<span>*</span></p>
-                                    <select name="payment_method">
-                                        <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
-                            
-                                        <option value="Thanh toán Online">Thanh toán Online</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phương thức thanh toán:<span>*</span></p>
+                                        <select name="payment_method">
+                                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
 
-            
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="checkout__order">
-                            <h4>Đơn hàng</h4>
-                            <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
-                            <ul>
-                                <?php
-                                $thanhtoan = [];
-                                if (isset($_SESSION['thanhtoan'])) {
-                                    $thanhtoan = $_SESSION['thanhtoan'];
-                                }
-                                // var_dump($thanhtoan);die();
-                                $count = 0; //số thứ tự
-                                $total = 0;
-                                foreach ($thanhtoan as $item) {
-                                    $total += $item['qty'] * $item['disscounted_price'];
+                                            <option value="Thanh toán Online">Thanh toán Online</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4>Đơn hàng</h4>
+                                <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
+                                <ul>
+                                    <?php
+                                    $thanhtoan = [];
+                                    if (isset($_SESSION['thanhtoan'])) {
+                                        $thanhtoan = $_SESSION['thanhtoan'];
+                                    }
+                                    // var_dump($thanhtoan);die();
+                                    $count = 0; //số thứ tự
+                                    $total = 0;
+                                    foreach ($thanhtoan as $item) {
+                                        $total += $item['qty'] * $item['disscounted_price'];
                                     ?>
-                                    <li>
-                                        <?= $item['name'] ?> <span>
-                                            <?= number_format($item['disscounted_price'] * $item['qty'], 0, '', '.') . " VNĐ" ?>
-                                        </span>
-                                    </li>
-                                <?php } ?>
+                                        <li>
+                                            <?= $item['name'] ?> <span>
+                                                <?= number_format($item['disscounted_price'] * $item['qty'], 0, '', '.') . " VNĐ" ?>
+                                            </span>
+                                        </li>
+                                    <?php } ?>
 
-                            </ul>
-                            <div class="checkout__order__total">Tổng tiền: <span>
-                                    <?= number_format($total, 0, '', '.') . " VNĐ" ?>
-                                </span></div>
+                                </ul>
+                                <div class="checkout__order__total">Tổng tiền: <span>
+                                        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
+                                    </span></div>
 
 
-                            <button type="submit" class="site-btn" name="btDathang">Đặt hàng</button>
+                                <button type="submit" class="site-btn" name="btDathang">Đặt hàng</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<?php
+    <?php
 
-require_once('components/footer.php');
-?>
+    require_once('components/footer.php');
+    ?>
 
-<script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

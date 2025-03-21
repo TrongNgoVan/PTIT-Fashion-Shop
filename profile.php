@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-	$update_sql = 'UPDATE users SET name = ?  , email = ?, password = ?  , phone = ? , address = ? ,avatar = ?  WHERE id = ?';
+    $update_sql = 'UPDATE users SET name = ?  , email = ?, password = ?  , phone = ? , address = ? ,avatar = ?  WHERE id = ?';
     $update_stmt = $conn->prepare($update_sql);
-    $update_stmt->bind_param('ssssssi', $name,$email,  $password, $phone , $add, $avatar, $id);
+    $update_stmt->bind_param('ssssssi', $name, $email,  $password, $phone, $add, $avatar, $id);
 
-	
+
     if ($update_stmt->execute()) {
         $_SESSION['user'] = [
             'id' => $id,
@@ -75,15 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel ="icon" href ="img/ptit.png" type="image/x-icon">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
-<body>
-        <?php
-      
-        $is_homepage = false;
-        require('components/header.php');
 
-   
+<body>
+    <?php
+
+    $is_homepage = false;
+    require('components/header.php');
+
+
     ?>
 
 
@@ -125,19 +126,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="avatar">Ảnh đại diện:</label>
                         <input type="file" class="form-control" id="avatar" name="avatar">
                     </div>
-                    <button type="submit" class="btn btn-primary"style="background-color: rgb(175, 0, 0);">Cập nhật</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: rgb(175, 0, 0);">Cập nhật</button>
                 </form>
-			</div>
+            </div>
         </div>
     </div>
 
 
     <?php
 
-require('components/footer.php');
-                                
-?>
-<script src="js/jquery-3.3.1.min.js"></script>
+    require('components/footer.php');
+
+    ?>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
