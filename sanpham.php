@@ -478,9 +478,14 @@
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="<?= "quantri/" . $arrs[0] ?>">
                                 <ul class="product__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li>
+                                        <!-- Thay thẻ <a> để thêm data-id -->
+                                        <a
+                                            class="add-to-cart"
+                                            data-id="<?= $row2['id'] ?>">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
@@ -566,7 +571,64 @@
                     }
                 });
             });
+            $('.add-to-cart').click(function(e) {
+                e.preventDefault(); // Chặn nhảy trang (href="#")
+
+                // Lấy ID sản phẩm từ data-id
+                let pid = $(this).data('id');
+                let qty = 1;
+
+                // Gửi AJAX đến file xử lý, ví dụ add_to_cart.php
+                $.ajax({
+                    url: 'add_to_cart.php',
+                    type: 'POST',
+                    data: {
+                        pid: pid,
+                        qty: qty
+                    },
+                    success: function(response) {
+                        let res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            // Gọi SweetAlert2
+                            Swal.fire({
+                                toast: true,
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Thêm thành công!',
+                                text: 'Sản phẩm đã được thêm vào Giỏ hàng!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                            // Cập nhật số lượng giỏ (nếu có)
+                            // $('#cartCount').text(res.cartCount);
+                        } else {
+                            // Thông báo lỗi
+                            Swal.fire({
+                                toast: true,
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Không thể thêm sản phẩm!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    },
+                    error: function() {
+                        // Thông báo lỗi kết nối
+                        Swal.fire({
+                            toast: true,
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Kết nối thất bại!',
+                            text: 'Vui lòng kiểm tra lại đường truyền mạng.',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                });
+            });
         });
+       
     </script>
 
 
