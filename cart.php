@@ -144,7 +144,7 @@
                                     </button>
 
 
-                                    <!-- name=\"thanhtoan\" => phân biệt trên server -->
+                                  
                                     <button type="submit"
                                         name="thanhtoan"
                                         class="btn btn-success">
@@ -314,11 +314,8 @@
                     });
                 });
 
-                // Nút “Thanh toán” => tùy bạn xử lý (AJAX hoặc chuyển trang):
-                $('#thanhtoanBtn').click(function() {
-                    window.location.href = 'thanhtoan.php';
-                    // hoặc AJAX
-                });
+   
+
             });
 
 

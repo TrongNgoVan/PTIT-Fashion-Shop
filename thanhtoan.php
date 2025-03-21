@@ -30,9 +30,9 @@ session_start();
 $is_homepage = false;
 $name = $phone = $email = $address = "";
 $uid = 0;
-$cart = [];
-if (isset($_SESSION['cart'])) {
-    $cart = $_SESSION['cart'];
+$thanhtoan = [];
+if (isset($_SESSION['thanhtoan'])) {
+    $thanhtoan = $_SESSION['thanhtoan'];
 }
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
@@ -56,7 +56,7 @@ if (isset($_POST['btDathang'])) {
     //tao du lieu cho order
     
     $total_end = 0.0;
-    foreach ($cart as $item) {
+    foreach ($thanhtoan as $item) {
        
         $total_end +=  $item['qty'] * $item['disscounted_price'];
     }
@@ -68,7 +68,7 @@ if (isset($_POST['btDathang'])) {
     if (mysqli_query($conn, $sqli)) {
         $last_order_id = mysqli_insert_id($conn);
         //sau do them vao orer detail
-        foreach ($cart as $item) {
+        foreach ($thanhtoan as $item) {
             $masp = $item['id'];
             $disscounted_price = $item['disscounted_price'];
             $qty = $item['qty'];
@@ -80,8 +80,8 @@ if (isset($_POST['btDathang'])) {
         }
     }
 
-    //xoa cart
-    unset($_SESSION["cart"]);
+    //xoa thanhtoan
+    unset($_SESSION["thanhtoan"]);
     header("Location: thankyou.php");
 
 }
@@ -157,14 +157,14 @@ require_once('components/header.php');
                             <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
                             <ul>
                                 <?php
-                                $cart = [];
-                                if (isset($_SESSION['cart'])) {
-                                    $cart = $_SESSION['cart'];
+                                $thanhtoan = [];
+                                if (isset($_SESSION['thanhtoan'])) {
+                                    $thanhtoan = $_SESSION['thanhtoan'];
                                 }
-                                // var_dump($cart);die();
+                                // var_dump($thanhtoan);die();
                                 $count = 0; //số thứ tự
                                 $total = 0;
-                                foreach ($cart as $item) {
+                                foreach ($thanhtoan as $item) {
                                     $total += $item['qty'] * $item['disscounted_price'];
                                     ?>
                                     <li>
