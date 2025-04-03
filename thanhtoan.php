@@ -45,30 +45,24 @@
     }
     require_once('./db/conn.php');
 
+
     if (isset($_POST['btDathang'])) {
-        //lay thong tin khach hang tu form
-
-
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $address = $_POST['address'];
-
-        //tao du lieu cho order
-
+        // Lấy phương thức vận chuyển và thanh toán từ form
+        $shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
+        $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
+    
+        // Tính tổng tiền đơn hàng
         $total_end = 0.0;
         foreach ($thanhtoan as $item) {
-
             $total_end +=  $item['qty'] * $item['disscounted_price'];
         }
-        $sqli = "insert into orders values (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', now(), now(),$total_end, 'Vận Chuyển Thường' , 'Thanh toán khi nhận hàng', 'Chưa thanh toán')";
-
-        // echo $sqli;
-        //exit; // mysqli_query($conn, $sqli);
-        //lay id vua duoc them vao 
+        $tiendachuyen = 0.0;
+    
+        // Thêm đơn hàng vào cơ sở dữ liệu
+        $sqli = "INSERT INTO orders VALUES (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', NOW(), NOW(), $total_end, $tiendachuyen, '$shipping_method', '$payment_method', 'Chưa thanh toán')";
+    
         if (mysqli_query($conn, $sqli)) {
             $last_order_id = mysqli_insert_id($conn);
-            //sau do them vao orer detail
             foreach ($thanhtoan as $item) {
                 $masp = $item['id'];
                 $disscounted_price = $item['disscounted_price'];
@@ -79,12 +73,37 @@
                 // echo $sqli2, exit;
                 mysqli_query($conn, $sqli2);
             }
+    
+            // Lưu thông tin đơn hàng vào session nếu là Thanh toán Online
+            if ($payment_method == 'Thanh toán Online') {
+                
+                $_SESSION['donhang'] = [
+                    'order_id' => $last_order_id,
+                    'user_id' => $uid,
+                    'name' => $name,
+                    'address' => $address,
+                    'phone' => $phone,
+                    'email' => $email,
+                    'total' => $total_end,
+                    'tiendachuyen' => $tiendachuyen,
+                    'shipping_method' => $shipping_method,
+                    'payment_method' => $payment_method,
+                    'status' => 'Chưa thanh toán'
+                ];
+    
+                // Điều hướng đến trang thanh toán online
+                header("Location: thanhtoanonline.php");
+            } else {
+                // Nếu không phải Thanh toán Online, điều hướng đến trang cảm ơn
+                header("Location: thankyou.php");
+            }
+    
+            // Xóa session thanh toán
+            unset($_SESSION["thanhtoan"]);
+            exit();
         }
-
-        //xoa thanhtoan
-        unset($_SESSION["thanhtoan"]);
-        header("Location: thankyou.php");
     }
+    
 
 
     require_once('components/header.php');
@@ -138,15 +157,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Phương thức thanh toán:<span>*</span></p>
-                                        <select name="payment_method">
-                                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
-
-                                            <option value="Thanh toán Online">Thanh toán Online</option>
-                                        </select>
-                                    </div>
-                                </div>
+                    <div class="checkout__input">
+                        <p>Phương thức thanh toán:<span>*</span></p>
+                        <select name="payment_method" id="payment_method">
+                            
+                            <option value="Thanh toán Online">Thanh toán Online</option>
+                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
+                        </select>
+                    </div>
+                </div>
                             </div>
 
 
@@ -180,7 +199,10 @@
                                     </span></div>
 
 
-                                <button type="submit" class="site-btn" name="btDathang">Đặt hàng</button>
+                                   
+                    <!-- ... Phần đơn hàng giữ nguyên ... -->
+                    <button type="submit" class="site-btn" name="btDathang" id="submitBtn">Đặt hàng</button>
+         
                             </div>
                         </div>
                     </div>
@@ -188,6 +210,17 @@
             </div>
         </div>
     </section>
+    <!-- <script>
+    $(document).ready(function() {
+        $('#payment_method').change(function() {
+            if ($(this).val() === 'Thanh toán Online') {
+                $('#submitBtn').text('Thanh toán ngay!');
+            } else {
+                $('#submitBtn').text('Đặt hàng ngay!');
+            }
+        });
+    });
+</script> -->
 
 
     <?php
@@ -206,3 +239,6 @@
 </body>
 
 </html>
+
+
+
