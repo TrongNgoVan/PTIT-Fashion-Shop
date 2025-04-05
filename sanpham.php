@@ -169,12 +169,14 @@
                                     <input type="hidden" name="pid" value="<?= $idsp ?>">
                                 </div>
                             </div>
-                            <button type="submit" class="primary-btn">Thêm vào giỏ hàng</button>
+                            <button type="submit" class="primary-btn" <?= ($row['stock'] == 0) ? 'disabled' : '' ?>>
+                                Thêm vào giỏ hàng
+                            </button>
                         </form>
 
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
-                            <li><b>Tình trạng:</b> <span><?= $row['status'] ?>_Còn hàng</span></li>
+                            <li><b>Tình trạng:</b> <span><?= ($row['stock'] == 0) ? 'Hết hàng' : 'Còn hàng' ?></span></li>
                             <li><b>Thương hiệu:</b> <span><?= $row['brand_id'] ?></span></li>
                             <li><b>Danh mục:</b> <span><?= $row['category_id'] ?></span></li>
 
