@@ -84,13 +84,31 @@
     $sql_reviews = "SELECT * FROM reviews WHERE product_id = $idsp ORDER BY created_at DESC";
     $result_reviews = mysqli_query($conn, $sql_reviews);
     //  xử lý comment
+    // Tính tổng điểm và số lượng review của sản phẩm
+    // Truy vấn tính điểm review trung bình và tổng số review của sản phẩm
+    $sql_rating = "SELECT AVG(rating) AS avg_rating, COUNT(*) AS total_reviews 
+               FROM reviews 
+               WHERE product_id = $idsp";
+    $result_rating = mysqli_query($conn, $sql_rating);
+    $rating_data = mysqli_fetch_assoc($result_rating);
+    $avg_rating = $rating_data['avg_rating'] ? round($rating_data['avg_rating'], 1) : 0;
+    $total_reviews = $rating_data['total_reviews'] ?: 0;
 
+    $sql_buyers = "SELECT COUNT(*) AS total_purchases 
+               FROM order_details
+               WHERE product_id = $idsp";
+    $result_buyers = mysqli_query($conn, $sql_buyers);
+    $buyers_data = mysqli_fetch_assoc($result_buyers);
+    $total_purchases = $buyers_data['total_purchases'] ?: 0;
 
 
 
 
 
     ?>
+
+
+
 
 
     <!-- Product Details Section Begin -->
@@ -123,12 +141,19 @@
                             <?= $row['name'] ?>
                         </h3>
                         <div class="product__details__rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-o"></i>
-                            <span>(18 reviews)</span>
+                            <?php
+                            // Hiển thị số sao dựa trên điểm trung bình
+                            for ($i = 0; $i < floor($avg_rating); $i++) {
+                                echo '<i class="fa fa-star"></i>';
+                            }
+                            // Nếu có phần thập phân >= 0.5, hiển thị 1 sao bán
+                            if ($avg_rating - floor($avg_rating) >= 0.5) {
+                                echo '<i class="fa fa-star-half-o"></i>';
+                            }
+                            ?>
+
+                            <span class="average-rating"><?= $avg_rating ?> điểm</span>
+                            <span>( <?= $total_purchases ?> lượt mua)</span>
                         </div>
                         <div class="product__details__price">
                             <?= $row['price'] ?>
@@ -140,25 +165,36 @@
                             <div class="product__details__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">
-
                                         <input type="text" value="1" class="qty-text" />
-
                                         <input type="hidden" value="1" name="qty" />
                                     </div>
                                     <!-- Hidden chứa ID sản phẩm -->
                                     <input type="hidden" name="pid" value="<?= $idsp ?>">
                                 </div>
                             </div>
-                            <button type="submit" class="primary-btn">Thêm vào giỏ hàng</button>
+                            <?php if ($row['stock'] > 0) { ?>
+                                <button type="submit" class="primary-btn">Thêm vào giỏ hàng</button>
+                            <?php } else { ?>
+                                <button type="button" class="primary-btn" style="opacity: 0.5; cursor: not-allowed;" disabled>
+                                    Tạm thời hết hàng
+                                </button>
+                            <?php } ?>
                         </form>
 
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
-                            <li><b>Tình trạng:</b> <span><?= $row['status'] ?>_Còn hàng</span></li>
+                            <li>
+                                <b>Tình trạng:</b>
+                                <?php if ($row['stock'] > 0) { ?>
+                                    <span> Còn <?= $row['stock'] ?> sản phẩm</span>
+                                <?php } else { ?>
+                                    <span>Tạm thời hết hàng</span>
+                                <?php } ?>
+                            </li>
                             <li><b>Thương hiệu:</b> <span><?= $row['brand_id'] ?></span></li>
                             <li><b>Danh mục:</b> <span><?= $row['category_id'] ?></span></li>
-
                         </ul>
+
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -171,7 +207,7 @@
 
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">Đánh giá <span>(1)</span></a>
+                                    aria-selected="false">Đánh giá <span>(<?= $total_reviews ?> reviews)</span></a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -193,11 +229,11 @@
                                             <div class="form-row">
                                                 <div class="rating-select">
                                                     <select name="rating">
-                                                        <option value="5">5 <span class="gold-star">★</span></option>
-                                                        <option value="4">4 <span class="gold-star">★</span></option>
-                                                        <option value="3">3 <span class="gold-star">★</span></option>
-                                                        <option value="2">2 <span class="gold-star">★</span></option>
-                                                        <option value="1">1 <span class="gold-star">★</span></option>
+                                                        <option value="5">5 <span class="gold-star">⭐</span></option>
+                                                        <option value="4">4 <span class="gold-star">⭐</span></option>
+                                                        <option value="3">3 <span class="gold-star">⭐</span></option>
+                                                        <option value="2">2 <span class="gold-star">⭐</span></option>
+                                                        <option value="1">1 <span class="gold-star">⭐</span></option>
                                                     </select>
                                                 </div>
                                                 <button type="submit" class="submit-review-btn">Gửi đánh giá</button>
@@ -220,6 +256,7 @@
                             </div>
 
                             <style>
+                                
                                 /* Định dạng chung */
                                 .review-container {
                                     font-family: 'Cairo', sans-serif;
@@ -354,7 +391,7 @@
                                 }
 
                                 .gold-star {
-                                    color: #FFD700;
+                                    color:  #FFD700  ;
                                     text-shadow: 0 0 1px #FFA500;
                                 }
 
@@ -383,6 +420,27 @@
                                     .submit-review-btn {
                                         width: 100%;
                                     }
+                                }
+
+                                .product__details__rating {
+                                    font-size: 18px;
+                                    color: #ffcc00;
+                                    margin-bottom: 10px;
+                                }
+
+                                .product__details__rating i {
+                                    margin-right: 2px;
+                                }
+
+                                .product__details__rating span {
+                                    font-size: 14px;
+                                    color: #555;
+                                    margin-left: 10px;
+                                }
+
+                                .average-rating {
+                                    font-weight: bold;
+                                    margin-left: 10px;
                                 }
                             </style>
 
@@ -463,17 +521,17 @@
                 </div>
             </div>
             <div class="row">
-                <?php 
-                
+                <?php
+
                 // Lấy category_id của sản phẩm hiện tại
-                $dmid = $row['category_id']; 
-            
+                $dmid = $row['category_id'];
+
                 // Truy vấn để lấy tất cả sản phẩm ngoại trừ sản phẩm cùng category_id
                 $sql_all = "SELECT * FROM products WHERE category_id <> $dmid";
                 $result_all = mysqli_query($conn, $sql_all);
 
                 // Lặp qua danh sách sản phẩm và hiển thị
-                while ($row_all = mysqli_fetch_assoc($result_all)) { 
+                while ($row_all = mysqli_fetch_assoc($result_all)) {
                     $arrs = explode(";", $row_all["images"]);
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
