@@ -87,7 +87,7 @@
                                                 </td>
                                                 <td><?= $count ?></td>
                                                 <td>
-                                                    <img src="http://localhost/quantri/<?= $item['images'] ?>" style="max-width: 100px;">
+                                                    <img src="http://localhost/PTIT_SHOP/quantri/<?= $item['images'] ?>" style="max-width: 100px;">
                                                 </td>
                                                 <td><?= $item['name'] ?></td>
                                                 <!-- data-value để JS lấy đơn giá -->

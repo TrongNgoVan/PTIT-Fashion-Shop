@@ -135,7 +135,7 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6 mix <?= $row['cslug'] ?>">
                         <div class="featured__item">
-                            <div class="featured__item__pic set-bg" data-setbg="<?= "http://localhost/quantri/" . $anh_arr[0] ?>">
+                            <div class="featured__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
                                 <ul class="featured__item__pic__hover">
                                     <li>
                                         <!-- Thay thẻ <a> để thêm data-id -->

@@ -101,15 +101,15 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large" src="<?= "quantri/" . $anh_arr[0] ?>"
+                            <img class="product__details__pic__item--large" src="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>"
                                 alt="<?= $row['name'] ?>">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
                             <?php
                             for ($i = 0; $i < count($anh_arr); $i++) {
                             ?>
-                                <img data-imgbigurl="<?= "quantri/" . $anh_arr[$i] ?>"
-                                    src="<?= "quantri/" . $anh_arr[$i] ?>">
+                                <img data-imgbigurl="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[$i] ?>"
+                                    src="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[$i] ?>">
                             <?php
                             }
                             ?>
@@ -431,7 +431,7 @@
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="<?= "quantri/" . $arrs[0] ?>">
+                            <div class="product__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $arrs[0] ?>">
                                 <ul class="product__item__pic__hover">
                                     <li>
                                         <!-- Thay thẻ <a> để thêm data-id -->
@@ -446,6 +446,50 @@
                             <div class="product__item__text">
                                 <h6><a href="sanpham.php?id=<?= $row2['id'] ?>"><?= $row2['name'] ?></a></h6>
                                 <h5><?= $row2['disscounted_price'] ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </section>
+    <section class="all-products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Có thể bạn cũng thích</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <?php 
+                
+                // Lấy category_id của sản phẩm hiện tại
+                $dmid = $row['category_id']; 
+            
+                // Truy vấn để lấy tất cả sản phẩm ngoại trừ sản phẩm cùng category_id
+                $sql_all = "SELECT * FROM products WHERE category_id <> $dmid";
+                $result_all = mysqli_query($conn, $sql_all);
+
+                // Lặp qua danh sách sản phẩm và hiển thị
+                while ($row_all = mysqli_fetch_assoc($result_all)) { 
+                    $arrs = explode(";", $row_all["images"]);
+                ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $arrs[0] ?>">
+                                <ul class="product__item__pic__hover">
+                                    <li>
+                                        <a class="add-to-cart" data-id="<?= $row_all['id'] ?>">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="sanpham.php?id=<?= $row_all['id'] ?>"><?= $row_all['name'] ?></a></h6>
+                                <h5><?= $row_all['disscounted_price'] ?> VND</h5>
                             </div>
                         </div>
                     </div>
