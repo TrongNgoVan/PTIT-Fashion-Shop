@@ -169,12 +169,14 @@
                                     <input type="hidden" name="pid" value="<?= $idsp ?>">
                                 </div>
                             </div>
-                            <button type="submit" class="primary-btn">Thêm vào giỏ hàng</button>
+                            <button type="submit" class="primary-btn" <?= ($row['stock'] == 0) ? 'disabled' : '' ?>>
+                                Thêm vào giỏ hàng
+                            </button>
                         </form>
 
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
-                            <li><b>Tình trạng:</b> <span><?= $row['status'] ?>_Còn hàng</span></li>
+                            <li><b>Tình trạng:</b> <span><?= ($row['stock'] == 0) ? 'Hết hàng' : 'Còn hàng' ?></span></li>
                             <li><b>Thương hiệu:</b> <span><?= $row['brand_id'] ?></span></li>
                             <li><b>Danh mục:</b> <span><?= $row['category_id'] ?></span></li>
 
@@ -428,6 +430,23 @@
                                         width: 100%;
                                     }
                                 }
+                                /* hiển thị sản phẩm */
+                                .product__item {
+                                    border: 2px solid rgb(209, 6, 6);
+                                    transition: all 0.3s ease-in-out;
+                                }
+                                .product__item:hover {
+                                    background-color: rgb(209, 6, 6); 
+                                    transition: 0.3s ease-in-out;
+                                }
+                                .product__item:hover .product__item__text h6 a {
+                                    color: white;
+                                    transition: color 0.3s ease-in-out;
+                                }
+                                .product__item .product__item__text h5 {
+                                    color: orange;
+                                    transition: color 0.3s ease-in-out;
+                                }
                             </style>
 
                             <script>
@@ -489,7 +508,7 @@
                             </div>
                             <div class="product__item__text">
                                 <h6><a href="sanpham.php?id=<?= $row2['id'] ?>"><?= $row2['name'] ?></a></h6>
-                                <h5><?= $row2['disscounted_price'] ?></h5>
+                                <h5><?= $row2['disscounted_price'] ?> VND</h5>
                             </div>
                         </div>
                     </div>
@@ -497,6 +516,52 @@
             </div>
         </div>
     </section>
+
+    <section class="all-products">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Có thể bạn cũng thích</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <?php 
+                
+                // Lấy category_id của sản phẩm hiện tại
+                $dmid = $row['category_id']; 
+            
+                // Truy vấn để lấy tất cả sản phẩm ngoại trừ sản phẩm cùng category_id
+                $sql_all = "SELECT * FROM products WHERE category_id <> $dmid";
+                $result_all = mysqli_query($conn, $sql_all);
+
+                // Lặp qua danh sách sản phẩm và hiển thị
+                while ($row_all = mysqli_fetch_assoc($result_all)) { 
+                    $arrs = explode(";", $row_all["images"]);
+                ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="<?= "quantri/" . $arrs[0] ?>">
+                                <ul class="product__item__pic__hover">
+                                    <li>
+                                        <a class="add-to-cart" data-id="<?= $row_all['id'] ?>">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="sanpham.php?id=<?= $row_all['id'] ?>"><?= $row_all['name'] ?></a></h6>
+                                <h5><?= $row_all['disscounted_price'] ?> VND</h5>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </section>
+
     <!-- Related Product Section End -->
     <?php require_once('components/footer.php'); ?>
     <script src="js/jquery-3.3.1.min.js"></script>

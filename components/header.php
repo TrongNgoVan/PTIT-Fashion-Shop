@@ -310,7 +310,8 @@
                             </ul>
                         </li>
                         <li><a href="./tintuc.php">Tin tức</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="./rankProduct.php">Xếp hạng</a></li>
+                        <!-- <li><a href="#">Liên hệ</a></li> -->
                         <li><a href="./list_order.php">Đơn Hàng của bạn</a></li>
                     </ul>
                 </nav>
