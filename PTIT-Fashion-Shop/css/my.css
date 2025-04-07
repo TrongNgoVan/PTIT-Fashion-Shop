@@ -1,0 +1,336 @@
+/*******************************************
+  RESET VÀ UTILITY (nếu cần)
+********************************************/
+.pull-left {
+    float: left !important;
+}
+.pull-right {
+    float: right !important;
+}
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*******************************************
+  HEADER CHUNG
+********************************************/
+
+.header {
+    background-color: #fff;
+    border-bottom: 2px solid #ddd;
+    position: relative;
+    padding: 10px 0;
+}
+#header {
+    position: relative;
+    padding: 10px 0 20px;  /* Giảm padding dưới để logo không chiếm quá nhiều không gian */
+}
+#header {
+    position: relative;
+    padding: 10px 0 20px;  /* Giảm padding dưới để logo không chiếm quá nhiều không gian */
+}
+
+/* .header__logo {
+    padding: 15px 0;
+  }
+  
+  .header__logo a {
+    display: inline-block;
+  } */
+
+#header .pull-left a img {
+    max-height: 50px; /* Chiều cao tối đa cho logo */
+}
+#header .pull-right {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+/* Ảnh đại diện tài khoản */
+#icon_acount {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+    float: left;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Đăng nhập, đăng ký, đăng xuất, tên user */
+.logIn_signIn_button {
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+}
+.logIn_signIn_button:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+/*******************************************
+  THANH MENU (MÀU ĐỎ)
+********************************************/
+.header__menu {
+    background-color: #b30000; /* Thanh menu màu đỏ */
+    padding: 10px 0;
+    margin-top: 10px; /* Tạo khoảng cách sau header trên */
+}
+.header__menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+.header__menu ul li {
+    margin-right: 30px;
+    position: relative;
+}
+.header__menu ul li:last-child {
+    margin-right: 0;
+}
+.header__menu ul li a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.header__menu ul li a:hover {
+    color: #ffefef;
+}
+.header__menu ul li.active a {
+    color: #ffefef; /* Màu link đang active */
+}
+/* Dropdown */
+.header__menu ul li .header__menu__dropdown {
+    display: none;
+    position: absolute;
+    top: 32px;
+    left: 0;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 99;
+    list-style: none;
+    padding: 5px 0;
+}
+.header__menu ul li:hover .header__menu__dropdown {
+    display: block;
+}
+.header__menu .header__menu__dropdown li {
+    margin: 0;
+}
+.header__menu .header__menu__dropdown li a {
+    color: #333;
+    padding: 8px 15px;
+    display: block;
+    text-transform: none;
+}
+.header__menu .header__menu__dropdown li a:hover {
+    background-color: #eee;
+}
+
+/*******************************************
+  KHUNG TÌM KIẾM Ở GIỮA
+********************************************/
+.hero__search__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 2px solid #b30000;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px; /* Khoảng cách nhỏ phía trên */
+}
+.hero__search__form select {
+    border: none;
+    padding: 8px 10px;
+    outline: none;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+}
+.hero__search__form input[type="text"] {
+    flex: 1;
+    border: none;
+    padding: 8px 10px;
+    font-size: 14px;
+    outline: none;
+}
+.hero__search__form .site-btn {
+    background-color: #b30000;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.hero__search__form .site-btn:hover {
+    background-color: #990000;
+}
+
+/*******************************************
+  GIỎ HÀNG (PHÍA PHẢI)
+********************************************/
+.header__cart {
+    text-align: right;
+    margin-top: 10px;
+}
+.header__cart ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.header__cart ul li {
+    display: inline-block;
+    margin-right: 15px;
+    font-weight: 600;
+    color: #333;
+}
+.header__cart ul li:last-child {
+    margin-right: 0;
+}
+.header__cart ul li a {
+    color: #333;
+    text-decoration: none;
+    position: relative;
+}
+.header__cart ul li a i {
+    font-size: 18px;
+    margin-right: 5px;
+}
+.header__cart ul li a span {
+    background: #b30000;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 2px 6px;
+    position: absolute;
+    top: -8px;
+    right: -14px;
+}
+
+/*******************************************
+  DANH MỤC BÊN TRÁI (hero__categories)
+********************************************/
+.hero__categories {
+    margin-top: 10px;
+}
+.hero__categories__all {
+    background-color: #b30000;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px;
+    cursor: pointer;
+}
+.hero__categories ul {
+    display: none;
+    background-color: #fff;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #eee;
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+}
+.hero__categories:hover ul {
+    display: block;
+}
+.hero__categories ul li {
+    padding: 8px 15px;
+}
+.hero__categories ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+.hero__categories ul li a:hover {
+    background-color: #f2f2f2;
+}
+
+/*******************************************
+  BANNER (NẾU CẦN)
+********************************************/
+.hero__item {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    text-align: left;
+    padding: 100px 50px;
+    margin-top: 20px;
+}
+.hero__text {
+    color: white;
+    max-width: 500px;
+    animation: fadeInUp 3s ease-in-out;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.hero__text span {
+    color: #ffc107;
+    font-size: 18px;
+    font-weight: bold;
+}
+.hero__text h2 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #111;
+}
+.primary-btn {
+    background-color: #b30000;
+    color: #fff;
+    padding: 12px 25px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.primary-btn:hover {
+    background-color: rgb(226, 7, 18);
+    color: #000;
+}
+/*******************************************
+  HIỆU ỨNG CHẠY CHỮ (marquee)
+********************************************/
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.marquee p {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marqueeScroll 6s linear infinite;
+    margin: 0;
+    color: #f7f7f5 !important;
+    font-size: 25px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+@keyframes marqueeScroll {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}

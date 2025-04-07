@@ -10,16 +10,8 @@
     <title>Độc lạ Thời Trang | Nơi quy tụ các thiết kế thời trang hàng đầu VN</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="img/ptit.png" type="image/x-icon">
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="../css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="../css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="../css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+
 </head>
 <style>
     #header {
@@ -196,11 +188,11 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <!-- <div class="col-lg-3">
                     <div class="header__logo">
                         <a href="./index.php"><img src="img/logo.png" alt=""></a>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-lg-6">
                     <!-- <div class="hero__search"> -->
                     <div class="hero__search__form">
@@ -257,9 +249,7 @@
                     </div>
                 </div>
             </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
+
         </div>
     </header>
     <!-- Header Section End -->

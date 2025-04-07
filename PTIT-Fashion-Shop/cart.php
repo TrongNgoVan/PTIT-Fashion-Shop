@@ -20,7 +20,8 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/cart.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 <style>
@@ -86,7 +87,7 @@
                                                 </td>
                                                 <td><?= $count ?></td>
                                                 <td>
-                                                    <img src="quantri/<?= $item['images'] ?>" style="max-width: 100px;">
+                                                    <img src="http://localhost/quantri/<?= $item['images'] ?>" style="max-width: 100px;">
                                                 </td>
                                                 <td><?= $item['name'] ?></td>
                                                 <!-- data-value để JS lấy đơn giá -->
@@ -150,7 +151,7 @@
                                         class="btn btn-success"
                                         id="thanhtoanSelected"
                                         style="display: none;">
-                                        Thanh toán
+                                        Đặt hàng
                                     </button>
                                 </div>
                             </form>

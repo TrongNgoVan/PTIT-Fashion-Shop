@@ -1,0 +1,156 @@
+/************************************************************
+  TỔNG QUAN
+*************************************************************/
+.checkout__form {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.checkout__form h4 {
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+/************************************************************
+  TIÊU ĐỀ "YOUR ORDER" VÀ KHUNG CHỨA
+*************************************************************/
+.checkout__order {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+.checkout__order h4 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.checkout__order__products {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/************************************************************
+  BẢNG SẢN PHẨM
+*************************************************************/
+.table {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 0; /* Để không bị hở với .checkout__order__total */
+}
+
+.table thead tr {
+    background-color: #b30000; /* Màu nền tiêu đề bảng */
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.table thead th {
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    text-align: center;
+    border-color: #eee;
+}
+
+.table tbody td img {
+    max-width: 80px;
+    border-radius: 4px;
+}
+
+/* STT, Tên sản phẩm, Đơn giá, Số lượng, Thành tiền */
+.table tbody td:nth-child(2) { /* Cột STT */
+    font-weight: 600;
+}
+
+/************************************************************
+  Ô CHECKBOX
+*************************************************************/
+#checkAll, .checkItem {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/************************************************************
+  CỘT SỐ LƯỢNG (THIẾT KẾ NÚT + -)
+*************************************************************/
+.quantity-controls {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minus-btn, .plus-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 0;
+}
+
+.quantity-label {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+/************************************************************
+  TỔNG TIỀN
+*************************************************************/
+.checkout__order__total {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: right;
+}
+
+.checkout__order__total span {
+    color: #b30000;
+    margin-left: 10px;
+}
+
+/************************************************************
+  NÚT XÓA & ĐẶT HÀNG
+*************************************************************/
+#deleteSelected, #thanhtoanSelected {
+    min-width: 120px;
+    font-weight: 600;
+}
+
+#deleteSelected {
+    background-color: #a50c07; /* đỏ */
+    color: #fff;
+    border: none;
+}
+
+#deleteSelected:hover {
+    background-color: #c60f09;
+}
+
+#thanhtoanSelected {
+    background-color: #035aab; /* xanh lá */
+    color: #fff;
+    border: none;
+}
+
+#thanhtoanSelected:hover {
+    background-color: #1e64d3;
+}

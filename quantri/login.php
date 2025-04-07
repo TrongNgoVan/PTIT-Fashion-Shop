@@ -26,7 +26,7 @@ if(isset($_POST['btSubmit']))
         $response_data = json_decode($verify_response);
         if($response_data->success)
         {
-            require_once("../db/conn.php");
+            require_once("conn.php");
             //cau lenh truy van
             $sql = "select * from admins where email='$email' and password='$password'";
             //thuc thi cau lenh

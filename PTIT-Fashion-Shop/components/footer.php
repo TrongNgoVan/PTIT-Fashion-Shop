@@ -6,7 +6,7 @@
                 <div class="footer__about">
                     <h6 style="font-weight: bold; font-size: 24px;">Liên hệ</h6>
 
-                    <ul style="list-style: none; padding-left: 0; font-size: 22px; line-height: 1.8;">
+                    <ul style="list-style: none; padding-left: 0; font-size: 18px; line-height: 1.8;">
                         <li>📍 <strong>Địa chỉ:</strong> Tầng 2, nhà A1, KM10 Đường Nguyễn Trãi, Quận Hà Đông, Hà Nội</li>
                         <li>📞 <strong>Số điện thoại:</strong> (024) 38.544.451 </li>
                         <li>📧 <strong>Email:</strong> <a href="mailto:PTITFashion@ptit.edu.vn" style="color: #FFD700; text-decoration: none;">PTITFashion@ptit.edu.vn</a></li>
@@ -20,7 +20,7 @@
             <div class="col-lg-4 col-md-4">
                 <div class="footer__widget">
                     <h6 style="font-weight: bold; font-size: 24px;">Hỗ trợ khách hàng</h6>
-                    <ul style="list-style: none; padding-left: 0; font-size: 22px; line-height: 1.8;">
+                    <ul style="list-style: none; padding-left: 0; font-size: 18px; line-height: 1.8;">
                         <li><a href="#" style="color: white; text-decoration: none;">📌 Hướng dẫn đặt hàng</a></li>
                         <li><a href="#" style="color: white; text-decoration: none;">💳 Hướng dẫn thanh toán</a></li>
                         <li><a href="#" style="color: white; text-decoration: none;">🛠 Chính sách bảo hành</a></li>

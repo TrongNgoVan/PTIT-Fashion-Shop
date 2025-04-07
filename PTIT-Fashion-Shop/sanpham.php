@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 <style>
@@ -85,27 +85,7 @@
     $result_reviews = mysqli_query($conn, $sql_reviews);
     //  xử lý comment
 
-    if (isset($_POST['rating']) && isset($_POST['comment'])) {
-        if (isset($_SESSION['user'])) { // Kiểm tra xem user đã đăng nhập chưa
-            $user_id = $_SESSION['user']['id'];
-            $rating = $_POST['rating'];
-            $comment = mysqli_real_escape_string($conn, $_POST['comment']);
 
-            $sql_insert = "INSERT INTO reviews (user_id, product_id, rating, comment, created_at) 
-                           VALUES ('$user_id', '$idsp', '$rating', '$comment', NOW())";
-
-            if (mysqli_query($conn, $sql_insert)) {
-
-
-                header("Location: sanpham.php?id=" . $idsp);
-                exit();
-            } else {
-                echo "Lỗi: " . mysqli_error($conn);
-            }
-        } else {
-            echo "<script>alert('Bạn cần đăng nhập để đánh giá!');</script>";
-        }
-    }
 
 
 
@@ -160,9 +140,9 @@
                             <div class="product__details__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        
+
                                         <input type="text" value="1" class="qty-text" />
-                                        
+
                                         <input type="hidden" value="1" name="qty" />
                                     </div>
                                     <!-- Hidden chứa ID sản phẩm -->
@@ -208,10 +188,11 @@
                                     <!-- Phần form viết đánh giá -->
                                     <div class="write-review-section">
 
-                                        <form id="reviewForm" action="" method="POST">
+                                        <form id="commentForm">
+
                                             <div class="form-row">
                                                 <div class="rating-select">
-                                                    <select name="rating" id="rating" required>
+                                                    <select name="rating">
                                                         <option value="5">5 <span class="gold-star">★</span></option>
                                                         <option value="4">4 <span class="gold-star">★</span></option>
                                                         <option value="3">3 <span class="gold-star">★</span></option>
@@ -219,10 +200,8 @@
                                                         <option value="1">1 <span class="gold-star">★</span></option>
                                                     </select>
                                                 </div>
-
                                                 <button type="submit" class="submit-review-btn">Gửi đánh giá</button>
                                             </div>
-
                                             <div class="form-group">
                                                 <textarea name="comment" id="comment" rows="3" placeholder="Chia sẻ cảm nhận của bạn về sản phẩm..." required></textarea>
                                             </div>
@@ -230,36 +209,13 @@
                                     </div>
 
                                     <div class="reviews-divider"></div>
+                                    <!-- Khu vực hiển thị comment -->
+                                    <div id="comments_section">
+
+                                    </div>
 
                                     <!-- Phần danh sách đánh giá -->
-                                    <div class="reviews-list">
 
-
-                                        <?php while ($review = mysqli_fetch_assoc($result_reviews)) {
-                                            $sql_users = "SELECT * FROM users WHERE id = $review[user_id]";
-                                            $result_user = mysqli_query($conn, $sql_users);
-                                            $user = mysqli_fetch_assoc($result_user);
-                                        ?>
-                                            <div class="review-item">
-                                                <div class="review-header">
-                                                    <div class="user-info">
-                                                        <td>
-
-                                                            <img src="<?= $user['avatar'] ?>" style="border-radius: 50%; width: 55px; height: 55px; object-fit: cover;">
-
-                                                        </td>
-
-                                                        <strong class="user-name"><?= $user['name'] ?></strong>
-                                                        <span class="rating-stars"><?= $review['rating'] ?>/5 <span class="gold-star">★</span></span>
-                                                    </div>
-                                                    <small class="review-date"><?= $review['created_at'] ?></small>
-                                                </div>
-                                                <div class="review-content">
-                                                    <p><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
                                 </div>
                             </div>
 
@@ -516,7 +472,10 @@
 
     <script>
         $(document).ready(function() {
-            
+
+
+            loadComments();
+
 
             $('#addCartForm').submit(function(e) {
                 e.preventDefault(); // Ngăn form submit reload trang
@@ -629,7 +588,34 @@
                 });
             });
         });
-       
+
+
+
+        $('#commentForm').on('submit', function(e) {
+            e.preventDefault(); // Ngăn không cho form gửi theo cách truyền thống
+
+            $.ajax({
+                type: 'POST',
+                url: 'comment.php',
+                data: $(this).serialize() + '&product_id=<?= $idsp ?>',
+                success: function(response) {
+                    const res = JSON.parse(response);
+                    if (res.success) {
+                        // Làm mới phần bình luận
+                        loadComments();
+                        $('#commentForm')[0].reset(); // Xóa form sau khi gửi
+                    } else {
+                        alert(res.message);
+                    }
+                }
+            });
+        });
+
+        function loadComments() {
+            $.get('load_comments.php?id=<?= $idsp ?>', function(data) {
+                $('#comments_section').html(data);
+            });
+        }
     </script>
 
 

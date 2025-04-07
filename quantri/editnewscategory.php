@@ -5,7 +5,7 @@
 $id = $_GET['id'];
 
 //ket noi csdl
-require('../db/conn.php');
+require('conn.php');
 
 $sql_str = "select * from newscategories where id=$id";
 $res = mysqli_query($conn, $sql_str);

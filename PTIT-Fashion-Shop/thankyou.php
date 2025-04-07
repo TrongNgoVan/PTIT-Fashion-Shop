@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 
@@ -41,8 +41,7 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <h4 style="text-align: center;">Cảm ơn bạn đã đặt hàng trên hệ thống của chúng tôi<br>Chúng tôi sẽ sớm liên
-                    hệ với bạn để chốt đơn hàng!
+                <h4 style="text-align: center;">Cảm ơn bạn đã đặt hàng trên hệ thống của chúng tôi<br>Các nhân viên của PTIT Shop sẽ sớm xác nhận và giao đơn hàng đến tay bạn!
                 </h4>
 
 

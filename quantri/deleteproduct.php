@@ -4,7 +4,7 @@
 $delid = $_GET['id'];
 
 //ket noi csdl
-require('../db/conn.php');
+require('conn.php');
 //tim cac hinh anh cua san pham va xoa
 $sql1 = "select images from products where id=$delid";
 $rs = mysqli_query($conn, $sql1);

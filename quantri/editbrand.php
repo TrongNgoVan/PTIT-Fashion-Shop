@@ -6,7 +6,7 @@ $id = $_GET['id'];
 
 //tim trong CSDL brand co id trung
 //ket noi csdl
-require('../db/conn.php');
+require('conn.php');
 
 $sql_str = "select * from brands where id=$id";
 $res = mysqli_query($conn, $sql_str);

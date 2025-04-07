@@ -5,7 +5,7 @@
 $id = $_GET['id'];
 
 //ket noi csdl
-require('../db/conn.php');
+require('conn.php');
 
 $sql_str = "select 
 products.id as pid,

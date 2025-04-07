@@ -44,7 +44,7 @@ require('includes/header.php');
                                 <select class="form-control" name="danhmuc">
                                     <option>Chọn danh mục</option>
                                     <?php
-                                    require('../db/conn.php');
+                                    require('conn.php');
                                     $sql_str = "select * from newscategories order by name";
                                     $result = mysqli_query($conn, $sql_str);
                                     while ($row = mysqli_fetch_assoc($result)) {

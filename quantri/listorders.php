@@ -57,7 +57,7 @@ require('includes/header.php');
             
             <tbody>
             <?php 
-    require('../db/conn.php');
+    require('conn.php');
     $sql_str = "select 
     * from orders
     order by created_at";

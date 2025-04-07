@@ -60,7 +60,7 @@ function anhdaidien($arrstr,$height){
         
             <tbody>
             <?php 
-    require('../db/conn.php');
+   require('conn.php');
     $sql_str = "select 
     products.id as pid,
     products.name as pname,

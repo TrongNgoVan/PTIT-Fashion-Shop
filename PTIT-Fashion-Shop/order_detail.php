@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 
@@ -39,7 +39,7 @@
 
     ?>
     <?php
-
+        
 
     //lay id goi edit
     $id = $_GET['id'];
@@ -68,6 +68,7 @@
         "Đã Nhận Được Hàng",
         "Đánh Giá"
     ];
+    
 
     // Ánh xạ trạng thái CSDL -> trạng thái giao diện
     $map_status = [
@@ -92,6 +93,18 @@
     } else {
         $status_index = array_search($map_status[$order_status], $status_steps);
     }
+
+    $payment_steps = [
+        "Chưa thanh toán",
+        "Thanh toán thiếu", 
+        "Đã thanh toán",
+        "Thanh toán thừa"
+    ];
+
+    
+    // Lấy trạng thái thanh toán từ CSDL (giả sử trường payment_status trong bảng orders)
+    $payment_status = $row['status_pay']; // Cần đảm bảo trường này tồn tại trong CSDL
+    $payment_index = array_search($payment_status, $payment_steps);
     ?>
 
     <div class="container mt-4">
@@ -117,8 +130,36 @@
             </div>
         </div>
     </div>
+    <div class="container mt-4">
+    <div class="card shadow-lg border-0 p-4">
+        <div class="d-flex justify-content-between align-items-center text-center">
+            <?php for ($i = 0; $i < count($payment_steps); $i++): 
+                $active = $i <= $payment_index ? "completed" : "";
+            ?>
+                <div class="step <?= $active ?>">
+                    <div class="icon"><i class="fa 
+                        <?= $i == 0 ? 'fa-times-circle' : 
+                               ($i == 1 ? 'fa-exclamation-circle' : 
+                               ($i == 2 ? 'fa-check-circle' : 
+                               'fa-plus-circle')) ?>"></i>
+                    </div>
+                    <p><?= $payment_steps[$i] ?></p>
+                </div>
+                <?php if ($i < count($payment_steps) - 1): ?>
+                    <div class="line <?= $active ?>"></div>
+                <?php endif; ?>
+            <?php endfor; ?>
+        </div>
+    </div>
+</div>
 
     <style>
+        .step.payment .icon {
+    background-color: #007bff; /* Màu chủ đạo khác */
+}
+.completed.payment .icon {
+    background-color: #17a2b8; /* Màu khi hoàn thành */
+}
         .step {
             display: flex;
             flex-direction: column;
@@ -225,7 +266,7 @@
                                         <tr>
                                             <td class="text-center"><?= ++$stt ?></td>
                                             <td>
-                                                <img src="quantri/<?= $row['images'] ?>" style="max-width: 100px;">
+                                                <img src="http://localhost/quantri/<?= $row['images'] ?>" style="max-width: 100px;">
 
                                             </td>
                                             <td><?= $row['pname'] ?></td>

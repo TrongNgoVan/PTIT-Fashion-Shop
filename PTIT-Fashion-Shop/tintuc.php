@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 <style>
@@ -124,7 +124,7 @@
                                 ?>
                                     <a href="#" class="blog__sidebar__recent__item">
                                         <div class="blog__sidebar__recent__item__pic">
-                                            <img src="<?= 'quantri/' . $row3['avatar'] ?>" width="70px" alt="">
+                                            <img src="<?= 'http://localhost/quantri/' . $row3['avatar'] ?>" width="70px" alt="">
                                         </div>
                                         <div class="blog__sidebar__recent__item__text">
                                             <h6><?= $row3['title'] ?></h6>
@@ -152,7 +152,7 @@
                 <div class="col-lg-8 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
                         <div class="news-header">
-                            <img src="<?= 'quantri/' . $row['avatar'] ?>" alt="">
+                            <img src="<?= 'http://localhost/quantri/' . $row['avatar'] ?>" alt="">
                             <h2><?= $row['title'] ?></h2>
                         </div>
                         <p><?= $row['description'] ?></p>
@@ -186,7 +186,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="<?= 'quantri/' . $row4['avatar'] ?>" alt="">
+                                <img src="<?= 'http://localhost/quantri/' . $row4['avatar'] ?>" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>

@@ -36,7 +36,7 @@
     <style>
         .bg-gradient-primary {
             position: relative;
-            background: url('../img/ptitnen.jpg') no-repeat center center fixed;
+            background: url('img/ptitnen.jpg') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
         }
@@ -87,7 +87,7 @@
                         <div class="row">
                             <div class="col-lg-8  offset-lg-2">
                                 <div class="header">
-                                    <img src="../img/logo2.jpg" alt="PTIT Fashion" class="header-img">
+                                    <img src="img/logo2.jpg" alt="PTIT Fashion" class="header-img">
                                 </div>
                                 <div class="p-5">
                                     
