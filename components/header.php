@@ -299,23 +299,25 @@
 
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="./index.php">Trang chủ</a></li>
-                        <li><a href="./shop.php">Cửa hàng</a></li>
-                        <li><a href="#">Pages</a>
+                        <?php
+                            $current_page = basename($_SERVER['PHP_SELF']);
+                        ?>
+                        <li class="<?= ($current_page == 'index.php') ? 'active' : '' ?>"><a href="./index.php">Trang chủ</a></li>
+                        <li class="<?= ($current_page == 'shop.php') ? 'active' : '' ?>"><a href="./shop.php">Cửa hàng</a></li>
+                        <li class="<?= in_array($current_page, ['shop-details.php', 'cart.php', 'checkout.php', 'blog-details.php']) ? 'active' : '' ?>">
+                            <a href="#">Pages</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="#">Shop Details</a></li>
-                                <li><a href="#">Shoping Cart</a></li>
-                                <li><a href="#">Check Out</a></li>
-                                <li><a href="#">Blog Details</a></li>
+                                <li><a href="shop-details.php">Shop Details</a></li>
+                                <li><a href="cart.php">Shoping Cart</a></li>
+                                <li><a href="checkout.php">Check Out</a></li>
+                                <li><a href="blog-details.php">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="./tintuc.php">Tin tức</a></li>
-                        <li><a href="./rankProduct.php">Xếp hạng</a></li>
-                        <!-- <li><a href="#">Liên hệ</a></li> -->
-                        <li><a href="./list_order.php">Đơn Hàng của bạn</a></li>
+                        <li class="<?= ($current_page == 'tintuc.php') ? 'active' : '' ?>"><a href="./tintuc.php">Tin tức</a></li>
+                        <li class="<?= ($current_page == 'rankProduct.php') ? 'active' : '' ?>"><a href="./rankProduct.php">Xếp hạng</a></li>
+                        <li class="<?= ($current_page == 'list_order.php') ? 'active' : '' ?>"><a href="./list_order.php">Đơn Hàng của bạn</a></li>
                     </ul>
                 </nav>
-
 
                 <?php
                 if ($is_homepage) {
