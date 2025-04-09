@@ -175,12 +175,27 @@
                         </form>
 
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <?php
+                            $product_id = $_GET['id']; // Lấy ID từ URL
+
+                            $sql = "SELECT p.*, 
+                                        b.name AS brand_name, 
+                                        c.name AS category_name 
+                                    FROM products p 
+                                    JOIN brands b ON p.brand_id = b.id 
+                                    JOIN categories c ON p.category_id = c.id 
+                                    WHERE p.id = $product_id";
+
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result); // chỉ lấy 1 sản phẩm
+                        ?>
+
                         <ul>
                             <li><b>Tình trạng:</b> <span><?= ($row['stock'] == 0) ? 'Hết hàng' : 'Còn hàng' ?></span></li>
-                            <li><b>Thương hiệu:</b> <span><?= $row['brand_id'] ?></span></li>
-                            <li><b>Danh mục:</b> <span><?= $row['category_id'] ?></span></li>
-
+                            <li><b>Thương hiệu:</b> <span><?= $row['brand_name'] ?></span></li>
+                            <li><b>Danh mục:</b> <span><?= $row['category_name'] ?></span></li>
                         </ul>
+
                     </div>
                 </div>
                 <div class="col-lg-12">
