@@ -25,10 +25,67 @@
 </head>
 
 <body>
+    <style>
+        .price-filter-form {
+            margin-top: 15px;
+        }
+
+        .price-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .price-input-item {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .price-input-item label {
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .price-input-item input {
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .site-btn {
+            padding: 4px 12px;           /* Giảm padding để nút nhỏ hơn */
+            background-color:rgb(226, 7, 18);
+            border: none;
+            color: #fff;
+            border-radius: 2px;          /* Bo góc nhẹ để ra dạng chữ nhật */
+            font-size: 14px;             /* Chữ nhỏ hơn */
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .site-btn:hover {
+            background-color: #e65c50;
+        }
+    </style>
     <?php
     session_start();
     $is_homepage = false;
     require_once('components/header.php');
+
+    require('./db/conn.php');
+    $filter_price_min = $_GET['min'] ?? 0;
+    $filter_price_max = $_GET['max'] ?? 999999999;
+    $filter_category = isset($_GET['category']) ? intval($_GET['category']) : 0;
+    $where_clauses = ["p.status = 1"];
+    if ($filter_category !== '') {
+        $where_clauses[] = "p.category_id = '" . mysqli_real_escape_string($conn, $filter_category) . "'";
+    }
+    $where_clauses[] = "p.disscounted_price BETWEEN {$filter_price_min} AND {$filter_price_max}";
+    $where_sql = implode(' AND ', $where_clauses);
     ?>
 
     <!-- Product Section Begin -->
@@ -41,31 +98,33 @@
                             <h4>Danh mục sản phẩm</h4>
                             <ul>
                                 <?php
-                                require('./db/conn.php');
-                                $sql_str = "select * from categories order by name";
-                                $result = mysqli_query($conn, $sql_str);
-                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $sql_str = "SELECT * FROM categories ORDER BY name";
+                                    $result = mysqli_query($conn, $sql_str);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        // Kiểm tra nếu danh mục đang được chọn thì in đậm
+                                        $selected = ($row['id'] == $filter_category) ? 'style="font-weight: bold;"' : '';
+                                        echo '<li><a href="?category=' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</a></li>';
+                                    }
                                 ?>
-                                    <li><a href="#"><?= $row['name'] ?></a></li>
-                                <?php } ?>
                             </ul>
                         </div>
                         <div class="sidebar__item">
-                            <h4>Price</h4>
-                            <div class="price-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="10" data-max="540">
-                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                </div>
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
+                            <h4>Giá sản phẩm</h4>
+                            <form method="GET" class="price-filter-form">
+                                <input type="hidden" name="category" value="<?= htmlspecialchars($filter_category) ?>">
+                                <div class="price-input-group">
+                                    <div class="price-input-item">
+                                        <label for="min">Từ:</label>
+                                        <input type="number" name="min" id="min" value="<?= $filter_price_min ?>" placeholder="Giá thấp nhất">
+                                    </div>
+                                    <div class="price-input-item">
+                                        <label for="max">Đến:</label>
+                                        <input type="number" name="max" id="max" value="<?= $filter_price_max ?>" placeholder="Giá cao nhất">
                                     </div>
                                 </div>
-                            </div>
+                                <button type="submit" class="site-btn mt-2">Lọc</button>
+                            </form>
+
                         </div>
                         <div class="sidebar__item sidebar__item__color--option">
                             <h4>Colors</h4>
@@ -138,6 +197,8 @@
                 <div class="col-lg-9 col-md-7">
                     <div class="row">
                         <?php
+                            $category_filter = isset($_GET['category']) ? intval($_GET['category']) : 0;
+
                             $sql = "
                                 SELECT 
                                     p.id,
@@ -152,14 +213,21 @@
                                 FROM products p
                                 LEFT JOIN reviews r ON p.id = r.product_id
                                 WHERE p.status = 1
+                                AND p.disscounted_price BETWEEN {$filter_price_min} AND {$filter_price_max}
+                            ";
+
+                            
+                            if ($category_filter > 0) {
+                                $sql .= " AND p.category_id = $category_filter";
+                            }
+                            
+                            $sql .= "
                                 GROUP BY p.id
                                 ORDER BY avg_rating DESC
                             ";
-                        
+                            
                             $result = mysqli_query($conn, $sql);
-                        ?>
-                        <?php
-                            while ($row = mysqli_fetch_assoc($result)) { 
+                            while ($row = mysqli_fetch_assoc($result)) {
                                 // Phân tách các ảnh từ cột images
                                 $anh_arr = explode(';', $row['images']);
                         ?>
