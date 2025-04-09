@@ -1,0 +1,66 @@
+.rank-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #e25959;
+    color: #fff;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.product__item {
+    gap: 20px; /* thêm khoảng cách giữa ảnh và text */
+}
+
+.product__item__pic {
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+
+.product__item__text a {
+    color: black;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+}
+
+.product__item__text a:hover {
+    font-size: 20px;
+    transform: scale(1.05);
+}
+
+.sidebar__item {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.sidebar__item h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.product__pagination {
+    margin-bottom: 80px; 
+    text-align: center;
+}
+
+.product__pagination a {
+    margin: 0 4px;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.product__pagination a.active {
+    background-color: #c72f2f;
+    color: white;
+    border-color: #cc3131;
+}
