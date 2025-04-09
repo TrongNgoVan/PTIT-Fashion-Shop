@@ -238,11 +238,11 @@
                                     <ul class="product__item__pic__hover">
                                         <li>
                                             <!-- Thay thẻ <a> để thêm data-id -->
-                                            <a
-                                                class="add-to-cart"
-                                                data-id="<?= $row['id'] ?>">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
+                                            <?php if (isset($_SESSION['user'])): ?>
+                                                <a class="add-to-cart" data-id="<?= $row['id'] ?>">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            <?php endif; ?>
                                         </li>
                                     </ul>
                                 </div>
