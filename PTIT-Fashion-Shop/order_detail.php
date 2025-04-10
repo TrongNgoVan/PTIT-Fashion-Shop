@@ -254,31 +254,31 @@
                                 <tbody>
                                     <?php
                                     $sql = "SELECT *, products.name AS pname, order_details.price AS oprice  
-                                                FROM products, order_details 
+                                                FROM products, order_details
                                                 WHERE products.id = order_details.product_id 
                                                 AND order_id = $id";
                                     $res = mysqli_query($conn, $sql);
                                     $stt = 0;
                                     $tongtien = 0;
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $tongtien += $row['qty'] * $row['oprice'];
-                                    ?>
+                                     while ($row1 = mysqli_fetch_assoc($res)) {
+                                   
+                                    // ?>
                                         <tr>
                                             <td class="text-center"><?= ++$stt ?></td>
                                             <td>
-                                                <img src="/PTIT_SHOP/quantri/<?= $row['images'] ?>" style="max-width: 100px;">
+                                                <img src="/PTIT_SHOP/quantri/<?= $row1['images'] ?>" style="max-width: 100px;">
 
                                             </td>
-                                            <td><?= $row['pname'] ?></td>
-                                            <td class="text-end"><?= number_format($row['oprice'], 0, '', '.') ?> VNĐ</td>
-                                            <td class="text-center"><?= $row['qty'] ?></td>
-                                            <td class="text-end"><?= number_format($row['total'], 0, '', '.') ?> VNĐ</td>
+                                            <td><?= $row1['pname'] ?></td>
+                                            <td class="text-end"><?= number_format($row1['oprice'], 0, '', '.') ?> VNĐ</td>
+                                            <td class="text-center"><?= $row1['qty'] ?></td>
+                                            <td class="text-end"><?= number_format($row1['total'], 0, '', '.') ?> VNĐ</td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
                             <div class="text-end mt-3">
-                                <h5 class="fw-bold">Tổng tiền: <?= number_format($tongtien, 0, '', '.') ?> VNĐ</h5>
+                                <h5 class="fw-bold">Tổng tiền: <?= number_format($row['total_price'], 0, '', '.') ?> VNĐ</h5>
                             </div>
                         </div>
                     </div>

@@ -51,6 +51,8 @@
         $address = $user['address'];
     }
     require_once('./db/conn.php');
+// Nếu người dùng đã chọn mã giảm giá, thực hiện kiểm tra
+
 
 
     if (isset($_POST['btDathang'])) {
@@ -307,37 +309,38 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-<script>
 
+    <script>
 $(document).on('click', '.select-coupon', function() {
     const code = $(this).data('code');
-    const discountType = $(this).data('type');
-    const discountValue = parseFloat($(this).data('value'));
-    
-    // Cập nhật giá trị tổng gốc từ phí vận chuyển
     const currentTotal = parseFloat($('#orderTotal').data('amount'));
-    
-    let discountAmount = 0;
-    
-    if(discountType === 'phan_tram') {
-        discountAmount = currentTotal * (discountValue / 100);
-    } else {
-        discountAmount = Math.min(discountValue, currentTotal);
-    }
-    
-    // Tính lại thành tiền sau khi trừ tiền giảm giá
-    const finalTotal = currentTotal - discountAmount;
-    
-    // Cập nhật các phần hiển thị DOM
-    $('#selectedDiscount').val(code);
-    $('#discountAmount').text(formatCurrency(discountAmount));
-    $('#finalTotal').text(formatCurrency(finalTotal));
-    
-    // Lưu số tiền giảm giá vào input ẩn để gửi lên server
-    $('#discountAmountInput').val(discountAmount);
 
-    // Ẩn modal mã giảm giá
-    $('#discountModal').modal('hide');
+    $.ajax({
+        url: 'check_coupon.php',
+        method: 'POST',
+        data: {
+            discount_code: code,
+            currentTotal: currentTotal
+        },
+        dataType: 'json',
+        success: function(response) {
+            if(response.status === 'error') {
+                alert(response.message);
+            } else {
+                // Nếu mã giảm giá hợp lệ, cập nhật các phần hiển thị DOM
+                const discountAmount = parseFloat(response.discountAmount);
+                const finalTotal = currentTotal - discountAmount;
+                $('#selectedDiscount').val(code);
+                $('#discountAmount').text(formatCurrency(discountAmount));
+                $('#finalTotal').text(formatCurrency(finalTotal));
+                $('#discountAmountInput').val(discountAmount);
+                $('#discountModal').modal('hide');
+            }
+        },
+        error: function() {
+            alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+        }
+    });
 });
 
 // Hàm định dạng tiền tệ
@@ -347,9 +350,8 @@ function formatCurrency(amount) {
         currency: 'VND'
     }).format(amount);
 }
-
-
 </script>
+
 
 
 
