@@ -37,6 +37,7 @@
     $is_homepage = false;
     $name = $phone = $email = $address = "";
     $uid = 0;
+    $total_end = 0.0;
     $thanhtoan = [];
     if (isset($_SESSION['thanhtoan'])) {
         $thanhtoan = $_SESSION['thanhtoan'];
@@ -57,12 +58,19 @@
         $shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
         $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
     
-        // Tính tổng tiền đơn hàng
-        $total_end = 0.0;
+   
         foreach ($thanhtoan as $item) {
             $total_end +=  $item['qty'] * $item['disscounted_price'];
         }
+        $discount_amount = 0.0;
+        if (isset($_POST['discount_amount']) && is_numeric($_POST['discount_amount'])) {
+            $discount_amount = floatval($_POST['discount_amount']);
+        }
+        
+        // Trừ tiền giảm giá khỏi tổng đơn hàng
+        $total_end = $total_end - $discount_amount;
         $tiendachuyen = 0.0;
+        
     
         // Thêm đơn hàng vào cơ sở dữ liệu
         $sqli = "INSERT INTO orders VALUES (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', NOW(), NOW(), $total_end, $tiendachuyen, '$shipping_method', '$payment_method', 'Chưa thanh toán')";
@@ -259,14 +267,15 @@
 <div class="checkout__order__discount">
     Tiền giảm: <span id="discountAmount">0 VNĐ</span>
 </div>
+<!-- Input ẩn để lưu số tiền giảm giá đã áp dụng -->
+<input type="hidden" name="discount_amount" id="discountAmountInput" value="0">
+
 <div class="checkout__order__final">
     Thành tiền: <span id="finalTotal">
         <?= number_format($total, 0, '', '.') . " VNĐ" ?>
     </span>
 </div>
 
-                                    <li>Phí vận chuyển <span id="shipping_cost">0₫</span></li>
-<li>Tổng cộng <span id="total_price">...₫</span></li>
 
                                 
                                     <div class="discount-code">
@@ -289,7 +298,8 @@
         </div>
     </section>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
+ <!-- Đường dẫn tuyệt đối (khuyến nghị) -->
+ <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
@@ -297,83 +307,49 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-
 <script>
-     document.addEventListener("DOMContentLoaded", function () {
-        const shippingSelect = document.getElementById("shipping_method");
-        const shippingCostSpan = document.getElementById("shipping_cost");
-        const totalPriceSpan = document.getElementById("total_price");
 
-        const originalTotal = <?= $total_end ?>;
+$(document).on('click', '.select-coupon', function() {
+    const code = $(this).data('code');
+    const discountType = $(this).data('type');
+    const discountValue = parseFloat($(this).data('value'));
+    
+    // Cập nhật giá trị tổng gốc từ phí vận chuyển
+    const currentTotal = parseFloat($('#orderTotal').data('amount'));
+    
+    let discountAmount = 0;
+    
+    if(discountType === 'phan_tram') {
+        discountAmount = currentTotal * (discountValue / 100);
+    } else {
+        discountAmount = Math.min(discountValue, currentTotal);
+    }
+    
+    // Tính lại thành tiền sau khi trừ tiền giảm giá
+    const finalTotal = currentTotal - discountAmount;
+    
+    // Cập nhật các phần hiển thị DOM
+    $('#selectedDiscount').val(code);
+    $('#discountAmount').text(formatCurrency(discountAmount));
+    $('#finalTotal').text(formatCurrency(finalTotal));
+    
+    // Lưu số tiền giảm giá vào input ẩn để gửi lên server
+    $('#discountAmountInput').val(discountAmount);
 
-        function updateShippingCost() {
-            let selected = shippingSelect.value;
-            let fee = 0;
+    // Ẩn modal mã giảm giá
+    $('#discountModal').modal('hide');
+});
 
-            if (selected === "Vận Chuyển Thường") {
-                fee = 15000;
-            } else if (selected === "Vận Chuyển Hỏa Tốc") {
-                fee = 30000;
-            } else {
-                fee = 0;
-            }
-
-            // Cập nhật vào HTML
-            shippingCostSpan.textContent = fee.toLocaleString('vi-VN') + "₫";
-            totalPriceSpan.textContent = (originalTotal + fee).toLocaleString('vi-VN') + "₫";
-        }
-
-        // Gọi khi trang load và khi thay đổi select
-        shippingSelect.addEventListener("change", updateShippingCost);
-        updateShippingCost();
-    });
+// Hàm định dạng tiền tệ
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    }).format(amount);
+}
 
 
- 
-
-  $(document).on('click', '.select-coupon', function(){
-      // Lấy mã giảm giá, loại và giá trị giảm từ nút
-      var code = $(this).data('code');
-      var discountType = $(this).data('type');
-      var discountValue = parseFloat($(this).data('value'));
-      
-      // Lưu mã giảm giá vào input ẩn nếu cần gửi lên server
-      $('#selectedDiscount').val(code);
-      
-      // Lấy tổng tiền ban đầu từ thuộc tính data-amount
-      var orderTotal = parseFloat($('#orderTotal').data('amount'));
-      var discountAmount = 0;
-      
-      if(discountType === 'phan_tram'){
-          // Tính giảm theo phần trăm
-          discountAmount = orderTotal * (discountValue / 100);
-      } else {
-          // Giảm tiền mặt
-          discountAmount = discountValue;
-      }
-      
-      // Tính thành tiền sau giảm
-      var finalTotal = orderTotal - discountAmount;
-      if(finalTotal < 0) finalTotal = 0;
-      
-      // Cập nhật hiển thị tiền giảm và tổng sau giảm
-      $('#discountAmount').text(formatCurrency(discountAmount));
-      $('#finalTotal').text(formatCurrency(finalTotal));
-      
-      // Hiển thị thông báo hoặc cập nhật giao diện nếu cần
-      alert('Bạn đã chọn mã giảm giá: ' + code);
-      
-      // Đóng modal
-      $('#discountModal').modal('hide');
-  });
-  
-  // Hàm format tiền, ví dụ: 1000000 => "1.000.000 VNĐ"
-  function formatCurrency(amount) {
-      // Sử dụng toLocaleString cho việc format theo VN
-      return amount.toLocaleString('vi-VN') + " VNĐ";
-  }
 </script>
-
 
 
 
