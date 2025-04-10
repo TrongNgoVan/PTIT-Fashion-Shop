@@ -241,7 +241,7 @@ $name = $donhang['name'];
             }
         }
         // Kiểm tra trạng thái thanh toán mỗi 2 giây
-        setInterval(check_payment_status, 3000);
+        setInterval(check_payment_status, 10000);
     </script>
 </body>
 
