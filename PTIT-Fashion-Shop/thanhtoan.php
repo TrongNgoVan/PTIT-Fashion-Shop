@@ -28,6 +28,7 @@
 <!-- Modal Discount Code -->
 
 
+
 <body>
 
 
@@ -145,7 +146,14 @@
                    <p><strong>Số lượt giới hạn:</strong> <?= $row['so_luot_gioi_han'] ?></p>
                    <p><strong>Ngày hết hạn:</strong> <?= date("d/m/Y", strtotime($row['ngay_het_han'])) ?></p>
                    <p><strong>Mã code:</strong> <strong><?= htmlspecialchars($row['code']) ?></strong></p>
-                   <button type="button" class="btn btn-primary select-coupon" data-code="<?= htmlspecialchars($row['code']) ?>">Chọn mã này</button>
+                   <button type="button" 
+        class="btn btn-primary select-coupon" 
+        data-code="<?= htmlspecialchars($row['code']) ?>"
+        data-type="<?= htmlspecialchars($row['loai_giam_gia']) ?>"
+        data-value="<?= $row['gia_tri_giam'] ?>">
+    Chọn mã này
+</button>
+
                 </div>
              </div>
              <?php endwhile; else: ?>
@@ -197,11 +205,12 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phương thức vận chuyển:<span>*</span></p>
-                                        <select name="shipping_method">
-                                            <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
-                                            <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
-                                            <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
-                                        </select>
+                                        <select name="shipping_method" id="shipping_method">
+    <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
+    <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
+    <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
+</select>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -242,9 +251,23 @@
                                     <?php } ?>
 
                                 </ul>
-                                <div class="checkout__order__total">Tổng tiền: <span>
-                                        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
-                                    </span></div>
+                                <div class="checkout__order__total">
+    Tổng tiền: <span id="orderTotal" data-amount="<?= $total ?>">
+        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
+    </span>
+</div>
+<div class="checkout__order__discount">
+    Tiền giảm: <span id="discountAmount">0 VNĐ</span>
+</div>
+<div class="checkout__order__final">
+    Thành tiền: <span id="finalTotal">
+        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
+    </span>
+</div>
+
+                                    <li>Phí vận chuyển <span id="shipping_cost">0₫</span></li>
+<li>Tổng cộng <span id="total_price">...₫</span></li>
+
                                 
                                     <div class="discount-code">
          <!-- Nút mở modal mã giảm giá -->
@@ -266,18 +289,92 @@
         </div>
     </section>
 
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
 
-    <script>
+<script>
+     document.addEventListener("DOMContentLoaded", function () {
+        const shippingSelect = document.getElementById("shipping_method");
+        const shippingCostSpan = document.getElementById("shipping_cost");
+        const totalPriceSpan = document.getElementById("total_price");
+
+        const originalTotal = <?= $total_end ?>;
+
+        function updateShippingCost() {
+            let selected = shippingSelect.value;
+            let fee = 0;
+
+            if (selected === "Vận Chuyển Thường") {
+                fee = 15000;
+            } else if (selected === "Vận Chuyển Hỏa Tốc") {
+                fee = 30000;
+            } else {
+                fee = 0;
+            }
+
+            // Cập nhật vào HTML
+            shippingCostSpan.textContent = fee.toLocaleString('vi-VN') + "₫";
+            totalPriceSpan.textContent = (originalTotal + fee).toLocaleString('vi-VN') + "₫";
+        }
+
+        // Gọi khi trang load và khi thay đổi select
+        shippingSelect.addEventListener("change", updateShippingCost);
+        updateShippingCost();
+    });
+
+
+ 
+
   $(document).on('click', '.select-coupon', function(){
+      // Lấy mã giảm giá, loại và giá trị giảm từ nút
       var code = $(this).data('code');
-      // Lưu mã giảm giá vào input ẩn trong form thanh toán
+      var discountType = $(this).data('type');
+      var discountValue = parseFloat($(this).data('value'));
+      
+      // Lưu mã giảm giá vào input ẩn nếu cần gửi lên server
       $('#selectedDiscount').val(code);
-      // Hiển thị thông báo (có thể thay bằng cập nhật giao diện)
+      
+      // Lấy tổng tiền ban đầu từ thuộc tính data-amount
+      var orderTotal = parseFloat($('#orderTotal').data('amount'));
+      var discountAmount = 0;
+      
+      if(discountType === 'phan_tram'){
+          // Tính giảm theo phần trăm
+          discountAmount = orderTotal * (discountValue / 100);
+      } else {
+          // Giảm tiền mặt
+          discountAmount = discountValue;
+      }
+      
+      // Tính thành tiền sau giảm
+      var finalTotal = orderTotal - discountAmount;
+      if(finalTotal < 0) finalTotal = 0;
+      
+      // Cập nhật hiển thị tiền giảm và tổng sau giảm
+      $('#discountAmount').text(formatCurrency(discountAmount));
+      $('#finalTotal').text(formatCurrency(finalTotal));
+      
+      // Hiển thị thông báo hoặc cập nhật giao diện nếu cần
       alert('Bạn đã chọn mã giảm giá: ' + code);
+      
       // Đóng modal
       $('#discountModal').modal('hide');
   });
+  
+  // Hàm format tiền, ví dụ: 1000000 => "1.000.000 VNĐ"
+  function formatCurrency(amount) {
+      // Sử dụng toLocaleString cho việc format theo VN
+      return amount.toLocaleString('vi-VN') + " VNĐ";
+  }
 </script>
+
+
 
 
 
@@ -287,14 +384,6 @@
     require_once('components/footer.php');
     ?>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
 </body>
 
 </html>
