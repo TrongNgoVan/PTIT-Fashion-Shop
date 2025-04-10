@@ -119,15 +119,15 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large" src="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>"
+                            <img class="product__details__pic__item--large" src="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>"
                                 alt="<?= $row['name'] ?>">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
                             <?php
                             for ($i = 0; $i < count($anh_arr); $i++) {
                             ?>
-                                <img data-imgbigurl="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[$i] ?>"
-                                    src="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[$i] ?>">
+                                <img data-imgbigurl="<?= "/PTIT_SHOP/quantri/" . $anh_arr[$i] ?>"
+                                    src="<?= "/PTIT_SHOP/quantri/" . $anh_arr[$i] ?>">
                             <?php
                             }
                             ?>

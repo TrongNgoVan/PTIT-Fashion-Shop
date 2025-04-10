@@ -166,7 +166,7 @@
                         
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
+                                <div class="product__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
                                     <ul class="product__item__pic__hover">
                                         <li>
                                             <!-- Thay thẻ <a> để thêm data-id -->

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/shop.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 
@@ -136,7 +137,7 @@
                                         ?>
                                             <a href="sanpham.php?id=<?= $row['id'] ?>" class="latest-product__item">
                                                 <div class="latest-product__item__pic">
-                                                    <img src="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>" alt="">
+                                                    <img src="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>" alt="">
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6><?= $row['name'] ?></h6>
@@ -161,7 +162,7 @@
                                         ?>
                                             <a href="sanpham.php?id=<?= $row['id'] ?>" class="latest-product__item">
                                                 <div class="latest-product__item__pic">
-                                                    <img src="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>" alt="">
+                                                    <img src="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>" alt="">
                                                 </div>
                                                 <div class="latest-product__item__text">
                                                     <h6><?= $row['name'] ?></h6>
@@ -180,6 +181,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
+                    
                     <div class="product__discount">
                         <div class="section-title product__discount__title">
                             <h2>Giảm giá</h2>
@@ -195,7 +197,7 @@
                                     <div class="col-lg-4">
                                         <div class="product__discount__item">
                                             <div class="product__discount__item__pic set-bg"
-                                                data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
+                                                data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
                                                 <div class="product__discount__percent">-<?= $row['discount'] ?>%</div>
                                                 <ul class="product__item__pic__hover">
 
@@ -261,7 +263,7 @@
                         ?>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
+                                    <div class="product__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
                                         <ul class="product__item__pic__hover">
 
                                             <li>

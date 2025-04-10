@@ -266,7 +266,7 @@
                                         <tr>
                                             <td class="text-center"><?= ++$stt ?></td>
                                             <td>
-                                                <img src="http://localhost/PTIT_SHOP/quantri/<?= $row['images'] ?>" style="max-width: 100px;">
+                                                <img src="/PTIT_SHOP/quantri/<?= $row['images'] ?>" style="max-width: 100px;">
 
                                             </td>
                                             <td><?= $row['pname'] ?></td>

@@ -124,7 +124,7 @@
                                 ?>
                                     <a href="#" class="blog__sidebar__recent__item">
                                         <div class="blog__sidebar__recent__item__pic">
-                                            <img src="<?= 'http://localhost/PTIT_SHOP/quantri/' . $row3['avatar'] ?>" width="70px" alt="">
+                                            <img src="<?= '/PTIT_SHOP/quantri/' . $row3['avatar'] ?>" width="70px" alt="">
                                         </div>
                                         <div class="blog__sidebar__recent__item__text">
                                             <h6><?= $row3['title'] ?></h6>
@@ -152,7 +152,7 @@
                 <div class="col-lg-8 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
                         <div class="news-header">
-                            <img src="<?= 'http://localhost/PTIT_SHOP/quantri/' . $row['avatar'] ?>" alt="">
+                            <img src="<?= '/PTIT_SHOP/quantri/' . $row['avatar'] ?>" alt="">
                             <h2><?= $row['title'] ?></h2>
                         </div>
                         <p><?= $row['description'] ?></p>
@@ -186,7 +186,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="<?= 'http://localhost/PTIT_SHOP/quantri/' . $row4['avatar'] ?>" alt="">
+                                <img src="<?= '/PTIT_SHOP/quantri/' . $row4['avatar'] ?>" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>

@@ -135,7 +135,8 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6 mix <?= $row['cslug'] ?>">
                         <div class="featured__item">
-                            <div class="featured__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
+                            <div class="featured__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
+                            <!--  trình duyệt đã truy cập trực tiếp đến server thì chỉ cần đường dẫn tuương đối là được, thuận lợi trong trường hợp đổi IP -->
                                 <ul class="featured__item__pic__hover">
                                     <li>
                                         <!-- Thay thẻ <a> để thêm data-id -->
@@ -186,7 +187,7 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="<?= 'quantri/' . $row['avatar'] ?>" alt="">
+                                <img src="<?= '/PTIT_SHOP/quantri/' . $row['avatar'] ?>" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>
