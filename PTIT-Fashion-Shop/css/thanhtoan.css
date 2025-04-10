@@ -104,3 +104,56 @@
 .site-btn:hover {
     background: #b00000;
 }
+
+
+.discount-code {
+    margin: 20px 0;
+}
+
+.discount-btn {
+    background: #007bff;
+    border: none;
+    padding: 10px 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.discount-btn:hover {
+    background: #0056b3;
+}
+
+.discount-form {
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.discount-form h5 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.discount-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+.discount-list li {
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.discount-list input[type="radio"] {
+    margin-right: 8px;
+}
+
+.modal-dialog.modal-lg {
+    max-width: 80%; /* Hoặc giá trị bạn mong muốn, ví dụ: 90% hoặc 100% */
+}

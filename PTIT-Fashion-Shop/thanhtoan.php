@@ -22,10 +22,14 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="stylesheet" href="css/thanhtoan.css" type="text/css">
+    <link rel="stylesheet" href="css/magiamgia.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
+<!-- Modal Discount Code -->
+
 
 <body>
+
 
     <?php
     session_start();
@@ -109,6 +113,49 @@
 
     require_once('components/header.php');
     ?>
+    <div id="discountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+           <h5 class="modal-title" id="discountModalLabel">Danh Sách Mã Giảm Giá</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+               <span aria-hidden="true">&times;</span>
+           </button>
+       </div>
+       <div class="modal-body">
+          <div class="coupon-list">
+             <?php
+             $sql = "SELECT * FROM magiamgia ORDER BY ngay_het_han ASC";
+             $result = $conn->query($sql); // Nếu dùng mysqli, hoặc thay đổi theo PDO nếu cần
+             
+             if ($result && $result->num_rows > 0):
+                 while ($row = $result->fetch_assoc()):
+                     $gia_tri = $row['loai_giam_gia'] === 'phan_tram' ? $row['gia_tri_giam'] . '%' : number_format($row['gia_tri_giam'], 0, ',', '.') . 'đ';
+                     $dieu_kien = $row['dieu_kien_giam'] > 0 ? 'Từ đơn hàng ' . number_format($row['dieu_kien_giam'], 0, ',', '.') . 'đ' : 'Không có điều kiện';
+             ?>
+             <div class="coupon-card-custom">
+                <div class="coupon-image">
+                   <img src="<?= htmlspecialchars($row['image']) ?>" alt="Mã giảm giá" />
+                </div>
+                <div class="coupon-content">
+                   <p><strong>Mô tả:</strong> <?= htmlspecialchars($row['mo_ta']) ?></p>
+                   <p><strong>Giá trị giảm:</strong> <?= $gia_tri ?></p>
+                   <p><strong>Điều kiện giảm:</strong> <?= $dieu_kien ?></p>
+                   <p><strong>Số lượt đã dùng:</strong> <?= $row['so_luot_su_dung'] ?></p>
+                   <p><strong>Số lượt giới hạn:</strong> <?= $row['so_luot_gioi_han'] ?></p>
+                   <p><strong>Ngày hết hạn:</strong> <?= date("d/m/Y", strtotime($row['ngay_het_han'])) ?></p>
+                   <p><strong>Mã code:</strong> <strong><?= htmlspecialchars($row['code']) ?></strong></p>
+                   <button type="button" class="btn btn-primary select-coupon" data-code="<?= htmlspecialchars($row['code']) ?>">Chọn mã này</button>
+                </div>
+             </div>
+             <?php endwhile; else: ?>
+                 <p>Hiện không có mã giảm giá nào.</p>
+             <?php endif; ?>
+          </div>
+       </div>
+    </div>
+  </div>
+</div>
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
@@ -198,7 +245,13 @@
                                 <div class="checkout__order__total">Tổng tiền: <span>
                                         <?= number_format($total, 0, '', '.') . " VNĐ" ?>
                                     </span></div>
-                                    
+                                
+                                    <div class="discount-code">
+         <!-- Nút mở modal mã giảm giá -->
+    <button type="button" class="site-btn discount-btn" data-toggle="modal" data-target="#discountModal">Chọn mã giảm giá</button>
+    
+    <!-- Input ẩn để lưu mã giảm giá đã chọn -->
+    <input type="hidden" name="discount_code" id="selectedDiscount" value="">
 
 
                                    
@@ -212,17 +265,21 @@
             </div>
         </div>
     </section>
-    <!-- <script>
-    $(document).ready(function() {
-        $('#payment_method').change(function() {
-            if ($(this).val() === 'Thanh toán Online') {
-                $('#submitBtn').text('Thanh toán ngay!');
-            } else {
-                $('#submitBtn').text('Đặt hàng ngay!');
-            }
-        });
-    });
-</script> -->
+
+
+    <script>
+  $(document).on('click', '.select-coupon', function(){
+      var code = $(this).data('code');
+      // Lưu mã giảm giá vào input ẩn trong form thanh toán
+      $('#selectedDiscount').val(code);
+      // Hiển thị thông báo (có thể thay bằng cập nhật giao diện)
+      alert('Bạn đã chọn mã giảm giá: ' + code);
+      // Đóng modal
+      $('#discountModal').modal('hide');
+  });
+</script>
+
+
 
 
     <?php
