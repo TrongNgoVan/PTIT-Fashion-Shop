@@ -1,0 +1,244 @@
+/* Khoảng cách và background cho toàn bộ phần sản phẩm */
+.product-details.spad {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+/* Style cho khung hiển thị hình ảnh chính của sản phẩm */
+.product__details__pic {
+    margin-bottom: 30px;
+}
+.product__details__pic__item img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Style cho thanh slider các ảnh nhỏ */
+.product__details__pic__slider {
+    margin-top: 15px;
+}
+.product__details__pic__slider img {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 0.8;
+}
+.product__details__pic__slider img:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+/* Style cho phần mô tả thông tin sản phẩm */
+.product__details__text {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.product__details__text h3 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Style cho phần đánh giá sản phẩm */
+.product__details__rating i {
+    color: #f1c40f;
+    margin-right: 3px;
+}
+.average-rating {
+    font-size: 14px;
+    color: #555;
+    margin-left: 10px;
+}
+
+/* Hiển thị giá sản phẩm nổi bật */
+.product__details__price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 15px 0;
+}
+
+/* Style cho mô tả chi tiết sản phẩm */
+.product__details__text p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Style cho phần chọn số lượng */
+.product__details__quantity .pro-qty {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.product__details__quantity .pro-qty input.qty-text {
+    width: 50px;
+    text-align: center;
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+/* Style cho nút chính (Thêm vào giỏ hàng) */
+.primary-btn {
+    display: inline-block;
+    background-color: #b4091d;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    border: none;
+}
+.primary-btn:hover {
+    background-color: #cf172d;
+}
+
+/* Icon tim bên cạnh nút giỏ hàng */
+.heart-icon {
+    font-size: 22px;
+    color: #e74c3c;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+
+/* Style cho danh sách thông tin phụ (Tình trạng, Thương hiệu, Danh mục) */
+.product__details__text ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    font-size: 15px;
+    color: #555;
+}
+.product__details__text ul li {
+    margin-bottom: 8px;
+}
+.product__details__text ul li b {
+    color: #333;
+}
+
+
+/* -------------------------------
+   Phần chung cho cả "related-product" và "all-products"
+---------------------------------- */
+.related-product,
+.all-products {
+    padding: 60px 0;
+    /* Tùy chỉnh màu nền nếu muốn */
+    /* background-color: #f8f8f8; */
+}
+
+/* Title cho hai section */
+.related-product .section-title,
+.all-products .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.related-product .section-title h2,
+.all-products .section-title h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* -------------------------------
+   Các thẻ .product__item
+---------------------------------- */
+.product__item {
+    margin-bottom: 30px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+    text-align: center; /* Canh giữa nội dung */
+}
+.product__item:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+}
+
+/* -------------------------------
+   Phần hình ảnh (product__item__pic)
+---------------------------------- */
+/* Nếu bạn dùng data-setbg (kết hợp JS để set background-image),
+   nên ấn định độ cao cho khung ảnh để hiển thị đồng đều. */
+.product__item__pic {
+    position: relative;
+    width: 100%;
+    height: 220px; /* Có thể chỉnh lớn/nhỏ tùy ý */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Nếu thay vì background, bạn muốn dùng <img>, có thể dùng code:
+   .product__item__pic img {
+       width: 100%;
+       height: 220px;
+       object-fit: cover;
+   }
+*/
+
+/* Icon hover (giỏ hàng) nổi trên ảnh */
+.product__item__pic__hover {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    list-style: none;
+    
+}
+
+.product__item__pic__hover li a {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    color: #27ae60;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.product__item__pic__hover li a:hover {
+    background: #27ae60;
+    color: #fff;
+}
+
+/* -------------------------------
+   Phần text thông tin sản phẩm
+---------------------------------- */
+.product__item__text {
+    padding: 15px;
+}
+.product__item__text h6 {
+    margin: 10px 0 5px;
+}
+.product__item__text h6 a {
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 15px;
+}
+.product__item__text h6 a:hover {
+    color: #27ae60;
+}
+.product__item__text h5 {
+    color: #e74c3c;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 5px;
+}

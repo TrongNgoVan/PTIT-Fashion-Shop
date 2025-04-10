@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="stylesheet" href="css/shop.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
+    
 </head>
 
 <body>
@@ -31,8 +32,6 @@
     $is_homepage = false;
     require_once('components/header.php');
     ?>
-
-
 
     <!-- Product Section Begin -->
     <section class="product spad">
@@ -125,8 +124,9 @@
                             </div>
                         </div>
                         <div class="sidebar__item">
+                            <h4>Sản phẩm mới nhất</h4>
                             <div class="latest-product__text">
-                                <h4>Sản phẩm mới nhất</h4>
+                                
                                 <div class="latest-product__slider owl-carousel">
                                     <div class="latest-prdouct__slider__item">
                                         <?php
@@ -181,7 +181,6 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
-                    
                     <div class="product__discount">
                         <div class="section-title product__discount__title">
                             <h2>Giảm giá</h2>
@@ -194,7 +193,7 @@
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $anh_arr = explode(';', $row['images']);
                                 ?>
-                                    <div class="col-lg-4">
+                                    <div class="">
                                         <div class="product__discount__item">
                                             <div class="product__discount__item__pic set-bg"
                                                 data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">

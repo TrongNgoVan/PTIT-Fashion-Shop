@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/timkiem.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
@@ -294,7 +295,7 @@
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $anh_arr = explode(';', $row['images']);
                                 ?>
-                                    <div class="col-lg-4">
+                           
                                         <div class="product__discount__item">
                                             <div class="product__discount__item__pic set-bg"
                                                 data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
@@ -321,7 +322,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                  
                                 <?php } ?>
 
                             </div>

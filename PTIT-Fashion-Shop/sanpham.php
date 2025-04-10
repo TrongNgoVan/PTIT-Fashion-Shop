@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/sanpham.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 <style>
@@ -489,7 +490,7 @@
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $arrs[0] ?>">
+                            <div class="product__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $arrs[0] ?>">
                                 <ul class="product__item__pic__hover">
                                     <li>
                                         <!-- Thay thẻ <a> để thêm data-id -->
@@ -536,7 +537,7 @@
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="<?= "http://localhost/PTIT_SHOP/quantri/" . $arrs[0] ?>">
+                            <div class="product__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $arrs[0] ?>">
                                 <ul class="product__item__pic__hover">
                                     <li>
                                         <a class="add-to-cart" data-id="<?= $row_all['id'] ?>">

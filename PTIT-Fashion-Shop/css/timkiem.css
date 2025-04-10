@@ -1,0 +1,299 @@
+/* ---------------------------
+   Phần tiêu đề và vùng lọc (filter)
+------------------------------- */
+.col-lg-9.col-md-7 h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Vùng filter (Sort, Sản phẩm tìm được, Option hiển thị lưới/danh sách) */
+.filter__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.filter__sort {
+    display: flex;
+    align-items: center;
+}
+
+.filter__sort span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-right: 10px;
+}
+
+.filter__sort select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    background-color: #fff;
+}
+
+/* Hiển thị số sản phẩm tìm được */
+.filter__found h6 {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+/* Tùy chọn hiển thị (grid/list) */
+.filter__option {
+    display: flex;
+    align-items: center;
+}
+
+.filter__option span {
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.filter__option span:hover {
+    color: #27ae60;
+}
+
+/* ---------------------------
+   Style sản phẩm trong kết quả tìm kiếm
+------------------------------- */
+
+/* Kiện sản phẩm chung */
+.product__item {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.product__item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hình ảnh sản phẩm */
+.product__item__pic {
+    position: relative;
+    width: 100%;
+    height: 220px; /* Điều chỉnh chiều cao tùy ý */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Nếu dùng data-setbg để set ảnh nền, đảm bảo JS đã xử lý việc gán thuộc tính background-image */
+
+/* Icon giỏ hàng trên ảnh */
+.product__item__pic__hover {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    list-style: none;
+}
+
+.product__item__pic__hover li {
+    margin-left: 5px;
+}
+
+.product__item__pic__hover li a {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    color: #27ae60;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.product__item__pic__hover li a:hover {
+    background: #27ae60;
+    color: #fff;
+}
+
+/* Thông tin sản phẩm */
+.product__item__text {
+    padding: 15px;
+}
+
+.product__item__text h6 {
+    margin: 10px 0 5px;
+}
+
+.product__item__text h6 a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.product__item__text h6 a:hover {
+    color: #27ae60;
+}
+
+/* Giá sản phẩm */
+.prices {
+    margin-top: 8px;
+}
+
+.prices .old {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 5px;
+}
+
+.prices .curr {
+    font-size: 16px;
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+
+/* ----------------------------
+   CSS cho phần Giảm giá
+----------------------------- */
+.product__discount {
+    padding: 60px 0;
+    background-color: #f8f8f8; /* Bạn có thể điều chỉnh màu nền theo ý muốn */
+}
+
+.product__discount .product__discount__title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.product__discount .product__discount__title h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+}
+
+/* Các item giảm giá */
+.product__discount__item {
+    margin: 15px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.product__discount__item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hình ảnh sản phẩm */
+.product__discount__item__pic {
+    position: relative;
+    width: 100%;
+    height: 250px; /* Chiều cao của khung ảnh, bạn có thể điều chỉnh */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Badge giảm giá */
+.product__discount__percent {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e74c3c;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* Icon giỏ hàng trên hình ảnh */
+.product__discount__item__pic ul.product__item__pic__hover {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    list-style: none;
+}
+
+.product__discount__item__pic ul.product__item__pic__hover li {
+    margin-left: 5px;
+}
+
+.product__discount__item__pic ul.product__item__pic__hover li a {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    color: #27ae60;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.product__discount__item__pic ul.product__item__pic__hover li a:hover {
+    background: #27ae60;
+    color: #fff;
+}
+
+/* Thông tin sản phẩm */
+.product__discount__item__text {
+    padding: 15px;
+}
+
+.product__discount__item__text span {
+    display: block;
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.product__discount__item__text h5 {
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.product__discount__item__text h5 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.product__discount__item__text h5 a:hover {
+    color: #27ae60;
+}
+
+/* Giá sản phẩm */
+.product__discount__item__text .prices {
+    margin-top: 8px;
+}
+
+.product__discount__item__text .prices .old {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 5px;
+}
+
+.product__discount__item__text .prices .curr {
+    font-size: 16px;
+    color: #e74c3c;
+    font-weight: 600;
+}

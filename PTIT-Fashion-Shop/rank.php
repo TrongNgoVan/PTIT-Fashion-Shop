@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/rank.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 
@@ -136,69 +137,88 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-7">
-                    <div class="row">
-                        <?php
-                            $sql = "
-                                SELECT 
-                                    p.id,
-                                    p.name,
-                                    p.slug,
-                                    p.summary,
-                                    p.price,
-                                    p.disscounted_price,
-                                    p.images,
-                                    IFNULL(AVG(r.rating), 0) AS avg_rating,
-                                    COUNT(r.id) AS review_count
-                                FROM products p
-                                LEFT JOIN reviews r ON p.id = r.product_id
-                                WHERE p.status = 1
-                                GROUP BY p.id
-                                ORDER BY avg_rating DESC
-                            ";
-                        
-                            $result = mysqli_query($conn, $sql);
-                        ?>
-                        <?php
+                    <?php
+                        // Cấu hình phân trang
+                        $limit = 10;
+                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        $page = ($page < 1) ? 1 : $page;
+                        $offset = ($page - 1) * $limit;
+
+                        // Đếm tổng số sản phẩm
+                        $count_sql = "SELECT COUNT(DISTINCT p.id) AS total 
+                                    FROM products p 
+                                    WHERE p.status = 1";
+                        $count_result = mysqli_query($conn, $count_sql);
+                        $count_row = mysqli_fetch_assoc($count_result);
+                        $total_products = $count_row['total'];
+                        $total_pages = ceil($total_products / $limit);
+                        // Truy vấn sản phẩm xếp hạng theo rating trung bình (cao xuống thấp)
+                        $sql = "
+                            SELECT 
+                                p.id,
+                                p.name,
+                                p.slug,
+                                p.summary,
+                                p.price,
+                                p.disscounted_price,
+                                p.images,
+                                IFNULL(AVG(r.rating), 0) AS avg_rating,
+                                COUNT(r.id) AS review_count
+                            FROM products p
+                            LEFT JOIN reviews r ON p.id = r.product_id
+                            WHERE p.status = 1
+                            GROUP BY p.id
+                            ORDER BY avg_rating DESC
+                            LIMIT $limit OFFSET $offset
+                        ";
+
+
+                        $result = mysqli_query($conn, $sql);
+                    ?>
+
+                    <!-- Hiển thị danh sách sản phẩm -->
+                    <div class="col-lg-11 col-md-12">
+                        <div class="row" style="margin: 10px;">
+                            <?php
+                            $rank = $offset + 1;
                             while ($row = mysqli_fetch_assoc($result)) { 
-                                // Phân tách các ảnh từ cột images
                                 $anh_arr = explode(';', $row['images']);
-                        ?>
-                        
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
-                                    <ul class="product__item__pic__hover">
-                                        <li>
-                                            <!-- Thay thẻ <a> để thêm data-id -->
-                                            <a
-                                                class="add-to-cart"
-                                                data-id="<?= $row['id'] ?>">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="sanpham.php?id=<?= $row['id'] ?>"><?= $row['name'] ?></a></h6>
-                                    <div class="prices">
-                                        <span class="old"><?= number_format($row['price'], 0, '', '.') . " VNĐ" ?></span>
-                                        <span class="curr"><?= number_format($row['disscounted_price'], 0, '', '.') . " VNĐ" ?></span>
+                            ?>
+                            <div class="col-12 mb-4">
+                                <div class="product__item d-flex align-items-center p-3 border rounded shadow-sm">
+                                    <div class="product__item__pic me-4" style="margin: 10px; width: 150px; height: 150px; background-size: cover; background-position: center; background-image: url('<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>'); position: relative;">
+                                        <div class="rank-badge">#<?= $rank++ ?></div>
                                     </div>
-                                    <!-- Hiển thị rating và số lượng đánh giá -->
-                                    <div class="product__item__rating">
-                                        <p>⭐ <?= round($row['avg_rating'], 1) ?> (<?= $row['review_count'] ?> đánh giá)</p>
+                                    <div class="product__item__text flex-grow-1">
+                                        <h5><a href="sanpham.php?id=<?= $row['id'] ?>"><?= $row['name'] ?></a></h5>
+                                        <div class="prices mb-2">
+                                            <span class="old text-muted me-2"><del><?= number_format($row['price'], 0, '', '.') ?> VNĐ</del></span>
+                                            <span class="curr text-danger fw-bold"><?= number_format($row['disscounted_price'], 0, '', '.') ?> VNĐ</span>
+                                        </div>
+                                        <p class="mb-1">⭐ <?= round($row['avg_rating'], 1) ?> (<?= $row['review_count'] ?> đánh giá)</p>
+                                        <button class="btn btn-sm btn-primary add-to-cart" style="background: #c72f2f; border: #c72f2f;" data-id="<?= $row['id'] ?>">
+                                            <i class="fa fa-shopping-cart me-1"></i> Thêm vào giỏ
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
-                        <?php } ?>
 
-                    </div>
-                    <div class="product__pagination">
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                        <!-- Hiển thị phân trang -->
+                        <div class="product__pagination mt-4">
+                            <?php if ($page > 1): ?>
+                                <a href="?page=<?= $page - 1 ?>"><i class="fa fa-long-arrow-left"></i></a>
+                            <?php endif; ?>
+
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <a href="?page=<?= $i ?>" class="<?= ($i == $page) ? 'active' : '' ?>"><?= $i ?></a>
+                            <?php endfor; ?>
+
+                            <?php if ($page < $total_pages): ?>
+                                <a href="?page=<?= $page + 1 ?>"><i class="fa fa-long-arrow-right"></i></a>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
