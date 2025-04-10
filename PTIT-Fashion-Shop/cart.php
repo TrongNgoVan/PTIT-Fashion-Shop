@@ -345,10 +345,6 @@
             updateTotal(); // Cập nhật tổng tiền (nếu có sẵn checkbox check)
         });
     </script>
-</body>
-
-</html>
-
 
 
 <script src="js/jquery-3.3.1.min.js"></script>

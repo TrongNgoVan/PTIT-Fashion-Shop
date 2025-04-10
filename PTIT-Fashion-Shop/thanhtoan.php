@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/thanhtoan.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
 
@@ -173,7 +174,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4>Đơn hàng</h4>
-                                <div class="checkout__order__products">Sản phẩm <span>Thành tiền</span></div>
+                                <div class="checkout__order__products">Sản phẩm     <span>     Thành tiền</span></div>
                                 <ul>
                                     <?php
                                     $thanhtoan = [];
@@ -197,6 +198,7 @@
                                 <div class="checkout__order__total">Tổng tiền: <span>
                                         <?= number_format($total, 0, '', '.') . " VNĐ" ?>
                                     </span></div>
+                                    
 
 
                                    

@@ -1,0 +1,63 @@
+.coupon-card-custom {
+    display: flex;
+    border: 2px solid rgb(211, 9, 9);
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    background-color: #fff;
+    max-height: 250px;
+    overflow: hidden;
+  
+    /* 👉 Thêm dòng này để giới hạn độ rộng */
+    width: 500px; /* hoặc dùng max-width: 500px; */
+ /* để căn giữa nếu bạn dùng width cố định */
+  }
+  
+  
+  .coupon-image img {
+    width: 100px;
+    height: 100px; /* giảm kích thước ảnh */
+    object-fit: contain;
+    margin-right: 10px;
+  }
+  
+  .coupon-content {
+    flex: 1;
+    font-size: 18px; /* giảm cỡ chữ */
+    color: #333;
+    line-height: 1.5; /* giảm khoảng cách giữa các dòng */
+  }
+  
+  .coupon-content p {
+    margin: 1px 0; /* giảm khoảng cách giữa các đoạn */
+  }
+  .coupon-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .coupon-card-custom {
+    width: calc(50% - 20px); /* 2 thẻ mỗi hàng, trừ khoảng cách */
+    box-sizing: border-box;
+  }
+  
+  .buy-btn {
+    display: inline-block;
+    margin-top: 0px;
+    background: rgb(185, 3, 3);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    float: right;
+  }
+  
+  .buy-btn:hover {
+    background: rgb(234, 7, 7);
+  }
+  

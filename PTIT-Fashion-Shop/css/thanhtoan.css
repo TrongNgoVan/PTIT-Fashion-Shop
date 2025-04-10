@@ -1,0 +1,106 @@
+.checkout {
+    background: #f8f9fa;
+    padding: 60px 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+.checkout__form h4,
+.checkout__order h4 {
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    text-transform: uppercase;
+}
+
+.checkout__input {
+    margin-bottom: 25px;
+}
+
+.checkout__input p {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.checkout__input input,
+.checkout__input select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+}
+
+.checkout__input input:focus,
+.checkout__input select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.2);
+}
+
+.checkout__order {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #eee;
+    font-family: 'Arial', sans-serif;
+}
+
+.checkout__order h4 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.checkout__order__products {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.checkout__order ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.checkout__order ul li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    color: #999;
+    font-size: 16px;
+}
+
+.checkout__order__total {
+    font-weight: bold;
+    font-size: 18px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 15px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    color: #e20000;
+}
+
+.site-btn {
+    width: 100%;
+    background: #d10000;
+    color: white;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.site-btn:hover {
+    background: #b00000;
+}
