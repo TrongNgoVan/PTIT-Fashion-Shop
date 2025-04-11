@@ -1,57 +1,100 @@
-<?php
-session_start();
-
-// Kiểm tra xem người dùng đã đăng nhập chưa
-if (!isset($_SESSION['user'])) {
-    // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
-    header("Location: login.php");
-    exit();
-}
-
-// Kết nối cơ sở dữ liệu
-require_once('db/conn.php');
-
-// Khởi tạo biến thông báo lỗi và thành công
-$error = "";
-$success = "";
-
-// Xử lý khi form được gửi lên
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy và làm sạch dữ liệu từ form
-    $id_user      = $_SESSION['user']['id'];
-    $tennguoinhan = mysqli_real_escape_string($conn, trim($_POST['tennguoinhan']));
-    $sodienthoai  = mysqli_real_escape_string($conn, trim($_POST['sodienthoai']));
-    $diachi       = mysqli_real_escape_string($conn, trim($_POST['diachi']));
-    $xa           = mysqli_real_escape_string($conn, trim($_POST['xa']));
-    $huyen        = mysqli_real_escape_string($conn, trim($_POST['huyen']));
-    $tinh         = mysqli_real_escape_string($conn, trim($_POST['tinh']));
-
-    // Kiểm tra các trường bắt buộc
-    if (empty($tennguoinhan) || empty($sodienthoai) || empty($diachi) || empty($xa) || empty($huyen) || empty($tinh)) {
-        $error = "Vui lòng điền đầy đủ thông tin.";
-    } else {
-        // Tạo truy vấn INSERT
-        $sql = "INSERT INTO thongtinnhanhang (id_user, tennguoinhan, sodienthoai, diachi, xa, huyen, tinh)
-                VALUES ($id_user, '$tennguoinhan', '$sodienthoai', '$diachi', '$xa', '$huyen', '$tinh')";
-
-        if (mysqli_query($conn, $sql)) {
-            $success = "Thông tin nhận hàng đã được lưu thành công.";
-        } else {
-            $error = "Có lỗi xảy ra: " . mysqli_error($conn);
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="zxx">
+
 <head>
     <meta charset="UTF-8">
-    <title>Thêm Thông Tin Nhận Hàng</title>
-    <!-- Bạn có thể thêm các file CSS nếu cần -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thông tin nhận hàng</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/shop.css" type="text/css">
+    <link rel="icon" href="img/ptit.png" type="image/x-icon">
+
 </head>
+
 <body>
+<style>
+    /* Trong file add_thongtinnhanhang.css */
+.address-form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.address-form-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+    </style>
+    <?php
+    session_start();
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (!isset($_SESSION['user'])) {
+        header("Location: login.php");
+        exit();
+    }
+
+    $is_homepage = false;
+    require_once('components/header.php');
+
+    // Khởi tạo biến thông báo lỗi và thành công
+    $error = "";
+    $success = "";
+
+    // Xử lý khi form được gửi lên
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Lấy và làm sạch dữ liệu từ form
+        $id_user      = $_SESSION['user']['id'];
+        $tennguoinhan = mysqli_real_escape_string($conn, trim($_POST['tennguoinhan']));
+        $sodienthoai  = mysqli_real_escape_string($conn, trim($_POST['sodienthoai']));
+        $diachi       = mysqli_real_escape_string($conn, trim($_POST['diachi']));
+        $xa           = mysqli_real_escape_string($conn, trim($_POST['xa']));
+        $huyen        = mysqli_real_escape_string($conn, trim($_POST['huyen']));
+        $tinh         = mysqli_real_escape_string($conn, trim($_POST['tinh']));
+
+        // Kiểm tra các trường bắt buộc
+        if (empty($tennguoinhan) || empty($sodienthoai) || empty($diachi) || empty($xa) || empty($huyen) || empty($tinh)) {
+            $error = "Vui lòng điền đầy đủ thông tin.";
+        } else {
+            // Tạo truy vấn INSERT
+            $sql = "INSERT INTO thongtinnhanhang (id_user, tennguoinhan, sodienthoai, diachi, xa, huyen, tinh)
+                VALUES ($id_user, '$tennguoinhan', '$sodienthoai', '$diachi', '$xa', '$huyen', '$tinh')";
+
+            if (mysqli_query($conn, $sql)) {
+                $success = "Thông tin nhận hàng đã được lưu thành công.";
+            } else {
+                $error = "Có lỗi xảy ra: " . mysqli_error($conn);
+            }
+        }
+    }
+    ?>
+
+
     <div class="container mt-4">
         <h2>Thêm Thông Tin Nhận Hàng</h2>
         <?php if (!empty($error)): ?>
@@ -60,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if (!empty($success)): ?>
             <div class="alert alert-success"><?php echo $success; ?></div>
         <?php endif; ?>
-        
+
         <form action="" method="post">
             <div class="form-group">
                 <label for="tennguoinhan">Tên Người Nhận:</label>
@@ -90,8 +133,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 
-    <!-- Thêm JS nếu cần, ví dụ jQuery hoặc Bootstrap JS -->
+    <?php
+
+require_once('components/footer.php');
+?>
+<?php 
+// Sau khi xử lý submit thành công
+if ($success) { ?>
+    <script>
+        // Thông báo cho trang chính refresh
+        window.onload = function() {
+            setTimeout(function() {
+                refreshParent();
+            }, 500);
+        }
+        
+        function refreshParent() {
+            if (window.opener && !window.opener.closed) {
+                window.opener.location.reload();
+            }
+            window.close();
+        }
+    </script>
+<?php } ?>
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>

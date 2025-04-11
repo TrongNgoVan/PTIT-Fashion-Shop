@@ -34,6 +34,7 @@
 
     <?php
     session_start();
+    require_once('./db/conn.php');
     $is_homepage = false;
     $name = $phone = $email = $address = "";
     $uid = 0;
@@ -46,48 +47,71 @@
     if (isset($_SESSION['user'])) {
         $user = $_SESSION['user'];
         $uid = $user['id'];
-        $name = $user['name'];
-        $phone = $user['phone'];
-        $email = $user['email'];
-        $address = $user['address'];
+
+
+
+        // Truy vấn lấy tất cả các địa chỉ nhận hàng của người dùng từ bảng thongtinnhanhang
+        $sql = "SELECT * FROM thongtinnhanhang WHERE id_user = $uid ";
+        $result = mysqli_query($conn, $sql);
+
+        $thongtin = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $thongtin[] = $row;
+        }
+
+        // Lấy địa chỉ mặc định (là địa chỉ đầu tiên trong danh sách)
+        if (count($thongtin) > 0) {
+            $default = $thongtin[0];
+            $address = implode(', ', [
+                $default['diachi'],
+                $default['xa'],
+                $default['huyen'],
+                $default['tinh']
+            ]);
+            $name = $default['tennguoinhan'];
+            $phone = $default['sodienthoai'];
+            $email = $user['email'];
+        } else {
+            $address = "Chưa có thông tin nhận hàng";
+        }
     }
-    require_once('./db/conn.php');
-// Nếu người dùng đã chọn mã giảm giá, thực hiện kiểm tra
+
+    // Nếu người dùng đã chọn mã giảm giá, thực hiện kiểm tra
 
 
 
     if (isset($_POST['btDathang'])) {
-       // Lấy phương thức vận chuyển và thanh toán từ form
-$shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
-$payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
+        // Lấy phương thức vận chuyển và thanh toán từ form
+        $shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
+        $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
 
-// Tính phí vận chuyển theo phương thức
-if ($shipping_method == 'Vận Chuyển Thường') {
-    $tienvanchuyen = 15000;
-} else if ($shipping_method == 'Vận Chuyển Hỏa Tốc') {
-    $tienvanchuyen = 30000;
-} else {
-    $tienvanchuyen = 0;
-}
+        // Tính phí vận chuyển theo phương thức
+        if ($shipping_method == 'Vận Chuyển Thường') {
+            $tienvanchuyen = 15000;
+        } else if ($shipping_method == 'Vận Chuyển Hỏa Tốc') {
+            $tienvanchuyen = 30000;
+        } else {
+            $tienvanchuyen = 0;
+        }
 
-// Tính tổng đơn hàng từ các sản phẩm
-foreach ($thanhtoan as $item) {
-    $total_end += $item['qty'] * $item['disscounted_price'];
-}
-$discount_amount = 0.0;
-if (isset($_POST['discount_amount']) && is_numeric($_POST['discount_amount'])) {
-    $discount_amount = floatval($_POST['discount_amount']);
-}
+        // Tính tổng đơn hàng từ các sản phẩm
+        foreach ($thanhtoan as $item) {
+            $total_end += $item['qty'] * $item['disscounted_price'];
+        }
+        $discount_amount = 0.0;
+        if (isset($_POST['discount_amount']) && is_numeric($_POST['discount_amount'])) {
+            $discount_amount = floatval($_POST['discount_amount']);
+        }
 
-// Trừ tiền giảm giá và cộng phí vận chuyển
-$total_end = $total_end - $discount_amount + $tienvanchuyen;
+        // Trừ tiền giảm giá và cộng phí vận chuyển
+        $total_end = $total_end - $discount_amount + $tienvanchuyen;
 
         $tiendachuyen = 0.0;
-        
-    
+
+
         // Thêm đơn hàng vào cơ sở dữ liệu
         $sqli = "INSERT INTO orders VALUES (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', NOW(), NOW(), $total_end, $tiendachuyen, '$shipping_method', '$payment_method', 'Chưa thanh toán')";
-    
+
         if (mysqli_query($conn, $sqli)) {
             $last_order_id = mysqli_insert_id($conn);
             foreach ($thanhtoan as $item) {
@@ -100,10 +124,10 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
                 // echo $sqli2, exit;
                 mysqli_query($conn, $sqli2);
             }
-    
+
             // Lưu thông tin đơn hàng vào session nếu là Thanh toán Online
             if ($payment_method == 'Thanh toán Online') {
-                
+
                 $_SESSION['donhang'] = [
                     'order_id' => $last_order_id,
                     'user_id' => $uid,
@@ -117,81 +141,147 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
                     'payment_method' => $payment_method,
                     'status' => 'Chưa thanh toán'
                 ];
-    
+
                 // Điều hướng đến trang thanh toán online
                 header("Location: thanhtoanonline.php");
             } else {
                 // Nếu không phải Thanh toán Online, điều hướng đến trang cảm ơn
                 header("Location: thankyou.php");
             }
-    
+
             // Xóa session thanh toán
             unset($_SESSION["thanhtoan"]);
             exit();
         }
     }
-    
+
 
 
     require_once('components/header.php');
     ?>
     <div id="discountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-       <div class="modal-header">
-           <h5 class="modal-title" id="discountModalLabel">Danh Sách Mã Giảm Giá</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
-               <span aria-hidden="true">&times;</span>
-           </button>
-       </div>
-       <div class="modal-body">
-          <div class="coupon-list">
-             <?php
-             $sql = "SELECT * FROM magiamgia ORDER BY ngay_het_han ASC";
-             $result = $conn->query($sql); // Nếu dùng mysqli, hoặc thay đổi theo PDO nếu cần
-             
-             if ($result && $result->num_rows > 0):
-                 while ($row = $result->fetch_assoc()):
-                     $gia_tri = $row['loai_giam_gia'] === 'phan_tram' ? $row['gia_tri_giam'] . '%' : number_format($row['gia_tri_giam'], 0, ',', '.') . 'đ';
-                     $dieu_kien = $row['dieu_kien_giam'] > 0 ? 'Từ đơn hàng ' . number_format($row['dieu_kien_giam'], 0, ',', '.') . 'đ' : 'Không có điều kiện';
-             ?>
-             <div class="coupon-card-custom">
-                <div class="coupon-image">
-                   <img src="<?= htmlspecialchars($row['image']) ?>" alt="Mã giảm giá" />
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="discountModalLabel">Danh Sách Mã Giảm Giá</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="coupon-content">
-                   <p><strong>Mô tả:</strong> <?= htmlspecialchars($row['mo_ta']) ?></p>
-                   <p><strong>Giá trị giảm:</strong> <?= $gia_tri ?></p>
-                   <p><strong>Điều kiện giảm:</strong> <?= $dieu_kien ?></p>
-                   <p><strong>Số lượt đã dùng:</strong> <?= $row['so_luot_su_dung'] ?></p>
-                   <p><strong>Số lượt giới hạn:</strong> <?= $row['so_luot_gioi_han'] ?></p>
-                   <p><strong>Ngày hết hạn:</strong> <?= date("d/m/Y", strtotime($row['ngay_het_han'])) ?></p>
-                   <p><strong>Mã code:</strong> <strong><?= htmlspecialchars($row['code']) ?></strong></p>
-                   <button type="button" 
-        class="btn btn-primary select-coupon" 
-        data-code="<?= htmlspecialchars($row['code']) ?>"
-        data-type="<?= htmlspecialchars($row['loai_giam_gia']) ?>"
-        data-value="<?= $row['gia_tri_giam'] ?>">
-    Chọn mã này
-</button>
+                <div class="modal-body">
+                    <div class="coupon-list">
+                        <?php
+                        $sql = "SELECT * FROM magiamgia ORDER BY ngay_het_han ASC";
+                        $result = $conn->query($sql); // Nếu dùng mysqli, hoặc thay đổi theo PDO nếu cần
 
+                        if ($result && $result->num_rows > 0):
+                            while ($row = $result->fetch_assoc()):
+                                $gia_tri = $row['loai_giam_gia'] === 'phan_tram' ? $row['gia_tri_giam'] . '%' : number_format($row['gia_tri_giam'], 0, ',', '.') . 'đ';
+                                $dieu_kien = $row['dieu_kien_giam'] > 0 ? 'Từ đơn hàng ' . number_format($row['dieu_kien_giam'], 0, ',', '.') . 'đ' : 'Không có điều kiện';
+                        ?>
+                                <div class="coupon-card-custom">
+                                    <div class="coupon-image">
+                                        <img src="<?= htmlspecialchars($row['image']) ?>" alt="Mã giảm giá" />
+                                    </div>
+                                    <div class="coupon-content">
+                                        <p><strong>Mô tả:</strong> <?= htmlspecialchars($row['mo_ta']) ?></p>
+                                        <p><strong>Giá trị giảm:</strong> <?= $gia_tri ?></p>
+                                        <p><strong>Điều kiện giảm:</strong> <?= $dieu_kien ?></p>
+                                        <p><strong>Số lượt đã dùng:</strong> <?= $row['so_luot_su_dung'] ?></p>
+                                        <p><strong>Số lượt giới hạn:</strong> <?= $row['so_luot_gioi_han'] ?></p>
+                                        <p><strong>Ngày hết hạn:</strong> <?= date("d/m/Y", strtotime($row['ngay_het_han'])) ?></p>
+                                        <p><strong>Mã code:</strong> <strong><?= htmlspecialchars($row['code']) ?></strong></p>
+                                        <button type="button"
+                                            class="btn btn-primary select-coupon"
+                                            data-code="<?= htmlspecialchars($row['code']) ?>"
+                                            data-type="<?= htmlspecialchars($row['loai_giam_gia']) ?>"
+                                            data-value="<?= $row['gia_tri_giam'] ?>">
+                                            Chọn mã này
+                                        </button>
+
+                                    </div>
+                                </div>
+                            <?php endwhile;
+                        else: ?>
+                            <p>Hiện không có mã giảm giá nào.</p>
+                        <?php endif; ?>
+                    </div>
                 </div>
-             </div>
-             <?php endwhile; else: ?>
-                 <p>Hiện không có mã giảm giá nào.</p>
-             <?php endif; ?>
-          </div>
-       </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+    <!-- Address Modal -->
+    <div id="addressModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Quản lý địa chỉ nhận hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="text-right mb-3">
+                        <a href="add_thongtinnhanhang.php"
+                            class="btn btn-success"
+                            target="_blank"
+                            onclick="openAddressForm(event)">
+                            <i class="fa fa-plus"></i> Thêm thông tin mới
+                        </a>
+                    </div>
+
+                    <table class="table table-bordered address-table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Người Nhận</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Địa Chỉ</th>
+                                <th>Xã/Phường</th>
+                                <th>Huyện/Quận</th>
+                                <th>Tỉnh/Thành Phố</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($thongtin as $index => $info): ?>
+                                <tr>
+                                    <td><?= $index + 1 ?></td>
+                                    <td><?= htmlspecialchars($info['tennguoinhan']) ?></td>
+                                    <td><?= htmlspecialchars($info['sodienthoai']) ?></td>
+                                    <td><?= htmlspecialchars($info['diachi']) ?></td>
+                                    <td><?= htmlspecialchars($info['xa']) ?></td>
+                                    <td><?= htmlspecialchars($info['huyen']) ?></td>
+                                    <td><?= htmlspecialchars($info['tinh']) ?></td>
+                                    <td>
+                                        <button type="button"
+                                            class="btn btn-primary btn-sm btn-select-address"
+                                            data-diachi="<?= htmlspecialchars($info['diachi']) ?>"
+                                            data-xa="<?= htmlspecialchars($info['xa']) ?>"
+                                            data-huyen="<?= htmlspecialchars($info['huyen']) ?>"
+                                            data-tinh="<?= htmlspecialchars($info['tinh']) ?>"
+                                            data-name="<?= htmlspecialchars($info['tennguoinhan']) ?>"
+                                            data-phone="<?= htmlspecialchars($info['sodienthoai']) ?>">
+                                            Chọn
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
 
             <div class="checkout__form">
-                <h4>Thông tin Khách hàng</h4>
+                <h4>Thông tin nhận hàng</h4>
+                <button id="changeAddressBtn" class="btn btn-primary">Thay đổi thông tin nhận hàng</button>
                 <form action="#" method="post">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
@@ -204,8 +294,10 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
 
 
                             <div class="checkout__input">
+
                                 <p>Địa chỉ nhận hàng:<span>*</span></p>
                                 <input type="text" placeholder="Địa chỉ" class="checkout__input__add" name="address" value="<?php echo $address; ?>">
+
                             </div>
 
                             <div class="row">
@@ -227,24 +319,24 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
                                     <div class="checkout__input">
                                         <p>Phương thức vận chuyển:<span>*</span></p>
                                         <select name="shipping_method" id="shipping_method">
-    <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
-    <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
-    <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
-    
-</select>
+                                            <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
+                                            <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
+                                            <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
+
+                                        </select>
 
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                    <div class="checkout__input">
-                        <p>Phương thức thanh toán:<span>*</span></p>
-                        <select name="payment_method" id="payment_method">
-                            
-                            <option value="Thanh toán Online">Thanh toán Online</option>
-                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
-                        </select>
-                    </div>
-                </div>
+                                    <div class="checkout__input">
+                                        <p>Phương thức thanh toán:<span>*</span></p>
+                                        <select name="payment_method" id="payment_method">
+
+                                            <option value="Thanh toán Online">Thanh toán Online</option>
+                                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -252,7 +344,7 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4>Đơn hàng</h4>
-                                <div class="checkout__order__products">Sản phẩm     <span>     Thành tiền</span></div>
+                                <div class="checkout__order__products">Sản phẩm <span> Thành tiền</span></div>
                                 <ul>
                                     <?php
                                     $thanhtoan = [];
@@ -262,7 +354,7 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
                                     // var_dump($thanhtoan);die();
                                     $count = 0; //số thứ tự
                                     $total = 0;
-                                    $total += $tienvanchuyen ;
+                                    $total += $tienvanchuyen;
                                     foreach ($thanhtoan as $item) {
                                         $total += $item['qty'] * $item['disscounted_price'];
                                     ?>
@@ -275,49 +367,49 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
 
                                 </ul>
                                 <div class="checkout__order__total">
-    Tổng tiền: <span id="orderTotal" data-amount="<?= $total ?>">
-        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
-    </span>
-</div>
-<div class="checkout__order__shipping">
-    Phí vận chuyển: <span id="shippingFee">0 VNĐ</span>
-</div>
-<div class="checkout__order__discount">
-    Tiền giảm: <span id="discountAmount">0 VNĐ</span>
-</div>
-<!-- Input ẩn để lưu số tiền giảm giá đã áp dụng -->
-<input type="hidden" name="discount_amount" id="discountAmountInput" value="0">
+                                    Tổng tiền: <span id="orderTotal" data-amount="<?= $total ?>">
+                                        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
+                                    </span>
+                                </div>
+                                <div class="checkout__order__shipping">
+                                    Phí vận chuyển: <span id="shippingFee">0 VNĐ</span>
+                                </div>
+                                <div class="checkout__order__discount">
+                                    Tiền giảm: <span id="discountAmount">0 VNĐ</span>
+                                </div>
+                                <!-- Input ẩn để lưu số tiền giảm giá đã áp dụng -->
+                                <input type="hidden" name="discount_amount" id="discountAmountInput" value="0">
 
-<div class="checkout__order__final">
-    Thành tiền: <span id="finalTotal">
-        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
-    </span>
-</div>
-
-
-                                
-                                    <div class="discount-code">
-         <!-- Nút mở modal mã giảm giá -->
-    <button type="button" class="site-btn discount-btn" data-toggle="modal" data-target="#discountModal">Chọn mã giảm giá</button>
-    
-    <!-- Input ẩn để lưu mã giảm giá đã chọn -->
-    <input type="hidden" name="discount_code" id="selectedDiscount" value="">
+                                <div class="checkout__order__final">
+                                    Thành tiền: <span id="finalTotal">
+                                        <?= number_format($total, 0, '', '.') . " VNĐ" ?>
+                                    </span>
+                                </div>
 
 
-                                   
-                    <!-- ... Phần đơn hàng giữ nguyên ... -->
-                    <button type="submit" class="site-btn" name="btDathang" id="submitBtn">Đặt hàng</button>
-         
+
+                                <div class="discount-code">
+                                    <!-- Nút mở modal mã giảm giá -->
+                                    <button type="button" class="site-btn discount-btn" data-toggle="modal" data-target="#discountModal">Chọn mã giảm giá</button>
+
+                                    <!-- Input ẩn để lưu mã giảm giá đã chọn -->
+                                    <input type="hidden" name="discount_code" id="selectedDiscount" value="">
+
+
+
+                                    <!-- ... Phần đơn hàng giữ nguyên ... -->
+                                    <button type="submit" class="site-btn" name="btDathang" id="submitBtn">Đặt hàng</button>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>
     </section>
 
- <!-- Đường dẫn tuyệt đối (khuyến nghị) -->
- <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- Đường dẫn tuyệt đối (khuyến nghị) -->
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
@@ -327,72 +419,108 @@ $total_end = $total_end - $discount_amount + $tienvanchuyen;
     <script src="js/main.js"></script>
 
     <script>
+        // Khi người dùng thay đổi phương thức vận chuyển
+        $('#shipping_method').on('change', function() {
+            let shippingMethod = $(this).val();
+            let shippingFee = 0;
 
-// Khi người dùng thay đổi phương thức vận chuyển
-$('#shipping_method').on('change', function() {
-        let shippingMethod = $(this).val();
-        let shippingFee = 0;
-        
-        if (shippingMethod === 'Vận Chuyển Thường') {
-            shippingFee = 15000;
-        } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
-            shippingFee = 30000;
-        } else {
-            shippingFee = 0;
-        }
-        
-        // Cập nhật hiển thị phí vận chuyển
-        $('#shippingFee').text(formatCurrency(shippingFee));
-
-        // Tính lại tổng tiền cuối: Tổng tiền đơn hàng - tiền giảm + phí vận chuyển
-        let orderTotal = parseFloat($('#orderTotal').data('amount'));
-        let discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
-        let finalTotal = orderTotal - discountAmount + shippingFee;
-        
-        $('#finalTotal').text(formatCurrency(finalTotal));
-    });
-
-
-$(document).on('click', '.select-coupon', function() {
-    const code = $(this).data('code');
-    const currentTotal = parseFloat($('#orderTotal').data('amount'));
-
-    $.ajax({
-        url: 'check_coupon.php',
-        method: 'POST',
-        data: {
-            discount_code: code,
-            currentTotal: currentTotal
-        },
-        dataType: 'json',
-        success: function(response) {
-            if(response.status === 'error') {
-                alert(response.message);
+            if (shippingMethod === 'Vận Chuyển Thường') {
+                shippingFee = 15000;
+            } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
+                shippingFee = 30000;
             } else {
-                // Nếu mã giảm giá hợp lệ, cập nhật các phần hiển thị DOM
-                const discountAmount = parseFloat(response.discountAmount);
-                const finalTotal = currentTotal - discountAmount;
-                $('#selectedDiscount').val(code);
-                $('#discountAmount').text(formatCurrency(discountAmount));
-                $('#finalTotal').text(formatCurrency(finalTotal));
-                $('#discountAmountInput').val(discountAmount);
-                $('#discountModal').modal('hide');
+                shippingFee = 0;
             }
-        },
-        error: function() {
-            alert("Có lỗi xảy ra, vui lòng thử lại sau.");
-        }
-    });
-});
 
-// Hàm định dạng tiền tệ
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND'
-    }).format(amount);
-}
-</script>
+            // Cập nhật hiển thị phí vận chuyển
+            $('#shippingFee').text(formatCurrency(shippingFee));
+
+            // Tính lại tổng tiền cuối: Tổng tiền đơn hàng - tiền giảm + phí vận chuyển
+            let orderTotal = parseFloat($('#orderTotal').data('amount'));
+            let discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
+            let finalTotal = orderTotal - discountAmount + shippingFee;
+
+            $('#finalTotal').text(formatCurrency(finalTotal));
+        });
+
+
+        $(document).on('click', '.select-coupon', function() {
+            const code = $(this).data('code');
+            const currentTotal = parseFloat($('#orderTotal').data('amount'));
+
+            $.ajax({
+                url: 'check_coupon.php',
+                method: 'POST',
+                data: {
+                    discount_code: code,
+                    currentTotal: currentTotal
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'error') {
+                        alert(response.message);
+                    } else {
+                        // Nếu mã giảm giá hợp lệ, cập nhật các phần hiển thị DOM
+                        const discountAmount = parseFloat(response.discountAmount);
+                        const finalTotal = currentTotal - discountAmount;
+                        $('#selectedDiscount').val(code);
+                        $('#discountAmount').text(formatCurrency(discountAmount));
+                        $('#finalTotal').text(formatCurrency(finalTotal));
+                        $('#discountAmountInput').val(discountAmount);
+                        $('#discountModal').modal('hide');
+                    }
+                },
+                error: function() {
+                    alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+                }
+            });
+        });
+
+        // Hàm định dạng tiền tệ
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+
+        // Xử lý mở modal
+        $('#changeAddressBtn').click(function() {
+            $('#addressModal').modal('show');
+        });
+
+        // Xử lý chọn địa chỉ bằng nút
+        $(document).on('click', '.btn-select-address', function() {
+            const $btn = $(this);
+            const fullAddress = [
+                $btn.data('diachi'),
+                $btn.data('xa'),
+                $btn.data('huyen'),
+                $btn.data('tinh')
+            ].join(', ');
+
+            $('input[name="name"]').val($btn.data('name'));
+            $('input[name="phone"]').val($btn.data('phone'));
+            $('input[name="address"]').val(fullAddress);
+
+            $('#addressModal').modal('hide');
+        });
+
+        // Trong file thanhtoan.php
+        function openAddressForm(e) {
+            e.preventDefault();
+            const url = e.currentTarget.href;
+            window.open(url, 'addressWindow', 'width=800,height=600');
+        }
+
+        // Hàm này cần được gọi từ trang add_thongtinnhanhang.php sau khi submit thành công
+        function refreshParent() {
+            if (window.opener && !window.opener.closed) {
+                window.opener.location.reload();
+            }
+            window.close();
+        }
+    </script>
 
     <?php
 
@@ -402,6 +530,3 @@ function formatCurrency(amount) {
 </body>
 
 </html>
-
-
-

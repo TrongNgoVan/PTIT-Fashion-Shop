@@ -157,3 +157,45 @@
 .modal-dialog.modal-lg {
     max-width: 80%; /* Hoặc giá trị bạn mong muốn, ví dụ: 90% hoặc 100% */
 }
+
+
+/* Table styling */
+.address-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.address-table th,
+.address-table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.address-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.address-table tbody tr:hover {
+    background-color: rgba(0,123,255,0.05);
+}
+
+.btn-select-address {
+    min-width: 80px;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .address-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+
+
