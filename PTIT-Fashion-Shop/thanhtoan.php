@@ -39,6 +39,7 @@
     $uid = 0;
     $total_end = 0.0;
     $thanhtoan = [];
+    $tienvanchuyen = 0.0;
     if (isset($_SESSION['thanhtoan'])) {
         $thanhtoan = $_SESSION['thanhtoan'];
     }
@@ -56,21 +57,31 @@
 
 
     if (isset($_POST['btDathang'])) {
-        // Lấy phương thức vận chuyển và thanh toán từ form
-        $shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
-        $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
-    
-   
-        foreach ($thanhtoan as $item) {
-            $total_end +=  $item['qty'] * $item['disscounted_price'];
-        }
-        $discount_amount = 0.0;
-        if (isset($_POST['discount_amount']) && is_numeric($_POST['discount_amount'])) {
-            $discount_amount = floatval($_POST['discount_amount']);
-        }
-        
-        // Trừ tiền giảm giá khỏi tổng đơn hàng
-        $total_end = $total_end - $discount_amount;
+       // Lấy phương thức vận chuyển và thanh toán từ form
+$shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
+$payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
+
+// Tính phí vận chuyển theo phương thức
+if ($shipping_method == 'Vận Chuyển Thường') {
+    $tienvanchuyen = 15000;
+} else if ($shipping_method == 'Vận Chuyển Hỏa Tốc') {
+    $tienvanchuyen = 30000;
+} else {
+    $tienvanchuyen = 0;
+}
+
+// Tính tổng đơn hàng từ các sản phẩm
+foreach ($thanhtoan as $item) {
+    $total_end += $item['qty'] * $item['disscounted_price'];
+}
+$discount_amount = 0.0;
+if (isset($_POST['discount_amount']) && is_numeric($_POST['discount_amount'])) {
+    $discount_amount = floatval($_POST['discount_amount']);
+}
+
+// Trừ tiền giảm giá và cộng phí vận chuyển
+$total_end = $total_end - $discount_amount + $tienvanchuyen;
+
         $tiendachuyen = 0.0;
         
     
@@ -216,9 +227,10 @@
                                     <div class="checkout__input">
                                         <p>Phương thức vận chuyển:<span>*</span></p>
                                         <select name="shipping_method" id="shipping_method">
+    <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
     <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
     <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
-    <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
+    
 </select>
 
                                     </div>
@@ -250,6 +262,7 @@
                                     // var_dump($thanhtoan);die();
                                     $count = 0; //số thứ tự
                                     $total = 0;
+                                    $total += $tienvanchuyen ;
                                     foreach ($thanhtoan as $item) {
                                         $total += $item['qty'] * $item['disscounted_price'];
                                     ?>
@@ -265,6 +278,9 @@
     Tổng tiền: <span id="orderTotal" data-amount="<?= $total ?>">
         <?= number_format($total, 0, '', '.') . " VNĐ" ?>
     </span>
+</div>
+<div class="checkout__order__shipping">
+    Phí vận chuyển: <span id="shippingFee">0 VNĐ</span>
 </div>
 <div class="checkout__order__discount">
     Tiền giảm: <span id="discountAmount">0 VNĐ</span>
@@ -311,6 +327,32 @@
     <script src="js/main.js"></script>
 
     <script>
+
+// Khi người dùng thay đổi phương thức vận chuyển
+$('#shipping_method').on('change', function() {
+        let shippingMethod = $(this).val();
+        let shippingFee = 0;
+        
+        if (shippingMethod === 'Vận Chuyển Thường') {
+            shippingFee = 15000;
+        } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
+            shippingFee = 30000;
+        } else {
+            shippingFee = 0;
+        }
+        
+        // Cập nhật hiển thị phí vận chuyển
+        $('#shippingFee').text(formatCurrency(shippingFee));
+
+        // Tính lại tổng tiền cuối: Tổng tiền đơn hàng - tiền giảm + phí vận chuyển
+        let orderTotal = parseFloat($('#orderTotal').data('amount'));
+        let discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
+        let finalTotal = orderTotal - discountAmount + shippingFee;
+        
+        $('#finalTotal').text(formatCurrency(finalTotal));
+    });
+
+
 $(document).on('click', '.select-coupon', function() {
     const code = $(this).data('code');
     const currentTotal = parseFloat($('#orderTotal').data('amount'));
@@ -351,11 +393,6 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 </script>
-
-
-
-
-
 
     <?php
 
