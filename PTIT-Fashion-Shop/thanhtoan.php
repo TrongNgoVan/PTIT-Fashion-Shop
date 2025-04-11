@@ -371,6 +371,7 @@
                                         <?= number_format($total, 0, '', '.') . " VNĐ" ?>
                                     </span>
                                 </div>
+                                
                                 <div class="checkout__order__shipping">
                                     Phí vận chuyển: <span id="shippingFee">0 VNĐ</span>
                                 </div>
@@ -417,31 +418,33 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <!-- Thêm sau các thẻ script khác -->
+<script src="js/shipping.js"></script>
 
     <script>
-        // Khi người dùng thay đổi phương thức vận chuyển
-        $('#shipping_method').on('change', function() {
-            let shippingMethod = $(this).val();
-            let shippingFee = 0;
+        // // Khi người dùng thay đổi phương thức vận chuyển
+        // $('#shipping_method').on('change', function() {
+        //     let shippingMethod = $(this).val();
+        //     let shippingFee = 0;
 
-            if (shippingMethod === 'Vận Chuyển Thường') {
-                shippingFee = 15000;
-            } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
-                shippingFee = 30000;
-            } else {
-                shippingFee = 0;
-            }
+        //     if (shippingMethod === 'Vận Chuyển Thường') {
+        //         shippingFee = 15000;
+        //     } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
+        //         shippingFee = 30000;
+        //     } else {
+        //         shippingFee = 0;
+        //     }
 
-            // Cập nhật hiển thị phí vận chuyển
-            $('#shippingFee').text(formatCurrency(shippingFee));
+        //     // Cập nhật hiển thị phí vận chuyển
+        //     $('#shippingFee').text(formatCurrency(shippingFee));
 
-            // Tính lại tổng tiền cuối: Tổng tiền đơn hàng - tiền giảm + phí vận chuyển
-            let orderTotal = parseFloat($('#orderTotal').data('amount'));
-            let discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
-            let finalTotal = orderTotal - discountAmount + shippingFee;
+        //     // Tính lại tổng tiền cuối: Tổng tiền đơn hàng - tiền giảm + phí vận chuyển
+        //     let orderTotal = parseFloat($('#orderTotal').data('amount'));
+        //     let discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
+        //     let finalTotal = orderTotal - discountAmount + shippingFee;
 
-            $('#finalTotal').text(formatCurrency(finalTotal));
-        });
+        //     $('#finalTotal').text(formatCurrency(finalTotal));
+        // });
 
 
         $(document).on('click', '.select-coupon', function() {
