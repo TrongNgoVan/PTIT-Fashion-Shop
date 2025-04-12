@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -23,7 +22,6 @@
     <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
-
 <body>
     <?php
     session_start();
@@ -33,34 +31,27 @@
         exit();
     }
     ?>
+    
+    <?php require('components/header.php'); ?>
 
     <?php
-    require('components/header.php');
-
-    ?>
-    <?php
-
-
-    //lay id goi edit
+    // Lấy id đơn hàng
     $id = $_GET['id'];
-
-    //ket noi csdl
+    
+    // Kết nối CSDL
     require('db/conn.php');
 
-    $sql_str = "select 
-        * from orders where id=$id";
-    // echo $sql_str; exit;   //debug cau lenh
+    // Hàm định dạng tiền tệ
+    function formatCurrency($amount) {
+        return number_format($amount, 0, ',', '.') . ' VNĐ';
+    }
 
+    // Lấy thông tin đơn hàng
+    $sql_str = "SELECT * FROM orders WHERE id = $id";
     $res = mysqli_query($conn, $sql_str);
-
     $row = mysqli_fetch_assoc($res);
 
-
-
-    ?>
-
-    <?php
-    // Danh sách trạng thái hiển thị
+    // Danh sách trạng thái đơn hàng
     $status_steps = [
         "Đơn Hàng Đã Đặt",
         "Đã Xác Nhận Đơn Hàng",
@@ -68,7 +59,6 @@
         "Đã Nhận Được Hàng",
         "Đánh Giá"
     ];
-
 
     // Ánh xạ trạng thái CSDL -> trạng thái giao diện
     $map_status = [
@@ -82,18 +72,19 @@
     $order_status = $row['status'];
     $status_dates = [
         "Đơn Hàng Đã Đặt"        => $row['created_at'] ?? null,
-        "Đã Xác Nhận Đơn Hàng" => $row['updated_at'] ?? null,
-        "Đã Giao Cho ĐVVC"       => $row['updated_at'] ?? null,
-        "Đã Nhận Được Hàng"      => $row['updated_at'] ?? null
+        "Đã Xác Nhận Đơn Hàng"    => $row['updated_at'] ?? null,
+        "Đã Giao Cho ĐVVC"        => $row['updated_at'] ?? null,
+        "Đã Nhận Được Hàng"       => $row['updated_at'] ?? null
     ];
 
-    // Nếu đơn hàng bị hủy, không tô màu xanh
+    // Nếu đơn bị hủy, đặt chỉ số trạng thái = -1
     if ($order_status === "Cancelled") {
         $status_index = -1;
     } else {
         $status_index = array_search($map_status[$order_status], $status_steps);
     }
 
+    // Danh sách trạng thái thanh toán
     $payment_steps = [
         "Chưa thanh toán",
         "Thanh toán thiếu",
@@ -101,24 +92,41 @@
         "Thanh toán thừa"
     ];
 
-
-    // Lấy trạng thái thanh toán từ CSDL (giả sử trường payment_status trong bảng orders)
-    $payment_status = $row['status_pay']; // Cần đảm bảo trường này tồn tại trong CSDL
+    // Lấy trạng thái thanh toán và số tiền đã thanh toán từ CSDL
+    $payment_status = $row['status_pay']; // Ví dụ: "Thanh toán thiếu" hoặc "Thanh toán thừa"
+    $amount_paid = $row['tiendachuyen'] ?? 0; // Số tiền khách hàng đã thanh toán; nếu chưa có thì mặc định 0
+    $total_price = $row['total_price']; // Tổng tiền đơn hàng
     $payment_index = array_search($payment_status, $payment_steps);
+
+    // Tính hiệu số thanh toán (nếu quá hay thiếu)
+    $payment_diff = 0;
+    $diff_str = "";
+    if ($payment_status === "Thanh toán thừa") {
+        $payment_diff = $amount_paid - $total_price;
+        if ($payment_diff > 0) {
+            $diff_str = "Thanh toán thừa: " . formatCurrency($payment_diff);
+        }
+    } elseif ($payment_status === "Thanh toán thiếu") {
+        $payment_diff = $total_price - $amount_paid;
+        if ($payment_diff > 0) {
+            $diff_str = "Thanh toán thiếu: " . formatCurrency($payment_diff);
+        }
+    }
     ?>
 
+    <!-- Hiển thị các bước trạng thái đơn hàng -->
     <div class="container mt-4">
         <div class="card shadow-lg border-0 p-4">
             <div class="d-flex justify-content-between align-items-center text-center">
-                <?php
-                for ($i = 0; $i < count($status_steps); $i++):
-                    // Nếu đơn chưa bị hủy và trạng thái này đã hoàn thành => màu xanh
+                <?php for ($i = 0; $i < count($status_steps); $i++): 
                     $completed = ($status_index !== -1 && $i <= $status_index) ? "completed" : "";
                     $date_text = isset($status_dates[$status_steps[$i]]) ? date("H:i d-m-Y", strtotime($status_dates[$status_steps[$i]])) : "";
                 ?>
                     <div class="step <?= $completed ?>">
-                        <div class="icon"><i class="fa 
-                        <?= $i == 0 ? 'fa-file-text' : ($i == 1 ? 'fa-dollar' : ($i == 2 ? 'fa-truck' : ($i == 3 ? 'fa-dropbox' : 'fa-star'))) ?>"></i>
+                        <div class="icon">
+                            <i class="fa 
+                                <?= $i == 0 ? 'fa-file-text' : ($i == 1 ? 'fa-dollar' : ($i == 2 ? 'fa-truck' : ($i == 3 ? 'fa-dropbox' : 'fa-star'))) ?>">
+                            </i>
                         </div>
                         <p><?= $status_steps[$i] ?></p>
                         <small class="date"><?= $date_text ?></small>
@@ -130,6 +138,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Hiển thị các bước trạng thái thanh toán -->
     <div class="container mt-4">
         <div class="card shadow-lg border-0 p-4">
             <div class="d-flex justify-content-between align-items-center text-center">
@@ -137,9 +147,10 @@
                     $active = $i <= $payment_index ? "completed" : "";
                 ?>
                     <div class="step <?= $active ?>">
-                        <div class="icon"><i class="fa 
-                        <?= $i == 0 ? 'fa-times-circle' : ($i == 1 ? 'fa-exclamation-circle' : ($i == 2 ? 'fa-check-circle' :
-                                    'fa-plus-circle')) ?>"></i>
+                        <div class="icon">
+                            <i class="fa 
+                                <?= $i == 0 ? 'fa-times-circle' : ($i == 1 ? 'fa-exclamation-circle' : ($i == 2 ? 'fa-check-circle' : 'fa-plus-circle')) ?>">
+                            </i>
                         </div>
                         <p><?= $payment_steps[$i] ?></p>
                     </div>
@@ -148,27 +159,21 @@
                     <?php endif; ?>
                 <?php endfor; ?>
             </div>
+            <?php if (!empty($diff_str)): ?>
+                <div class="text-end mt-3">
+                    <h5 class="fw-bold text-danger"><?= $diff_str ?></h5>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
     <style>
-        .step.payment .icon {
-            background-color: #007bff;
-            /* Màu chủ đạo khác */
-        }
-
-        .completed.payment .icon {
-            background-color: #17a2b8;
-            /* Màu khi hoàn thành */
-        }
-
         .step {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 120px;
         }
-
         .icon {
             width: 50px;
             height: 50px;
@@ -181,42 +186,33 @@
             justify-content: center;
             font-size: 20px;
         }
-
         .line {
             flex: 1;
             height: 4px;
             background-color: #ccc;
-            /* Mặc định màu xám */
             margin: 0 10px;
         }
-
         .completed .icon,
-        .completed+.line {
+        .completed + .line {
             background-color: #28a745;
-            /* Màu xanh khi hoàn thành */
         }
-
         .date {
             font-size: 12px;
             color: gray;
         }
-
         .small-currency {
             font-size: 1.1rem;
-            /* Giảm kích thước font theo ý bạn */
         }
-
         .discount {
             color: red;
-            /* Màu đỏ cho giảm giá */
             font-weight: bold;
-            /* In đậm nếu cần */
         }
     </style>
+
+    <!-- Thông tin khách hàng & chi tiết đơn hàng -->
     <div class="container mt-4">
         <div class="card shadow-lg border-0">
             <div class="card-body">
-
                 <div class="row">
                     <!-- Thông tin khách hàng -->
                     <div class="col-md-4">
@@ -268,21 +264,17 @@
                                 <tbody>
                                     <?php
                                     $sql = "SELECT *, products.name AS pname, order_details.price AS oprice  
-                                                FROM products, order_details
-                                                WHERE products.id = order_details.product_id 
-                                                AND order_id = $id";
+                                            FROM products, order_details
+                                            WHERE products.id = order_details.product_id 
+                                            AND order_id = $id";
                                     $res = mysqli_query($conn, $sql);
                                     $stt = 0;
-                                    $tongtien = 0;
                                     while ($row1 = mysqli_fetch_assoc($res)) {
-
-                                        // 
                                     ?>
                                         <tr>
                                             <td class="text-center"><?= ++$stt ?></td>
                                             <td>
                                                 <img src="/PTIT_SHOP/quantri/<?= $row1['images'] ?>" style="max-width: 100px;">
-
                                             </td>
                                             <td><?= $row1['pname'] ?></td>
                                             <td class="text-end"><?= number_format($row1['oprice'], 0, '', '.') ?> VNĐ</td>
@@ -304,7 +296,6 @@
                             <div class="text-end mt-3">
                                 <h5 class="fw-bold">Tổng tiền: <?= number_format($row['total_price'], 0, '', '.') ?> VNĐ</h5>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -312,13 +303,9 @@
         </div>
     </div>
 
+    <?php require('components/footer.php'); ?>
 
-
-    <?php
-
-    require('components/footer.php');
-
-    ?>
+    <!-- JS Scripts -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -327,9 +314,5 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-
-
-
 </body>
-
 </html>
