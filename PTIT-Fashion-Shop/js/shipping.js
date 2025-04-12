@@ -1,8 +1,9 @@
 function updateShippingFee() {
-    // Lấy giá trị hiện tại của địa chỉ và phương thức
+    // Lấy giá trị hiện tại của địa chỉ, phương thức và mã giảm giá
     const address = $('input[name="address"]').val();
     const shippingMethod = $('#shipping_method').val();
-    
+    const discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
+
     // Tách tỉnh từ địa chỉ
     const province = address.split(',').pop().trim();
     
@@ -21,8 +22,7 @@ function updateShippingFee() {
     // Tính phí hỏa tốc
     if (shippingMethod === 'Nhận tại cửa hàng') {
         baseFee = 0;
-    }
-    if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
+    } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
         baseFee += 10000;
     }
     
@@ -31,8 +31,7 @@ function updateShippingFee() {
     
     // Tính toán tổng cuối
     const orderTotal = parseFloat($('#orderTotal').data('amount'));
-    const discount = parseFloat($('#discountAmountInput').val()) || 0;
-    const finalTotal = orderTotal - discount + baseFee;
+    const finalTotal = orderTotal - discountAmount + baseFee;
     
     $('#finalTotal').text(formatCurrency(finalTotal));
 }
@@ -42,12 +41,15 @@ $(document).ready(function() {
     // Chạy lần đầu
     updateShippingFee();
     
-    // Theo dõi mọi thay đổi
+    // Theo dõi các sự kiện
     $('#shipping_method, input[name="address"]').on('change input', updateShippingFee);
     
-    // Thêm trigger khi chọn địa chỉ từ modal
+    // Thêm sự kiện cho mã giảm giá
+    $('#discountAmountInput').on('change', updateShippingFee);
+    
+    // Trigger khi chọn địa chỉ từ modal
     $(document).on('click', '.btn-select-address', function() {
-        setTimeout(updateShippingFee, 100); // Trigger sau 100ms để đảm bảo DOM đã cập nhật
+        setTimeout(updateShippingFee, 100);
     });
 });
 

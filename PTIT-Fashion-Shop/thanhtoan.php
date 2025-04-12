@@ -371,7 +371,7 @@
                                         <?= number_format($total, 0, '', '.') . " VNĐ" ?>
                                     </span>
                                 </div>
-                                
+
                                 <div class="checkout__order__shipping">
                                     Phí vận chuyển: <span id="shippingFee">0 VNĐ</span>
                                 </div>
@@ -380,6 +380,7 @@
                                 </div>
                                 <!-- Input ẩn để lưu số tiền giảm giá đã áp dụng -->
                                 <input type="hidden" name="discount_amount" id="discountAmountInput" value="0">
+
 
                                 <div class="checkout__order__final">
                                     Thành tiền: <span id="finalTotal">
@@ -419,53 +420,36 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Thêm sau các thẻ script khác -->
-<script src="js/shipping.js"></script>
+    <script src="js/shipping.js"></script>
 
     <script>
-        // // Khi người dùng thay đổi phương thức vận chuyển
-        // $('#shipping_method').on('change', function() {
-        //     let shippingMethod = $(this).val();
-        //     let shippingFee = 0;
-
-        //     if (shippingMethod === 'Vận Chuyển Thường') {
-        //         shippingFee = 15000;
-        //     } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
-        //         shippingFee = 30000;
-        //     } else {
-        //         shippingFee = 0;
-        //     }
-
-        //     // Cập nhật hiển thị phí vận chuyển
-        //     $('#shippingFee').text(formatCurrency(shippingFee));
-
-        //     // Tính lại tổng tiền cuối: Tổng tiền đơn hàng - tiền giảm + phí vận chuyển
-        //     let orderTotal = parseFloat($('#orderTotal').data('amount'));
-        //     let discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
-        //     let finalTotal = orderTotal - discountAmount + shippingFee;
-
-        //     $('#finalTotal').text(formatCurrency(finalTotal));
-        // });
-
-
+        // Hàm xử lý khi chọn mã giảm giá
         $(document).on('click', '.select-coupon', function() {
             const code = $(this).data('code');
-            const currentTotal = parseFloat($('#orderTotal').data('amount'));
+            const orderTotal = parseFloat($('#orderTotal').data('amount'));
+
+            // Lấy phí vận chuyển hiện tại (đã được tính toán trước đó)
+            const shippingFee = parseFloat($('#shippingFee').text().replace(/[^\d]/g, '')) || 0;
+
+            // Tổng tiền trước giảm giá (bao gồm cả phí vận chuyển)
+            const subtotal = orderTotal + shippingFee;
 
             $.ajax({
                 url: 'check_coupon.php',
                 method: 'POST',
                 data: {
                     discount_code: code,
-                    currentTotal: currentTotal
+                    currentTotal: subtotal // Gửi tổng tiền bao gồm cả phí vận chuyển
                 },
                 dataType: 'json',
                 success: function(response) {
                     if (response.status === 'error') {
                         alert(response.message);
                     } else {
-                        // Nếu mã giảm giá hợp lệ, cập nhật các phần hiển thị DOM
                         const discountAmount = parseFloat(response.discountAmount);
-                        const finalTotal = currentTotal - discountAmount;
+                        const finalTotal = subtotal - discountAmount;
+
+                        // Cập nhật giao diện
                         $('#selectedDiscount').val(code);
                         $('#discountAmount').text(formatCurrency(discountAmount));
                         $('#finalTotal').text(formatCurrency(finalTotal));
@@ -474,10 +458,20 @@
                     }
                 },
                 error: function() {
-                    alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+                    alert("Có lỗi xảy ra khi áp dụng mã giảm giá");
                 }
             });
         });
+
+        // Hàm tính toán tổng tiền hoàn chỉnh
+        function calculateTotal() {
+            const orderTotal = parseFloat($('#orderTotal').data('amount'));
+            const shippingFee = parseFloat($('#shippingFee').text().replace(/[^\d]/g, '')) || 0;
+            const discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
+
+            const finalTotal = orderTotal + shippingFee - discountAmount;
+            $('#finalTotal').text(formatCurrency(finalTotal));
+        }
 
         // Hàm định dạng tiền tệ
         function formatCurrency(amount) {
@@ -486,6 +480,19 @@
                 currency: 'VND'
             }).format(amount);
         }
+
+        // Gọi hàm khi có thay đổi
+        $(document).ready(function() {
+            // Theo dõi các sự kiện thay đổi
+            $('#shipping_method, input[name="address"], #discountAmountInput').on('change input', function() {
+                setTimeout(calculateTotal, 100);
+            });
+
+            // Khi chọn địa chỉ mới
+            $(document).on('click', '.btn-select-address', function() {
+                setTimeout(calculateTotal, 200);
+            });
+        });
 
         // Xử lý mở modal
         $('#changeAddressBtn').click(function() {
