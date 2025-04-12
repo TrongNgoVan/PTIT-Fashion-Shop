@@ -35,12 +35,31 @@
     <?php
     session_start();
     require_once('./db/conn.php');
+    function convertCurrencyToFloat($str) {
+        // Loại bỏ các ký tự không phải số và dấu chấm thập phân
+        // Nếu tiền tệ của bạn sử dụng dấu chấm làm dấu phân cách hàng nghìn,
+        // bạn có thể loại bỏ dấu chấm trước đó, thay vào đó, nếu có dấu phẩy làm dấu thập phân, chuyển đổi thành dấu chấm
+        // Ví dụ: "2.155.000 đ" -> "2155000"
+        // Hoặc "2,155,000 VNĐ" -> "2155000"
+    
+        // Loại bỏ tất cả ký tự không phải số
+        $cleaned = preg_replace('/[^\d.]/', '', $str);
+    
+        // Nếu chuỗi có nhiều dấu chấm (ví dụ sử dụng dấu chấm làm ngăn cách hàng nghìn)
+        // Bạn có thể loại bỏ tất cả dấu chấm và (nếu cần) thêm lại dấu chấm thập phân nếu có phần thập phân.
+        // Ở đây, giả sử số tiền không có phần thập phân, nên chỉ loại bỏ tất cả dấu chấm.
+        if(substr_count($cleaned, '.') > 1) {
+            $cleaned = str_replace('.', '', $cleaned);
+        }
+    
+        return floatval($cleaned);
+    }
     $is_homepage = false;
     $name = $phone = $email = $address = "";
     $uid = 0;
-    $total_end = 0.0;
+
     $thanhtoan = [];
-    $tienvanchuyen = 0.0;
+
     if (isset($_SESSION['thanhtoan'])) {
         $thanhtoan = $_SESSION['thanhtoan'];
     }
@@ -81,36 +100,35 @@
 
 
     if (isset($_POST['btDathang'])) {
+        $address_luu = mysqli_real_escape_string($conn, $_POST['address']);
+        $name_luu = mysqli_real_escape_string($conn, $_POST['name']);
+        $phone_luu = mysqli_real_escape_string($conn, $_POST['phone']);
+
+        $tiensanpham = isset($_POST['product_total']) ? convertCurrencyToFloat($_POST['product_total']) : 0;
+$phivanchuyen = isset($_POST['shipping_fee']) ? convertCurrencyToFloat($_POST['shipping_fee']) : 0;
+$giamgia = isset($_POST['discount_amount']) ? convertCurrencyToFloat($_POST['discount_amount']) : 0;
+$total_end = $tiensanpham + $phivanchuyen - $giamgia;
+
         // Lấy phương thức vận chuyển và thanh toán từ form
         $shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
         $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
 
         // Tính phí vận chuyển theo phương thức
-        if ($shipping_method == 'Vận Chuyển Thường') {
-            $tienvanchuyen = 15000;
-        } else if ($shipping_method == 'Vận Chuyển Hỏa Tốc') {
-            $tienvanchuyen = 30000;
-        } else {
-            $tienvanchuyen = 0;
-        }
 
         // Tính tổng đơn hàng từ các sản phẩm
-        foreach ($thanhtoan as $item) {
-            $total_end += $item['qty'] * $item['disscounted_price'];
-        }
-        $discount_amount = 0.0;
-        if (isset($_POST['discount_amount']) && is_numeric($_POST['discount_amount'])) {
-            $discount_amount = floatval($_POST['discount_amount']);
-        }
+        // foreach ($thanhtoan as $item) {
+        //     $total_end += $item['qty'] * $item['disscounted_price'];
+        // }
+ 
 
-        // Trừ tiền giảm giá và cộng phí vận chuyển
-        $total_end = $total_end - $discount_amount + $tienvanchuyen;
+
+         
 
         $tiendachuyen = 0.0;
 
 
         // Thêm đơn hàng vào cơ sở dữ liệu
-        $sqli = "INSERT INTO orders VALUES (0, $uid, '$name', '$address', '$phone', '$email', 'Processing', NOW(), NOW(), $total_end, $tiendachuyen, '$shipping_method', '$payment_method', 'Chưa thanh toán')";
+        $sqli = "INSERT INTO orders VALUES (0, $uid, '$name_luu', '$address_luu', '$phone_luu', '$email', 'Processing', NOW(), NOW(), $total_end,$tiensanpham, $phivanchuyen,$giamgia, $tiendachuyen, '$shipping_method', '$payment_method', 'Chưa thanh toán')";
 
         if (mysqli_query($conn, $sqli)) {
             $last_order_id = mysqli_insert_id($conn);
@@ -131,9 +149,9 @@
                 $_SESSION['donhang'] = [
                     'order_id' => $last_order_id,
                     'user_id' => $uid,
-                    'name' => $name,
-                    'address' => $address,
-                    'phone' => $phone,
+                    'name' => $name_luu,
+                    'address' => $address_luu,
+                    'phone' => $phone_luu,
                     'email' => $email,
                     'total' => $total_end,
                     'tiendachuyen' => $tiendachuyen,
@@ -354,7 +372,7 @@
                                     // var_dump($thanhtoan);die();
                                     $count = 0; //số thứ tự
                                     $total = 0;
-                                    $total += $tienvanchuyen;
+                                    // $total += $tienvanchuyen;
                                     foreach ($thanhtoan as $item) {
                                         $total += $item['qty'] * $item['disscounted_price'];
                                     ?>
@@ -380,6 +398,9 @@
                                 </div>
                                 <!-- Input ẩn để lưu số tiền giảm giá đã áp dụng -->
                                 <input type="hidden" name="discount_amount" id="discountAmountInput" value="0">
+                                <input type="hidden" name="shipping_fee" id="shippingFeeInput" value="0">
+                                <input type="hidden" name="product_total" id="productTotalInput" value="0">
+                                <input type="hidden" name="final_total" id="finalTotalInput" value="0">
 
 
                                 <div class="checkout__order__final">
@@ -471,7 +492,14 @@
 
             const finalTotal = orderTotal + shippingFee - discountAmount;
             $('#finalTotal').text(formatCurrency(finalTotal));
+            $('#productTotalInput').val(orderTotal);
+    $('#shippingFeeInput').val(shippingFee);
+    $('#discountAmountInput').val(discountAmount);
+    $('#finalTotalInput').val(finalTotal);
         }
+
+       
+
 
         // Hàm định dạng tiền tệ
         function formatCurrency(amount) {

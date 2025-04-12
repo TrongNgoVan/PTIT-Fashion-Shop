@@ -39,7 +39,7 @@
 
     ?>
     <?php
-        
+
 
     //lay id goi edit
     $id = $_GET['id'];
@@ -68,7 +68,7 @@
         "Đã Nhận Được Hàng",
         "Đánh Giá"
     ];
-    
+
 
     // Ánh xạ trạng thái CSDL -> trạng thái giao diện
     $map_status = [
@@ -96,12 +96,12 @@
 
     $payment_steps = [
         "Chưa thanh toán",
-        "Thanh toán thiếu", 
+        "Thanh toán thiếu",
         "Đã thanh toán",
         "Thanh toán thừa"
     ];
 
-    
+
     // Lấy trạng thái thanh toán từ CSDL (giả sử trường payment_status trong bảng orders)
     $payment_status = $row['status_pay']; // Cần đảm bảo trường này tồn tại trong CSDL
     $payment_index = array_search($payment_status, $payment_steps);
@@ -131,35 +131,37 @@
         </div>
     </div>
     <div class="container mt-4">
-    <div class="card shadow-lg border-0 p-4">
-        <div class="d-flex justify-content-between align-items-center text-center">
-            <?php for ($i = 0; $i < count($payment_steps); $i++): 
-                $active = $i <= $payment_index ? "completed" : "";
-            ?>
-                <div class="step <?= $active ?>">
-                    <div class="icon"><i class="fa 
-                        <?= $i == 0 ? 'fa-times-circle' : 
-                               ($i == 1 ? 'fa-exclamation-circle' : 
-                               ($i == 2 ? 'fa-check-circle' : 
-                               'fa-plus-circle')) ?>"></i>
+        <div class="card shadow-lg border-0 p-4">
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <?php for ($i = 0; $i < count($payment_steps); $i++):
+                    $active = $i <= $payment_index ? "completed" : "";
+                ?>
+                    <div class="step <?= $active ?>">
+                        <div class="icon"><i class="fa 
+                        <?= $i == 0 ? 'fa-times-circle' : ($i == 1 ? 'fa-exclamation-circle' : ($i == 2 ? 'fa-check-circle' :
+                                    'fa-plus-circle')) ?>"></i>
+                        </div>
+                        <p><?= $payment_steps[$i] ?></p>
                     </div>
-                    <p><?= $payment_steps[$i] ?></p>
-                </div>
-                <?php if ($i < count($payment_steps) - 1): ?>
-                    <div class="line <?= $active ?>"></div>
-                <?php endif; ?>
-            <?php endfor; ?>
+                    <?php if ($i < count($payment_steps) - 1): ?>
+                        <div class="line <?= $active ?>"></div>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </div>
         </div>
     </div>
-</div>
 
     <style>
         .step.payment .icon {
-    background-color: #007bff; /* Màu chủ đạo khác */
-}
-.completed.payment .icon {
-    background-color: #17a2b8; /* Màu khi hoàn thành */
-}
+            background-color: #007bff;
+            /* Màu chủ đạo khác */
+        }
+
+        .completed.payment .icon {
+            background-color: #17a2b8;
+            /* Màu khi hoàn thành */
+        }
+
         .step {
             display: flex;
             flex-direction: column;
@@ -197,6 +199,18 @@
         .date {
             font-size: 12px;
             color: gray;
+        }
+
+        .small-currency {
+            font-size: 1.1rem;
+            /* Giảm kích thước font theo ý bạn */
+        }
+
+        .discount {
+            color: red;
+            /* Màu đỏ cho giảm giá */
+            font-weight: bold;
+            /* In đậm nếu cần */
         }
     </style>
     <div class="container mt-4">
@@ -260,9 +274,10 @@
                                     $res = mysqli_query($conn, $sql);
                                     $stt = 0;
                                     $tongtien = 0;
-                                     while ($row1 = mysqli_fetch_assoc($res)) {
-                                   
-                                    // ?>
+                                    while ($row1 = mysqli_fetch_assoc($res)) {
+
+                                        // 
+                                    ?>
                                         <tr>
                                             <td class="text-center"><?= ++$stt ?></td>
                                             <td>
@@ -278,8 +293,18 @@
                                 </tbody>
                             </table>
                             <div class="text-end mt-3">
+                                <h5 class="fw-bold">Tiền sản phẩm: <?= number_format($row['tiensanpham'], 0, '', '.') ?> VNĐ</h5>
+                            </div>
+                            <div class="text-end mt-3">
+                                <h5 class="currency small-currency">Phí vận chuyển: <?= number_format($row['phivanchuyen'], 0, '', '.') ?> VNĐ</h5>
+                            </div>
+                            <div class="text-end mt-3">
+                                <h5 class="currency discount small-currency">Giảm giá: -<?= number_format($row['giamgia'], 0, '', '.') ?> VNĐ</h5>
+                            </div>
+                            <div class="text-end mt-3">
                                 <h5 class="fw-bold">Tổng tiền: <?= number_format($row['total_price'], 0, '', '.') ?> VNĐ</h5>
                             </div>
+
                         </div>
                     </div>
                 </div>
