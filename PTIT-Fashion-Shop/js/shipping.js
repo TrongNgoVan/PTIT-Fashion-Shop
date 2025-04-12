@@ -9,11 +9,11 @@ function updateShippingFee() {
     
     // Tính phí cơ bản
     let baseFee = 0;
-    if (province === 'Hà Nội') {
+    if (province === 'Thành phố Hà Nội') {
         baseFee = 15000;
-    } else if (province === 'Thanh Hóa') {
+    } else if (province === 'Tỉnh Thanh Hóa') {
         baseFee = 25000;
-    } else if (province === 'Nam Định') {
+    } else if (province === 'Tỉnh Nam Định') {
         baseFee = 20000;
     } else {
         baseFee = 30000; // Mặc định
