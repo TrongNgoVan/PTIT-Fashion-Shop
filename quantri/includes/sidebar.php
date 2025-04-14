@@ -74,6 +74,19 @@
   </li>
 
   <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanner" aria-expanded="true" aria-controls="collapseBanner">
+      <i class="fas fa-image"></i>
+      <span>Banner quảng cáo</span>
+    </a>
+    <div id="collapseBanner" class="collapse" aria-labelledby="headingBanner" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="./listbanner.php">Liệt kê</a>
+        <a class="collapse-item" href="./thembanner.php">Thêm mới</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
       aria-controls="collapseTwo">
       <i class="fab fa-product-hunt"></i>
