@@ -1,8 +1,4 @@
 <?php
-// addbanner.php
-
-// Khởi động session nếu cần hiển thị thông báo lỗi (tùy chọn)
-// session_start();
 
 require('conn.php'); // Kết nối CSDL
 
@@ -69,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } else {
     // Nếu truy cập trực tiếp file này mà không qua form
-    header("Location: addbanner_form.php");
+    header("Location: thembanner.php");
     exit();
 }
 ?>
