@@ -149,6 +149,11 @@
                 </a>
             </div>
             <?php
+            require('./db/conn.php');
+
+            $sql_banner = "SELECT * FROM banner WHERE status = 1";
+            $result_banner = mysqli_query($conn, $sql_banner);
+            $banner = mysqli_fetch_assoc($result_banner);
 
 
             if (isset($_SESSION["user"])) {
@@ -203,7 +208,7 @@
                             <select name="danhmuc">
                                 <option value='*'>Tất cả danh mục</option>
                                 <?php
-                                require('./db/conn.php');
+
                                 $sql_str = "select * from categories order by name";
                                 $result = mysqli_query($conn, $sql_str);
                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -303,20 +308,22 @@
 
                 <?php
                 if ($is_homepage) {
+                    if ($banner) {
                 ?>
-                    <div class="hero__item set-bg" data-setbg="img/banner.jpg">
-                        <div class="hero__text">
-                            <span>Rẻ, Đẹp, Chất Lượng</span>
-                            <h2>Phong Cách<br /> Sáng Tạo <br /> Khác Biệt</h2>
+                        <div class="hero__item set-bg" data-setbg="<?php echo $banner['image_path']; ?>">
+                            <div class="hero__text">
+                                <span>Rẻ, Đẹp, Chất Lượng</span>
+                                <h2>Phong Cách<br /> Sáng Tạo <br /> Khác Biệt</h2>
 
-                            <a href="shop.php" class="primary-btn">SHOP NOW</a>
-                            <div class="marquee">
-                                <p>🔥 Giảm giá 50% cho đơn hàng đầu tiên! 🚀 Mua ngay kẻo lỡ! 🎁</p>
+                                <a href="<?php echo $banner['link_url']; ?>" class="primary-btn">SHOP NOW</a>
+                                <div class="marquee">
+                                    <p>🔥🔥 <?php echo htmlspecialchars($banner['hot_text']); ?> 🎁 🔥 🚀</p>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
                 <?php
+                    }
                 }
                 ?>
 
