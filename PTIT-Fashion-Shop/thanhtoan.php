@@ -448,27 +448,7 @@
     <script src="js/shipping.js"></script>
 
     <script>
-        // document.getElementById('btDathangtest').addEventListener('click', function(event) {
-        //     // Lấy các giá trị cần kiểm tra
-        //     const name = document.getElementById('name')?.value;
-        //     const phone = document.getElementById('phone')?.value;
-        //     const address = document.getElementById('address')?.value;
-        //     const shippingMethod = document.getElementById('shipping_method')?.value;
-        //     const paymentMethod = document.getElementById('payment_method')?.value;
 
-        //     let errorMsg = '';
-
-        //     if (!name) errorMsg += 'Vui lòng nhập tên người nhận.\n';
-        //     if (!phone) errorMsg += 'Vui lòng nhập số điện thoại.\n';
-        //     if (!address || address.includes('Chưa có thông tin')) errorMsg += 'Vui lòng nhập địa chỉ.\n';
-        //     if (!shippingMethod) errorMsg += 'Vui lòng chọn phương thức vận chuyển.\n';
-        //     if (!paymentMethod) errorMsg += 'Vui lòng chọn phương thức thanh toán.\n';
-
-        //     if (errorMsg) {
-        //         alert(errorMsg);
-        //         event.preventDefault(); // Chặn gửi form
-        //     }
-        // });
         document.addEventListener('DOMContentLoaded', function() {
             // Lấy đối tượng form
             const checkoutForm = document.getElementById('checkoutForm');
