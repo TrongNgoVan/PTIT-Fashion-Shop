@@ -92,7 +92,7 @@
             $name = $default['tennguoinhan'];
             $phone = $default['sodienthoai'];
         } else {
-            $address = "Chưa có thông tin nhận hàng";
+            $address = "";
         }
     }
 
@@ -307,38 +307,34 @@
             <div class="checkout__form">
                 <h4>Thông tin nhận hàng</h4>
                 <button id="changeAddressBtn" class="btn btn-primary">Thay đổi thông tin nhận hàng</button>
-                <form action="#" method="post">
+                <form id="checkoutForm" action="#" method="post">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
 
 
                             <div class="checkout__input">
                                 <p>Họ & tên <span>*</span></p>
-                                <input type="text" name="name" value="<?php echo $name; ?>">
+                                <input type="text" name="name" value="<?php echo $name; ?>" readonly>
                             </div>
-
-
                             <div class="checkout__input">
-
                                 <p>Địa chỉ nhận hàng:<span>*</span></p>
-                                <input type="text" placeholder="Địa chỉ" class="checkout__input__add" name="address" value="<?php echo $address; ?>">
-
+                                <input type="text" placeholder="Địa chỉ" class="checkout__input__add" name="address" value="<?php echo $address; ?>" readonly>
                             </div>
-
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Số điện thoại:<span>*</span></p>
-                                        <input type="text" name="phone" value="<?php echo $phone; ?>">
+                                        <input type="text" name="phone" value="<?php echo $phone; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email:<span>*</span></p>
-                                        <input type="text" name="email" value="<?php echo $email; ?>">
+                                        <input type="text" name="email" value="<?php echo $email; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
@@ -473,6 +469,38 @@
         //         event.preventDefault(); // Chặn gửi form
         //     }
         // });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy đối tượng form
+            const checkoutForm = document.getElementById('checkoutForm');
+
+            // Lắng nghe sự kiện submit của form
+            checkoutForm.addEventListener('submit', function(e) {
+                // Danh sách các trường cần kiểm tra (bạn có thể thêm hoặc bớt theo yêu cầu)
+                const requiredFields = ['name', 'address', 'phone', 'email'];
+                let missingInfo = false;
+                let errorMessage = "Vui lòng thêm thông tin nhận hàng:\n";
+
+                // Duyệt qua các trường cần kiểm tra
+                requiredFields.forEach(function(fieldName) {
+                    const field = checkoutForm.elements[fieldName];
+                    if (field && field.value.trim() === "") {
+                        missingInfo = true;
+                        errorMessage += "- " + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + "\n";
+                        // Bạn có thể thêm class để highlight trường bị lỗi, ví dụ:
+                        field.classList.add("input-error");
+                    } else if (field) {
+                        // Nếu trường có dữ liệu, xóa class lỗi nếu có
+                        field.classList.remove("input-error");
+                    }
+                });
+
+                // Nếu có thông tin chưa nhập, ngăn submit và hiển thị cảnh báo
+                if (missingInfo) {
+                    e.preventDefault();
+                    alert(errorMessage);
+                }
+            });
+        });
         $(document).on('click', '.select-coupon', function() {
             const code = $(this).data('code');
             const orderTotal = parseFloat($('#orderTotal').data('amount'));
