@@ -85,6 +85,19 @@
       </div>
     </div>
   </li>
+  <li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVoucher" aria-expanded="true" aria-controls="collapseVoucher">
+    <i class="fas fa-ticket-alt"></i>
+    <span>Voucher</span>
+  </a>
+  <div id="collapseVoucher" class="collapse" aria-labelledby="headingVoucher" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="./listvoucher.php">Liệt kê</a>
+      <a class="collapse-item" href="./themvoucher.php">Thêm mới</a>
+    </div>
+  </div>
+</li>
+
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"

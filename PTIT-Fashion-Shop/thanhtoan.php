@@ -35,23 +35,24 @@
     <?php
     session_start();
     require_once('./db/conn.php');
-    function convertCurrencyToFloat($str) {
+    function convertCurrencyToFloat($str)
+    {
         // Loại bỏ các ký tự không phải số và dấu chấm thập phân
         // Nếu tiền tệ của bạn sử dụng dấu chấm làm dấu phân cách hàng nghìn,
         // bạn có thể loại bỏ dấu chấm trước đó, thay vào đó, nếu có dấu phẩy làm dấu thập phân, chuyển đổi thành dấu chấm
         // Ví dụ: "2.155.000 đ" -> "2155000"
         // Hoặc "2,155,000 VNĐ" -> "2155000"
-    
+
         // Loại bỏ tất cả ký tự không phải số
         $cleaned = preg_replace('/[^\d.]/', '', $str);
-    
+
         // Nếu chuỗi có nhiều dấu chấm (ví dụ sử dụng dấu chấm làm ngăn cách hàng nghìn)
         // Bạn có thể loại bỏ tất cả dấu chấm và (nếu cần) thêm lại dấu chấm thập phân nếu có phần thập phân.
         // Ở đây, giả sử số tiền không có phần thập phân, nên chỉ loại bỏ tất cả dấu chấm.
-        if(substr_count($cleaned, '.') > 1) {
+        if (substr_count($cleaned, '.') > 1) {
             $cleaned = str_replace('.', '', $cleaned);
         }
-    
+
         return floatval($cleaned);
     }
     $is_homepage = false;
@@ -77,6 +78,7 @@
         while ($row = mysqli_fetch_assoc($result)) {
             $thongtin[] = $row;
         }
+        $email = $user['email'];
 
         // Lấy địa chỉ mặc định (là địa chỉ đầu tiên trong danh sách)
         if (count($thongtin) > 0) {
@@ -89,7 +91,6 @@
             ]);
             $name = $default['tennguoinhan'];
             $phone = $default['sodienthoai'];
-            $email = $user['email'];
         } else {
             $address = "Chưa có thông tin nhận hàng";
         }
@@ -100,14 +101,15 @@
 
 
     if (isset($_POST['btDathang'])) {
+
         $address_luu = mysqli_real_escape_string($conn, $_POST['address']);
         $name_luu = mysqli_real_escape_string($conn, $_POST['name']);
         $phone_luu = mysqli_real_escape_string($conn, $_POST['phone']);
 
         $tiensanpham = isset($_POST['product_total']) ? convertCurrencyToFloat($_POST['product_total']) : 0;
-$phivanchuyen = isset($_POST['shipping_fee']) ? convertCurrencyToFloat($_POST['shipping_fee']) : 0;
-$giamgia = isset($_POST['discount_amount']) ? convertCurrencyToFloat($_POST['discount_amount']) : 0;
-$total_end = $tiensanpham + $phivanchuyen - $giamgia;
+        $phivanchuyen = isset($_POST['shipping_fee']) ? convertCurrencyToFloat($_POST['shipping_fee']) : 0;
+        $giamgia = isset($_POST['discount_amount']) ? convertCurrencyToFloat($_POST['discount_amount']) : 0;
+        $total_end = $tiensanpham + $phivanchuyen - $giamgia;
 
         // Lấy phương thức vận chuyển và thanh toán từ form
         $shipping_method = mysqli_real_escape_string($conn, $_POST['shipping_method']);
@@ -119,10 +121,10 @@ $total_end = $tiensanpham + $phivanchuyen - $giamgia;
         // foreach ($thanhtoan as $item) {
         //     $total_end += $item['qty'] * $item['disscounted_price'];
         // }
- 
 
 
-         
+
+
 
         $tiendachuyen = 0.0;
 
@@ -175,8 +177,13 @@ $total_end = $tiensanpham + $phivanchuyen - $giamgia;
 
 
 
+
     require_once('components/header.php');
+
+
     ?>
+
+    <!-- nên nhớ nếu muốn hiển thị cái gì hay xử lý cái gì ngay trên giao diện thì bắt buộc phải dùng js , chứ không là nó sẽ gửi dưx liệu ngược lại cho server để server xử lý, lúc đó thì nó sẽ load lại -->
     <div id="discountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -422,6 +429,7 @@ $total_end = $tiensanpham + $phivanchuyen - $giamgia;
 
                                     <!-- ... Phần đơn hàng giữ nguyên ... -->
                                     <button type="submit" class="site-btn" name="btDathang" id="submitBtn">Đặt hàng</button>
+                                    <!-- <button type="submit" class="site-btn" name="btDathangtest" id="submitBtn">Đặt hàng</button> -->
 
                                 </div>
                             </div>
@@ -444,7 +452,27 @@ $total_end = $tiensanpham + $phivanchuyen - $giamgia;
     <script src="js/shipping.js"></script>
 
     <script>
-        // Hàm xử lý khi chọn mã giảm giá
+        // document.getElementById('btDathangtest').addEventListener('click', function(event) {
+        //     // Lấy các giá trị cần kiểm tra
+        //     const name = document.getElementById('name')?.value;
+        //     const phone = document.getElementById('phone')?.value;
+        //     const address = document.getElementById('address')?.value;
+        //     const shippingMethod = document.getElementById('shipping_method')?.value;
+        //     const paymentMethod = document.getElementById('payment_method')?.value;
+
+        //     let errorMsg = '';
+
+        //     if (!name) errorMsg += 'Vui lòng nhập tên người nhận.\n';
+        //     if (!phone) errorMsg += 'Vui lòng nhập số điện thoại.\n';
+        //     if (!address || address.includes('Chưa có thông tin')) errorMsg += 'Vui lòng nhập địa chỉ.\n';
+        //     if (!shippingMethod) errorMsg += 'Vui lòng chọn phương thức vận chuyển.\n';
+        //     if (!paymentMethod) errorMsg += 'Vui lòng chọn phương thức thanh toán.\n';
+
+        //     if (errorMsg) {
+        //         alert(errorMsg);
+        //         event.preventDefault(); // Chặn gửi form
+        //     }
+        // });
         $(document).on('click', '.select-coupon', function() {
             const code = $(this).data('code');
             const orderTotal = parseFloat($('#orderTotal').data('amount'));
@@ -493,12 +521,12 @@ $total_end = $tiensanpham + $phivanchuyen - $giamgia;
             const finalTotal = orderTotal + shippingFee - discountAmount;
             $('#finalTotal').text(formatCurrency(finalTotal));
             $('#productTotalInput').val(orderTotal);
-    $('#shippingFeeInput').val(shippingFee);
-    $('#discountAmountInput').val(discountAmount);
-    $('#finalTotalInput').val(finalTotal);
+            $('#shippingFeeInput').val(shippingFee);
+            $('#discountAmountInput').val(discountAmount);
+            $('#finalTotalInput').val(finalTotal);
         }
 
-       
+
 
 
         // Hàm định dạng tiền tệ
