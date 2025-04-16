@@ -141,8 +141,22 @@
                 $total = $item['qty'] * $item['disscounted_price'];
                 $sqli2 = "insert into order_details values 
             (0, $last_order_id, $masp,  $disscounted_price, $qty, $total, now(), now())";
+
                 // echo $sqli2, exit;
                 mysqli_query($conn, $sqli2);
+
+                $updateInventorySql = "UPDATE products 
+                SET stock = stock - $qty 
+                WHERE id = $masp";
+                mysqli_query($conn, $updateInventorySql);
+            }
+            // Nếu người dùng đã áp mã giảm giá, tăng số lượt sử dụng của mã đó
+            if (isset($_POST['discount_code']) && !empty($_POST['discount_code'])) {
+                $discountCode = mysqli_real_escape_string($conn, $_POST['discount_code']);
+                $updateVoucherSql = "UPDATE magiamgia 
+                                 SET so_luot_su_dung = so_luot_su_dung + 1 
+                                 WHERE code = '$discountCode'";
+                mysqli_query($conn, $updateVoucherSql);
             }
 
             // Lưu thông tin đơn hàng vào session nếu là Thanh toán Online
@@ -448,7 +462,6 @@
     <script src="js/shipping.js"></script>
 
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
             // Lấy đối tượng form
             const checkoutForm = document.getElementById('checkoutForm');
