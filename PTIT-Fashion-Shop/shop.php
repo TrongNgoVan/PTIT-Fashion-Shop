@@ -351,7 +351,7 @@
                                 timer: 1000
                             });
                             // Cập nhật số lượng giỏ (nếu có)
-                            // $('#cartCount').text(res.cartCount);
+                            $('#cartCount').text(res.cartCount);
                         } else {
                             // Thông báo lỗi
                             Swal.fire({

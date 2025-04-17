@@ -8,16 +8,20 @@ if (isset($_POST['id']) && isset($_POST['qty'])) {
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
-
+$countCart = 0;
     // Tìm sp trong cart
     foreach ($_SESSION['cart'] as &$item) {
         if ($item['id'] == $id) {
             $item['qty'] = $qty; // set qty mới
             break;
         }
+        $countCart ++;
     }
 
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['status' => 'success',
+        'cartCount' => $countCart
+      
+    ]);
     exit;
 }
 

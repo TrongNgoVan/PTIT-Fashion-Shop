@@ -320,6 +320,7 @@
                                 });
                                 // 4) Cập nhật lại tổng tiền
                                 updateTotal();
+                                $('#cartCount').text(res.cartCount);
                                 // Ẩn nút nếu không còn item check
                                 toggleDeleteButton();
                                 toggleThanhtoanButton();

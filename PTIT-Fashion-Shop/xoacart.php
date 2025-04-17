@@ -12,9 +12,18 @@ if (!empty($_POST['ids']) && isset($_SESSION['cart'])) {
     }
     // Sắp xếp lại mảng
     $_SESSION['cart'] = array_values($_SESSION['cart']);
+    $cart = $_SESSION['cart'] ;
+
+    $cartCount = 0;
+    foreach ($cart as $p) {
+        $cartCount += 1;
+    }
 
     // Trả về JSON
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['status' => 'success'
+        , 'cartCount' => $cartCount
+
+    ]);
     exit;
 }
 
