@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Sheet API Demo</title>
+</head>
+<body>
+  <h1>Dữ liệu từ Google Sheet</h1>
+  <div id="sheet-data"></div>
+
+  <script>
+    const SHEET_ID = '1AD_51pU_72TuEDkgaezQGaNNglbPuxNhtFJsw-0LCDM'; // ✅ Chỉ ID thôi
+    const API_KEY = 'AIzaSyBmatT_dCNt9YEZGBAeEOEW1oVg-VyBhLE';
+    const RANGE = 'Trang tính1!A1:H'; // ✅ Tên sheet đúng là 'Trang tính1', không phải 'Tranh tính1'
+
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (!data.values) {
+          document.getElementById('sheet-data').innerHTML = '<p>Không có dữ liệu.</p>';
+          return;
+        }
+        const output = data.values.map(row => `<p>${row.join(' | ')}</p>`).join('');
+        document.getElementById('sheet-data').innerHTML = output;
+      })
+      .catch(error => console.error('Lỗi lấy dữ liệu:', error));
+  </script>
+</body>
+</html>

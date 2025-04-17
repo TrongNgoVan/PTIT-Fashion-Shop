@@ -2,13 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Check Paid Demo</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
 <body>
   <h1>Check Paid Demo</h1>
-  
-  <!-- Gọi file main.js -->
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Ngân hàng</th>
+        <th>Ngày</th>
+        <th>Số TK</th>
+        <th>TK phụ</th>
+        <th>Mã GD</th>
+        <th>Nội dung</th>
+        <th>Loại</th>
+        <th>Số tiền</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
   <script src="api.js"></script>
+  <script>
+    window.onload = async () => {
+      const data = await checkPaidFromSheet();
+      const tbody = document.querySelector('#data-table tbody');
+
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.bank}</td>
+          <td>${item.date}</td>
+          <td>${item.stk}</td>
+          <td>${item.stk_phu}</td>
+          <td>${item.code}</td>
+          <td>${item.content}</td>
+          <td>${item.type}</td>
+          <td>${item.amount.toLocaleString()} VND</td>
+        `;
+        tbody.appendChild(row);
+      });
+    };
+  </script>
 </body>
 </html>

@@ -133,116 +133,89 @@ $name = $donhang['name'];
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
     <script>
-        var pay_status = 'Unpaid';
-        // Hàm kiểm tra trạng thái thanh toán dựa vào API (sử dụng hàm checkPaid từ api.js)
-        // Bắt sự kiện click vào liên kết "Về trang chủ"
-        // $("#backHome").on("click", function(event) {
-        //     if (pay_status === "Unpaid") {
-        //         event.preventDefault(); // Ngăn chuyển hướng ngay lập tức
-        //         var confirmOrder = confirm("Bạn có muốn tiếp tục đặt đơn hàng và thanh toán tại nhà không?");
-        //         if (confirmOrder) {
-        //             // Chuyển hướng sang trang cập nhật phương thức thanh toán
-        //             window.location.href = "update_payment_method.php?order_id=<?= $order_id; ?>";
-        //         } else {
-        //             // Chuyển hướng sang trang xóa đơn hàng
-        //             window.location.href = "delete_order.php?order_id=<?= $order_id; ?>";
-        //         }
-        //     }
-        // });
+    var pay_status = 'Unpaid';
 
-        function check_payment_status() {
-            if (pay_status === 'Unpaid') {
-                checkPaid().then(data => {
-                    if (data && data.error === 0) {
-                        var records = data.data.records;
-                        // Nội dung CK cần so sánh
-                        var invoiceDesc = "HDPTITSHOP<?= $order_id; ?>";
-                        // Duyệt qua danh sách giao dịch
-                        for (var i = 0; i < records.length; i++) {
-                            var record = records[i];
-                            if (record.description.indexOf(invoiceDesc) !== -1) {
-                                var recordAmount = Math.abs(record.amount);
-                                // Nếu số tiền chính xác
-                                if (recordAmount === <?= $total; ?>) {
-                                    // Cập nhật trạng thái thanh toán thành "Paid"
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "update_payment_status.php",
-                                        data: {
-                                            order_id: <?= $order_id; ?>,
-                                            amount: recordAmount
-                                        },
-                                        success: function(response) {
-                                            $("#checkout_box").hide();
-                                            $("#error_pay_box").hide();
-                                            $("#success_pay_box").show();
-                                            pay_status = 'Paid';
-                                        },
-                                        error: function(xhr, status, error) {
-                                            console.error("Lỗi cập nhật trạng thái thanh toán:", error);
-                                        }
-                                    });
-                                    break;
-                                }
-                                // Nếu số tiền chuyển khoản thừa
-                                else if (recordAmount > <?= $total; ?>) {
-                                    var extra = recordAmount - <?= $total; ?>;
-                                    // Gửi thông tin số tiền thừa sang file PHP khác để cập nhật đơn hàng
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "update_payment_status_extra_missing.php",
-                                        data: {
-                                            order_id: <?= $order_id; ?>,
-                                            type: "extra",
-                                            amount: recordAmount
-                                        },
-                                        success: function(response) {
-                                            $("#checkout_box").hide();
-                                            $("#error_pay_box").hide();
-                                            $("#success_pay_box").show();
-                                            $("#success_pay_box").html("Số tiền chuyển khoản thừa: " + extra.toLocaleString() + "đ. Hệ thống sẽ sớm hoàn lại tiền cho bạn vào tài khoản hoặc lúc nhận hàng!").show();
-                                            pay_status = 'Extra';
-                                        },
-                                        error: function(xhr, status, error) {
-                                            console.error("Lỗi cập nhật trạng thái thanh toán thừa:", error);
-                                        }
-                                    });
-                                    break;
-                                }
-                                // Nếu số tiền chuyển khoản thiếu
-                                else if (recordAmount < <?= $total; ?>) {
-                                    var missing = <?= $total; ?> - recordAmount;
-                                    // Gửi thông tin số tiền thiếu sang file PHP khác để cập nhật đơn hàng
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "update_payment_status_extra_missing.php",
-                                        data: {
-                                            order_id: <?= $order_id; ?>,
-                                            type: "missing",
-                                            amount: recordAmount
-                                        },
-                                        success: function(response) {
-                                            $("#checkout_box").hide();
-                                            $("#error_pay_box").html("Số tiền chuyển khoản thiếu: " + missing.toLocaleString() + "đ. Bạn có thể thanh toán đủ khi nhận hàng!").show();
-                                            pay_status = 'Missing';
-                                        },
-                                        error: function(xhr, status, error) {
-                                            console.error("Lỗi cập nhật trạng thái thanh toán thiếu:", error);
-                                        }
-                                    });
-                                    break;
-                                }
-                            }
+    async function check_payment_status() {
+        if (pay_status === 'Unpaid') {
+            try {
+                const records = await checkPaidFromSheet();
+                var invoiceDesc = "HDPTITSHOP<?= $order_id; ?>"; // Mã đơn hàng cần kiểm tra
+
+                for (var i = 0; i < records.length; i++) {
+                    var record = records[i];
+                    if (record.content.includes(invoiceDesc)) {
+                        var recordAmount = Math.abs(record.amount);
+
+                        // Nếu số tiền chính xác
+                        if (recordAmount === <?= $total; ?>) {
+                            $.post("update_payment_status.php", {
+                                order_id: <?= $order_id; ?>,
+                                amount: recordAmount
+                            }, function(response) {
+                                $("#checkout_box").hide();
+                                $("#error_pay_box").hide();
+                                $("#success_pay_box").show();
+                                pay_status = 'Paid';
+                            }).fail(function(xhr, status, error) {
+                                console.error("Lỗi cập nhật thanh toán:", error);
+                            });
+                            break;
+                        }
+
+                        // Nếu chuyển khoản THỪA
+                        else if (recordAmount > <?= $total; ?>) {
+                            var extra = recordAmount - <?= $total; ?>;
+                            $.post("update_payment_status_extra_missing.php", {
+                                order_id: <?= $order_id; ?>,
+                                type: "extra",
+                                amount: recordAmount
+                            }, function(response) {
+                                $("#checkout_box").hide();
+                                $("#error_pay_box").hide();
+                                $("#success_pay_box").html(
+                                    "Số tiền chuyển khoản thừa: " +
+                                    extra.toLocaleString() +
+                                    "đ. Hệ thống sẽ hoàn lại phần dư cho bạn!"
+                                ).show();
+                                pay_status = 'Extra';
+                            }).fail(function(xhr, status, error) {
+                                console.error("Lỗi cập nhật thừa:", error);
+                            });
+                            break;
+                        }
+
+                        // Nếu chuyển khoản THIẾU
+                        else if (recordAmount < <?= $total; ?>) {
+                            var missing = <?= $total; ?> - recordAmount;
+                            $.post("update_payment_status_extra_missing.php", {
+                                order_id: <?= $order_id; ?>,
+                                type: "missing",
+                                amount: recordAmount
+                            }, function(response) {
+                                $("#checkout_box").hide();
+                                $("#error_pay_box").html(
+                                    "Số tiền chuyển khoản thiếu: " +
+                                    missing.toLocaleString() +
+                                    "đ. Bạn có thể trả phần còn lại khi nhận hàng."
+                                ).show();
+                                pay_status = 'Missing';
+                            }).fail(function(xhr, status, error) {
+                                console.error("Lỗi cập nhật thiếu:", error);
+                            });
+                            break;
                         }
                     }
-                }).catch(error => {
-                    console.error("Lỗi trong checkPaid:", error);
-                });
+                }
+            } catch (error) {
+                console.error("Lỗi trong check_payment_status:", error);
             }
         }
-        // Kiểm tra trạng thái thanh toán mỗi 2 giây
-        setInterval(check_payment_status, 10000);
-    </script>
+    }
+
+    // Gọi kiểm tra mỗi 10 giây
+    setInterval(check_payment_status, 1000);
+</script>
+
 </body>
 
 </html>

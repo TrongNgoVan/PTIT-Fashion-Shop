@@ -1,28 +1,40 @@
-const API_KEY = "AK_CS.3151e0e00ee311f097089522635f3f80.k5z2MThu2xCIbyhiVnKDibyo6AH9sVJMC4pyEm1LFtn5mIPE168AdTjxmsLsA2wclH6QPqle";
-const API_GET_PAID = "https://oauth.casso.vn/v2/transactions";
+const API_KEY = 'AIzaSyBmatT_dCNt9YEZGBAeEOEW1oVg-VyBhLE';
+const SHEET_ID = '1AD_51pU_72TuEDkgaezQGaNNglbPuxNhtFJsw-0LCDM';
+const RANGE = 'Trang tính1!A2:H'; // Bắt đầu từ hàng 2, bỏ hàng tiêu đề
 
-async function checkPaid() {
+async function checkPaidFromSheet() {
   try {
-    const response = await fetch(`${API_GET_PAID}?sort=DESC&pageSize=10&page=1`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Apikey ${API_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+    const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Lỗi server: ${response.status} ${response.statusText}`);
+      throw new Error(`Lỗi khi lấy sheet: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log('Các giao dịch mới nhất:', data);
-    return data;
+    const rows = data.values || [];
+
+    // Chuyển từng dòng thành object
+    const structuredData = rows.map(row => ({
+      bank: row[0] || '',        // Tên ngân hàng
+      date: row[1] || '',        // Ngày giờ
+      stk: row[2] || '',         // Số tài khoản
+      stk_phu: row[3] || '',     // Số tài khoản phụ
+      code: row[4] || '',        // Mã giao dịch
+      content: row[5] || '',     // Nội dung
+      type: row[6] || '',        // Loại giao dịch (in/out)
+      amount: parseFloat(row[7]?.replace(/[^0-9.-]+/g, '') || 0) // Số tiền
+    }));
+
+    return structuredData;
 
   } catch (error) {
-    console.error('Lỗi khi gọi checkPaid:', error);
-    return null;
+    console.error('Lỗi khi gọi checkPaidFromSheet:', error);
+    return [];
   }
 }
 
-// setInterval(checkPaid, 15000); 
+
+checkPaidFromSheet().then(data => console.log(data));
+
+
