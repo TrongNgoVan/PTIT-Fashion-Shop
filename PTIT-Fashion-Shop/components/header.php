@@ -124,6 +124,54 @@
         /* Đổi màu khi hover */
         color: #000;
     }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        /* ẩn mặc định */
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+    }
+
+    /* Nội dung modal, dùng background-image của hero */
+    .hero-modal {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        height: 450px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        color: #fff;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Nút đóng */
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
 </style>
 
 
@@ -242,14 +290,14 @@
                                         $count = 0;  //hien thi so luong san pham trong gio hang
 
                                         foreach ($cart as $item) {
-                                            $count += 1 ;                                      
+                                            $count += 1;
                                         }
                                         //hien thi so luong
                                         echo $count;
                                         ?>
                                     </span></a></li>
                         </ul>
-            
+
                     </div>
                 </div>
             </div>
@@ -321,6 +369,25 @@
                             </div>
 
                         </div>
+
+
+                        <!-- BANNER NỔI -->
+                        <!-- Modal Hero Banner -->
+                        <div id="heroModal" class="modal-overlay">
+                            <div class="modal-content hero-modal" style="background-image: url('<?= $banner['image_path'] ?>')">
+                                <button class="modal-close">&times;</button>
+                                <div class="hero__text">
+                                    <span>Rẻ, Đẹp, Chất Lượng</span>
+                                    <h2>Phong Cách<br /> Sáng Tạo <br /> Khác Biệt</h2>
+                                    <a href="<?= $banner['link_url'] ?>" class="primary-btn">SHOP NOW</a>
+                                    <div class="marquee">
+                                        <p>🔥🔥 <?= htmlspecialchars($banner['hot_text']) ?> 🎁 🔥 🚀</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                 <?php
                     }
                 }
@@ -330,4 +397,19 @@
         </div>
     </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('heroModal');
+            var closeBtn = modal.querySelector('.modal-close');
+
+            // Hiện modal
+            modal.style.display = 'flex';
+
+            // Đóng modal khi click nút
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+        });
+    </script>
     <!-- Hero Section End -->

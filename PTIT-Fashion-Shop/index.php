@@ -98,6 +98,10 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
         z-index: 1000;
         text-align: center;
     }
+   /* Overlay full màn hình */
+
+
+
     
 </style>
 
@@ -112,6 +116,9 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
 
     require_once('components/header.php');
     ?>
+
+
+
 
 
    
@@ -316,6 +323,8 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
             });
         });
     </script>
+
+
 
 
 
