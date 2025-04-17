@@ -232,7 +232,7 @@
                             <!-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> -->
                             <li><a><b>Giỏ Hàng</b></a></li>
 
-                            <li><a href="./cart.php"><i class="fa fa-shopping-cart"></i> <span>
+                            <li><a href="./cart.php"><i class="fa fa-shopping-cart"></i> <span id="cartCount">
                                         <?php
                                         $cart = [];
                                         if (isset($_SESSION['cart'])) {
@@ -240,17 +240,16 @@
                                         }
                                         // print_r($cart);exit;
                                         $count = 0;  //hien thi so luong san pham trong gio hang
-                                        $tongtien = 0;
+
                                         foreach ($cart as $item) {
-                                            $count += $item['qty'];
-                                            $tongtien += $item['qty'] * $item['disscounted_price'];
+                                            $count += 1 ;                                      
                                         }
                                         //hien thi so luong
                                         echo $count;
                                         ?>
                                     </span></a></li>
                         </ul>
-                        <!-- <div class="header__cart__price">Tổng tiền: <span><?= number_format($tongtien, 0, '', '.') . " VNĐ" ?></span></div> -->
+            
                     </div>
                 </div>
             </div>

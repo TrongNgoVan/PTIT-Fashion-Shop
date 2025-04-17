@@ -104,12 +104,12 @@
     if ($payment_status === "Thanh toán thừa") {
         $payment_diff = $amount_paid - $total_price;
         if ($payment_diff > 0) {
-            $diff_str = "Thanh toán thừa: " . formatCurrency($payment_diff);
+            $diff_str = "Thanh toán thừa: " . formatCurrency($payment_diff)."Shop iu sẽ hoàn tiền sớm cho bạn nhé^^!!!";
         }
     } elseif ($payment_status === "Thanh toán thiếu") {
         $payment_diff = $total_price - $amount_paid;
         if ($payment_diff > 0) {
-            $diff_str = "Thanh toán thiếu: " . formatCurrency($payment_diff);
+            $diff_str = "Thanh toán thiếu: " . formatCurrency($payment_diff) ." -> Vui lòng thanh toán đủ khi nhận hàng bạn nhé!!!" ;
         }
     }
     ?>

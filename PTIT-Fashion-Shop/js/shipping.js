@@ -9,6 +9,7 @@ function updateShippingFee() {
     
     // Tính phí cơ bản
     let baseFee = 0;
+    
     if (province === 'Thành phố Hà Nội') {
         baseFee = 15000;
     } else if (province === 'Tỉnh Thanh Hóa') {

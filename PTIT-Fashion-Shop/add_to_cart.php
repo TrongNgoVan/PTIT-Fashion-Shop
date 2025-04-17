@@ -38,7 +38,7 @@ if (isset($_POST['pid']) && isset($_POST['qty'])) {
     // Tính lại tổng số lượng sản phẩm
     $cartCount = 0;
     foreach ($cart as $p) {
-        $cartCount += $p['qty'];
+        $cartCount += 1;
     }
 
     // Trả về JSON
