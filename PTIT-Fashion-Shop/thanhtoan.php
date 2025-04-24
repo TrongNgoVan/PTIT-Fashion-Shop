@@ -463,6 +463,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            calculateTotal();
             // Lấy đối tượng form
             const checkoutForm = document.getElementById('checkoutForm');
 
@@ -495,6 +496,7 @@
             });
         });
         $(document).on('click', '.select-coupon', function() {
+            calculateTotal();
             const code = $(this).data('code');
             const orderTotal = parseFloat($('#orderTotal').data('amount'));
 
