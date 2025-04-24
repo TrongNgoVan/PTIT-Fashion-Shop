@@ -45,7 +45,7 @@
     }
 
     .hero__text {
-        animation: fadeInUp 3s ease-in-out;
+        animation: fadeInUp 0.5s ease-in-out;
     }
 
     @keyframes fadeInUp {
@@ -99,7 +99,7 @@
     .marquee p {
         display: inline-block;
         padding-left: 100%;
-        animation: marqueeScroll 6s linear infinite;
+        animation: marqueeScroll 5s linear infinite;
         margin: 0;
         color: rgb(247, 247, 245) !important;
         /* Màu đỏ tươi nổi bật */

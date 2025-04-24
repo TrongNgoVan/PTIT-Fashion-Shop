@@ -43,6 +43,19 @@
 
   <!-- Heading -->
 
+  <!-- Nav Item - Thống kê khách hàng -->
+
+
+<hr class="sidebar-divider" />
+
+<li class="nav-item">
+  <a class="nav-link" href="./khachhangtiemnang.php">
+    <i class="fas fa-chart-line"></i>
+    <span>Khách hàng tiềm năng</span>
+  </a>
+</li>
+
+
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
       aria-controls="collapseOne">
