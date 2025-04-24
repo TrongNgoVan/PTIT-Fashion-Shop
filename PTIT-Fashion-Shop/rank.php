@@ -134,26 +134,37 @@ select.form-control {
     // Thêm điều kiện lọc sao đánh giá vào câu truy vấn
     $rating_condition = ($rating_filter > 0) ? "HAVING AVG(r.rating) >= $rating_filter" : "";
 
+    
     // Truy vấn sản phẩm với phân trang và lọc theo danh mục và sao đánh giá
+    // Mặc định SELECT
     $sql = "
-        SELECT 
-            p.id,
-            p.name,
-            p.slug,
-            p.summary,
-            p.price,
-            p.disscounted_price,
-            p.images,
-            IFNULL(AVG(r.rating), 0) AS avg_rating,
-            COUNT(r.id) AS review_count
-        FROM products p
-        LEFT JOIN reviews r ON p.id = r.product_id
-        WHERE p.status = 1 $category_condition
-        GROUP BY p.id
-        $rating_condition
-        ORDER BY avg_rating DESC
-        LIMIT $limit OFFSET $offset
+    SELECT 
+        p.id,
+        p.name,
+        p.slug,
+        p.summary,
+        p.price,
+        p.disscounted_price,
+        p.images,
+        IFNULL(AVG(r.rating), 0) AS avg_rating,
+        COUNT(r.id) AS review_count,
+        (SELECT COUNT(*) FROM order_details WHERE product_id = p.id) AS total_purchases
+    FROM products p
+    LEFT JOIN reviews r ON p.id = r.product_id
+    WHERE p.status = 1 $category_condition
+    GROUP BY p.id
+    $rating_condition
     ";
+
+    // Sắp xếp
+    if (isset($_GET['sort']) && $_GET['sort'] == 'revenue') {
+    $sql .= " ORDER BY total_purchases DESC";
+    } else {
+    $sql .= " ORDER BY avg_rating DESC";
+    }
+
+    // Phân trang
+    $sql .= " LIMIT $limit OFFSET $offset";
 
 
     $result = mysqli_query($conn, $sql);
@@ -208,6 +219,16 @@ select.form-control {
                             </select>
                         </form>
                     </div>
+
+                    <div class="sidebar__item">
+                        <h4 class="sidebar__title">Sắp xếp theo</h4>
+                        <form method="GET" action="">
+                            <button type="submit" name="sort" value="revenue" class="btn btn-danger btn-block mb-2">
+                                🔥 Bán chạy nhất
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
 
 
