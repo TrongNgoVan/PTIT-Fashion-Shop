@@ -348,30 +348,92 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Phương thức vận chuyển:<span>*</span></p>
-                                        <select name="shipping_method" id="shipping_method">
-                                            <option value="Nhận tại cửa hàng">Nhận tại cửa hàng</option>
-                                            <option value="Vận Chuyển Thường">Vận Chuyển Thường</option>
-                                            <option value="Vận Chuyển Hỏa Tốc">Vận Chuyển Hỏa Tốc</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="checkout__input">
                                         <p>Phương thức thanh toán:<span>*</span></p>
-                                        <select name="payment_method" id="payment_method">
-
-                                            <option value="Thanh toán Online">Thanh toán Online</option>
-                                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
-                                        </select>
+                                        <!-- START payment-options -->
+                                        <div class="payment-options">
+                                            <div class="payment-cards">
+                                                <!-- COD -->
+                                                <label class="payment-item">
+                                                    <span class="payment-label">Thanh toán khi nhận hàng</span>
+                                                    <div class="payment-card">
+                                                        <input type="radio" name="payment_method" value="Thanh toán khi nhận hàng" checked>
+                                                        <img src="img/cod.png" alt="COD">
+                                                    </div>
+                                                </label>
+                                                <!-- Online Banking -->
+                                                <label class="payment-item">
+                                                    <span class="payment-label">Thanh toán Online</span>
+                                                    <div class="payment-card">
+                                                        <input type="radio" name="payment_method" value="Thanh toán Online">
+                                                        <img src="img/banking.jpg" alt="Banking">
+                                                    </div>
+                                                </label>
+                                                <!-- ZaloPay -->
+                                                <label class="payment-item">
+                                                    <span class="payment-label">ZaloPay</span>
+                                                    <div class="payment-card">
+                                                        <input type="radio" name="payment_method" value="zalopay">
+                                                        <img src="img/zalopay.png" alt="ZaloPay">
+                                                    </div>
+                                                </label>
+                                                <!-- Debit Card -->
+                                                <label class="payment-item">
+                                                    <span class="payment-label">Thẻ ghi nợ / Debit Card</span>
+                                                    <div class="payment-card">
+                                                        <input type="radio" name="payment_method" value="card">
+                                                        <img src="img/visadebit.png" alt="Visa Debit">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- END payment-options -->
                                     </div>
                                 </div>
+
+                            </div>
+
+                            <div class="row">
+
+
+                                <!-- Thay thế đoạn select bằng block này -->
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p>Phương thức vận chuyển:<span>*</span></p>
+                                        <div class="shipping-options">
+                                            <div class="shipping-cards">
+                                                <!-- Nhận tại cửa hàng -->
+                                                <label class="shipping-item">
+                                                    <span class="shipping-label">Nhận tại cửa hàng</span>
+                                                    <div class="shipping-card">
+                                                        <input type="radio" name="shipping_method" value="Nhận tại cửa hàng" checked>
+                                                        <img src="img/1.png" alt="Nhận tại cửa hàng">
+                                                    </div>
+                                                </label>
+                                                <!-- Vận chuyển thường -->
+                                                <label class="shipping-item">
+                                                    <span class="shipping-label">Vận Chuyển Thường</span>
+                                                    <div class="shipping-card">
+                                                        <input type="radio" name="shipping_method" value="Vận Chuyển Thường">
+                                                        <img src="img/2.png" alt="Vận Chuyển Thường">
+                                                    </div>
+                                                </label>
+
+                                                <!-- Vận chuyển qua hàng không -->
+                                                <label class="shipping-item">
+                                                    <span class="shipping-label">Vận Chuyển Hỏa Tốc</span>
+                                                    <div class="shipping-card">
+                                                        <input type="radio" name="shipping_method" value="Vận Chuyển Hỏa Tốc">
+                                                        <img src="img/3.png" alt="Vận Chuyển Hỏa Tốc">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
 

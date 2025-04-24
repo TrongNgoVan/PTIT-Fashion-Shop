@@ -1,201 +1,332 @@
 .checkout {
-    background: #f8f9fa;
-    padding: 60px 0;
-    font-family: 'Cairo', sans-serif;
+  background: #f8f9fa;
+  padding: 60px 0;
+  font-family: "Cairo", sans-serif;
 }
 
 .checkout__form h4,
 .checkout__order h4 {
-    font-weight: 700;
-    margin-bottom: 30px;
-    color: #2c3e50;
-    text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  text-transform: uppercase;
 }
 
 .checkout__input {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .checkout__input p {
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #34495e;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #34495e;
 }
 
 .checkout__input input,
 .checkout__input select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    background-color: #fff;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-    transition: 0.3s ease;
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
 }
 
 .checkout__input input:focus,
 .checkout__input select:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0,123,255,0.2);
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
 
 .checkout__order {
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #eee;
-    font-family: 'Arial', sans-serif;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #eee;
+  font-family: "Arial", sans-serif;
 }
 
 .checkout__order h4 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .checkout__order__products {
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #e5e5e5;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .checkout__order ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
 }
 
 .checkout__order ul li {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    color: #999;
-    font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  color: #999;
+  font-size: 16px;
 }
 
 .checkout__order__total {
-    font-weight: bold;
-    font-size: 18px;
-    border-top: 1px solid #e5e5e5;
-    padding-top: 15px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    color: #e20000;
+  font-weight: bold;
+  font-size: 18px;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 15px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: #e20000;
 }
 
 .site-btn {
-    width: 100%;
-    background: #d10000;
-    color: white;
-    padding: 14px 0;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.3s;
-    cursor: pointer;
+  width: 100%;
+  background: #d10000;
+  color: white;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 .site-btn:hover {
-    background: #b00000;
+  background: #b00000;
 }
 
-
 .discount-code {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
 .discount-btn {
-    background: #007bff;
-    border: none;
-    padding: 10px 15px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-    width: 100%;
-    margin-bottom: 10px;
+  background: #007bff;
+  border: none;
+  padding: 10px 15px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .discount-btn:hover {
-    background: #0056b3;
+  background: #0056b3;
 }
 
 .discount-form {
-    background: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  background: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .discount-form h5 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .discount-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 10px 0;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
 }
 
 .discount-list li {
-    margin-bottom: 5px;
-    font-size: 15px;
+  margin-bottom: 5px;
+  font-size: 15px;
 }
 
 .discount-list input[type="radio"] {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 
 .modal-dialog.modal-lg {
-    max-width: 80%; /* Hoặc giá trị bạn mong muốn, ví dụ: 90% hoặc 100% */
+  max-width: 80%; /* Hoặc giá trị bạn mong muốn, ví dụ: 90% hoặc 100% */
 }
-
 
 /* Table styling */
 .address-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
 }
 
 .address-table th,
 .address-table td {
-    padding: 12px;
-    border: 1px solid #dee2e6;
-    vertical-align: middle;
+  padding: 12px;
+  border: 1px solid #dee2e6;
+  vertical-align: middle;
 }
 
 .address-table th {
-    background-color: #f8f9fa;
-    font-weight: 600;
+  background-color: #f8f9fa;
+  font-weight: 600;
 }
 
 .address-table tbody tr:hover {
-    background-color: rgba(0,123,255,0.05);
+  background-color: rgba(0, 123, 255, 0.05);
 }
 
 .btn-select-address {
-    min-width: 80px;
-    padding: 6px 12px;
-    font-size: 13px;
+  min-width: 80px;
+  padding: 6px 12px;
+  font-size: 13px;
 }
 
 /* Responsive table */
 @media (max-width: 768px) {
-    .address-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
+  .address-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
+.payment-options {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
 
+.payment-options h5 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #333;
+}
 
+.payment-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  /* KHÔNG cho xuống hàng */
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.payment-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-label {
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* Card chứa ảnh và radio */
+.payment-card {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Hiển thị radio gốc ở góc */
+.payment-card input[type="radio"] {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #3b82f6;
+  /* màu viền khi chọn */
+  background: #fff;
+}
+
+/* Ảnh trong card */
+.payment-card img {
+  max-width: 120px;
+  max-height: 120px;
+  object-fit: cover;
+}
+
+/* Hover & khi chọn */
+.payment-card:hover {
+  border-color: #3b82f6;
+}
+
+.payment-card input[type="radio"]:checked ~ img {
+  filter: brightness(1.1);
+}
+
+/* ---------- SHIPPING CARDS ---------- */
+.shipping-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  /* Luôn nằm 1 hàng */
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.shipping-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shipping-label {
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.shipping-card {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, filter 0.2s;
+}
+
+/* Hiển thị radio gốc */
+.shipping-card input[type="radio"] {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #3b82f6;
+  background: #fff;
+}
+
+/* Ảnh phủ khung */
+.shipping-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Hiệu ứng hover và khi radio được chọn */
+.shipping-card:hover,
+.shipping-card input[type="radio"]:checked ~ img {
+  filter: brightness(1.05);
+  border-color: #3b82f6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}

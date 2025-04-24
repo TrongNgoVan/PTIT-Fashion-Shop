@@ -1,0 +1,112 @@
+<!-- PAYMENT METHODS -->
+<div class="payment-options">
+    <h5>Chọn hình thức thanh toán</h5>
+    <div class="payment-cards">
+      <!-- COD -->
+      <label class="payment-item">
+        <span class="payment-label">Thanh toán khi nhận hàng</span>
+        <div class="payment-card">
+          <input type="radio" name="payment_method" value="cod" checked>
+          <img src="img/cod.png" alt="COD">
+        </div>
+      </label>
+      <!-- VNPAY -->
+      <label class="payment-item">
+        <span class="payment-label">Thanh toán online</span>
+        <div class="payment-card">
+          <input type="radio" name="payment_method" value="Banking">
+          <img src="img/banking.jpg" alt="Banking">
+        </div>
+      </label>
+      <!-- ZaloPay -->
+      <label class="payment-item">
+        <span class="payment-label">ZaloPay</span>
+        <div class="payment-card">
+          <input type="radio" name="payment_method" value="zalopay">
+          <img src="img/zalopay.png" alt="ZaloPay">
+        </div>
+      </label>
+      <!-- Thẻ ghi nợ -->
+      <label class="payment-item">
+        <span class="payment-label">Thẻ ghi nợ / Debit Card</span>
+        <div class="payment-card">
+          <input type="radio" name="payment_method" value="card">
+          <img src="img/visadebit.png" alt="Visa Debit">
+        </div>
+      </label>
+    </div>
+  </div>
+  
+  <style>
+  .payment-options {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  .payment-options h5 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .payment-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .payment-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .payment-label {
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    color: #333;
+  }
+  
+  /* Card chứa ảnh và radio */
+  .payment-card {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  
+  /* Hiển thị radio gốc ở góc */
+  .payment-card input[type="radio"] {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 2;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #3b82f6; /* màu viền khi chọn */
+    background: #fff;
+  }
+  
+  /* Ảnh trong card */
+  .payment-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  /* Hover & khi chọn */
+  .payment-card:hover {
+    border-color: #3b82f6;
+  }
+  .payment-card input[type="radio"]:checked ~ img {
+    filter: brightness(1.1);
+  }
+  </style>
+  

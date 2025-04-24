@@ -1,63 +1,64 @@
+// Hàm lấy phí ship dựa trên address và radio đang checked
 function updateShippingFee() {
-    // Lấy giá trị hiện tại của địa chỉ, phương thức và mã giảm giá
-    const address = $('input[name="address"]').val();
-    const shippingMethod = $('#shipping_method').val();
-    const discountAmount = parseFloat($('#discountAmountInput').val()) || 0;
-
-    // Tách tỉnh từ địa chỉ
-    const province = address.split(',').pop().trim();
-    
-    // Tính phí cơ bản
+    // 1. Lấy giá trị
+    const address = $('input[name="address"]').val() || '';
+    const shippingMethod = $('input[name="shipping_method"]:checked').val();
+    const discountAmount  = parseFloat($('#discountAmountInput').val()) || 0;
+  
+    // 2. Tách tỉnh từ cuối address
+    const parts   = address.split(',');
+    const province = parts.length ? parts[parts.length - 1].trim() : '';
+  
+    // 3. Tính phí cơ bản theo tỉnh
     let baseFee = 0;
-    
-    if (province === 'Thành phố Hà Nội') {
-        baseFee = 15000;
-    } else if (province === 'Tỉnh Thanh Hóa') {
-        baseFee = 25000;
-    } else if (province === 'Tỉnh Nam Định') {
-        baseFee = 20000;
-    } else {
-        baseFee = 30000; // Mặc định
+    switch (province) {
+      case 'Thành phố Hà Nội':   baseFee =   15000; break;
+      case 'Tỉnh Thanh Hóa':      baseFee =   25000; break;
+      case 'Tỉnh Nam Định':       baseFee =   20000; break;
+      default:                    baseFee =   30000; break;
     }
-    
-    // Tính phí hỏa tốc
+  
+    // 4. Điều chỉnh nếu là phương thức khác
     if (shippingMethod === 'Nhận tại cửa hàng') {
-        baseFee = 0;
+      baseFee = 0;
     } else if (shippingMethod === 'Vận Chuyển Hỏa Tốc') {
-        baseFee += 10000;
+      baseFee += 10000;
     }
-    
-    // Cập nhật DOM
+    // (Nếu có thêm phương thức mới, thêm case ở đây)
+  
+    // 5. Cập nhật lên giao diện
     $('#shippingFee').text(formatCurrency(baseFee));
-    
-    // Tính toán tổng cuối
-    const orderTotal = parseFloat($('#orderTotal').data('amount'));
-    const finalTotal = orderTotal - discountAmount + baseFee;
-    
+    $('#shippingFeeInput').val(baseFee);         // hidden input
+  
+    // 6. Tính tổng cuối và update
+    const orderTotal = parseFloat($('#orderTotal').data('amount')) || 0;
+    const finalTotal = orderTotal + baseFee - discountAmount;
+  
     $('#finalTotal').text(formatCurrency(finalTotal));
-}
-
-// Gọi hàm update khi có bất kỳ thay đổi nào
-$(document).ready(function() {
-    // Chạy lần đầu
+    $('#finalTotalInput').val(finalTotal);
+  }
+  
+  // Khởi chạy và lắng nghe thay đổi
+  $(document).ready(function() {
     updateShippingFee();
-    
-    // Theo dõi các sự kiện
-    $('#shipping_method, input[name="address"]').on('change input', updateShippingFee);
-    
-    // Thêm sự kiện cho mã giảm giá
-    $('#discountAmountInput').on('change', updateShippingFee);
-    
-    // Trigger khi chọn địa chỉ từ modal
+  
+    // Khi user chọn radio mới
+    $('input[name="shipping_method"]').on('change', updateShippingFee);
+  
+    // Khi user chỉnh address hoặc mã giảm giá
+    $('input[name="address"], #discountAmountInput').on('change input', updateShippingFee);
+  
+    // Nếu bạn có nút chọn address từ modal
     $(document).on('click', '.btn-select-address', function() {
-        setTimeout(updateShippingFee, 100);
+      setTimeout(updateShippingFee, 100);
     });
-});
-
-// Hàm định dạng tiền
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('vi-VN', { 
-        style: 'currency', 
-        currency: 'VND' 
+  });
+  
+  // Định dạng tiền VND
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('vi-VN',{
+      style: 'currency',
+      currency: 'VND'
     }).format(amount);
-}
+  }
+  
