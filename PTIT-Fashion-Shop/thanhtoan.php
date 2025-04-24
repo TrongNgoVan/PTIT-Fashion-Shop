@@ -366,10 +366,9 @@
                                     <div class="checkout__input">
                                         <p>Phương thức thanh toán:<span>*</span></p>
                                         <select name="payment_method" id="payment_method">
-                                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
 
                                             <option value="Thanh toán Online">Thanh toán Online</option>
-                                            
+                                            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
                                         </select>
                                     </div>
                                 </div>

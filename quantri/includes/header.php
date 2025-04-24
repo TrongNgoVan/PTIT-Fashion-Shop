@@ -53,4 +53,3 @@ if (!isset($_SESSION["admin"])) {
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
