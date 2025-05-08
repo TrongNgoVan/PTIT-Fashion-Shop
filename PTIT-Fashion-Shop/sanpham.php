@@ -214,7 +214,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Thông tin sản phẩm</h6>
+                
                                     <?= $row['description'] ?>
                                 </div>
                             </div>

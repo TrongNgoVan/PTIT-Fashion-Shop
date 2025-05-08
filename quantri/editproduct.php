@@ -1,254 +1,200 @@
-<?php 
-
-
-//lay id goi edit
-$id = $_GET['id'];
-
-//ket noi csdl
+<?php
 require('conn.php');
 
-$sql_str = "select 
-products.id as pid,
-summary,
-description,
-stock,
-price,
-disscounted_price,
-products.name as pname,
-images,
-categories.name as cname,
-brands.name as bname,
-products.status as pstatus
-from products, categories, brands 
-where products.category_id=categories.id 
-and products.brand_id = brands.id 
-and products.id=$id";
-// echo $sql_str; exit;   //debug cau lenh
+// Lấy sản phẩm theo id
+$id = (int)$_GET['id'];
+$sql = "
+  SELECT p.id, p.name AS pname, p.summary, p.description, p.stock, 
+         p.price, p.disscounted_price, p.images, p.category_id, p.brand_id,
+         c.name AS cname, b.name AS bname
+  FROM products p
+  JOIN categories c ON p.category_id = c.id
+  JOIN brands    b ON p.brand_id    = b.id
+  WHERE p.id = $id
+";
+$product = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
-$res = mysqli_query($conn, $sql_str);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Lấy dữ liệu
+    $name        = trim($_POST['name']);
+    $slug        = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $name));
+    $summary     = $_POST['summary'];
+    $description = $_POST['description'];
+    $stock       = (int) $_POST['stock'];
+    $price       = (float) $_POST['giagoc'];
+    $giaban      = (float) $_POST['giaban'];
+    $cat_id      = (int) $_POST['danhmuc'];
+    $brand_id    = (int) $_POST['thuonghieu'];
 
-$product = mysqli_fetch_assoc($res);
+    // Xử lý ảnh
+    if (!empty($_FILES['anhs']['name'][0])) {
+        // Xóa ảnh cũ
+        foreach (explode(';', $product['images']) as $img) {
+            if (file_exists($img)) unlink($img);
+        }
+        // Upload ảnh mới
+        $imgs = [];
+        $upload_dir = 'uploads/';
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
 
-if (isset($_POST['btnUpdate'])){
-   //lay du lieu tu form
-   $name = $_POST['name'];
-   $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
-   $summary = $_POST['summary'];
-   $description = $_POST['description'];
-   $stock = $_POST['stock'];
-   $giagoc = $_POST['giagoc'];
-   $giaban = $_POST['giaban'];
-   $danhmuc = $_POST['danhmuc'];
-   $thuonghieu = $_POST['thuonghieu'];
-   $giaban = $_POST['giaban'];
-
-   //xu ly hinh anh
-   $countfiles = count($_FILES['anhs']['name']);
-//    print_r( $_FILES['anhs']['name']);
-//    echo str_length($_FILES['anhs']['name'][0]); exit;
-
-   if (!empty($_FILES['anhs']['name'][0])){//có chọn hình ảnh mới - xóa các ảnh cũ
-    //xoa anh cu
-    $images_arr = explode(';', $product['images']);
-    foreach($images_arr as $img){
-        unlink($img);
-    }
-    
-    //them anh moi 
-    $imgs = '';
-    for($i=0;$i<$countfiles;$i++){
-        $filename = $_FILES['anhs']['name'][$i];
-
-        ## Location
-        $location = "uploads/".uniqid().$filename;
-                    //pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] ) : mixed
-        $extension = pathinfo($location,PATHINFO_EXTENSION);
-        $extension = strtolower($extension);
-
-        ## File upload allowed extensions
-        $valid_extensions = array("jpg","jpeg","png");
-
-        $response = 0;
-        ## Check file extension
-        if(in_array(strtolower($extension), $valid_extensions)) {
-
-            // them vao CSDL - them thah cong moi upload anh len
-            ## Upload file
-                                //$_FILES['file']['tmp_name']: $_FILES['file']['tmp_name'] - The temporary filename of the file in which the uploaded file was stored on the server.
-            if(move_uploaded_file($_FILES['anhs']['tmp_name'][$i],$location)){
-
-                $imgs .= $location . ";";
+        foreach ($_FILES['anhs']['tmp_name'] as $idx => $tmp) {
+            $orig  = basename($_FILES['anhs']['name'][$idx]);
+            $ext   = strtolower(pathinfo($orig, PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg','jpeg','png'])) {
+                $new   = $upload_dir . uniqid() . "_{$orig}";
+                if (move_uploaded_file($tmp, $new)) {
+                    $imgs[] = $new;
+                }
             }
         }
-
+        $images = implode(';', $imgs);
+    } else {
+        // Giữ ảnh cũ
+        $images = $product['images'];
     }
-    $imgs = substr($imgs, 0, -1);
 
-    // echo substr($imgs, 0, -1); exit;
-    
-    // cau lenh them vao bang
-    $sql_str = "UPDATE `products` 
-        SET `name`='$name', 
-        `slug`='$slug', 
-        `description`='$description', 
-        `summary`='$summary', 
-        `stock`=$stock, 
-        `price`=$giagoc, 
-        `disscounted_price`=$giaban, 
-        `images`='$imgs', 
-        `category_id`=$danhmuc, 
-        `brand_id`=$thuonghieu 
-        WHERE `id`=$id
-        ";
-   } else {
-    $sql_str = "UPDATE `products` 
-        SET `name`='$name', 
-        `slug`='$slug', 
-        `description`='$description', 
-        `summary`='$summary', 
-        `stock`=$stock, 
-        `price`=$giagoc, 
-        `disscounted_price`=$giaban, 
-        `category_id`=$danhmuc, 
-        `brand_id`=$thuonghieu
-        WHERE `id`=$id
-        ";
-   }
-   
+    // Cập nhật DB
+    $sql = "
+      UPDATE products SET 
+        name = ?, slug = ?, summary = ?, description = ?, 
+        stock = ?, price = ?, disscounted_price = ?, 
+        images = ?, category_id = ?, brand_id = ?
+      WHERE id = ?
+    ";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param(
+      $stmt, "ssssiidsiii",
+      $name, $slug, $summary, $description,
+      $stock, $price, $giaban,
+      $images, $cat_id, $brand_id,
+      $id
+    );
+    mysqli_stmt_execute($stmt);
+    header("Location: listsanpham.php");
+    exit;
+}
 
-//    echo $sql_str; exit;
-
-   //thuc thi cau lenh
-   mysqli_query($conn, $sql_str);
-
-   //tro ve trang 
-   header("location: ./listsanpham.php");
-} else {
-    require('includes/header.php');
+// Nếu là GET, hiển thị form phía dưới
+require('includes/header.php');
 ?>
 
 <div class="container">
-
-<div class="card o-hidden border-0 shadow-lg my-5">
+  <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">
-        <!-- Nested Row within Card Body -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="p-5">
-                    <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Cập nhật sản phẩm</h1>
-                    </div>
-                    <form class="user" method="post" action="#" enctype="multipart/form-data">                        
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user"
-                            id="name" name="name" aria-describedby="emailHelp"
-                            placeholder="Tên sản phẩm"
-                            value="<?=$product['pname']?>">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Các hình ảnh cho sản phẩm</label>
-                        <input type="file" class="form-control form-control-user"
-                            id="anhs" name="anhs[]" 
-                            multiple>
-                        <br>
-                        Các ảnh hiện tại:
-                        <?php
-
-$arr = explode(';', $product['images']);
-foreach($arr as $img)
-    echo "<img src='$img' height='100px' />";
-                        ?>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Tóm tắt sản phẩm:</label>
-                        <textarea name="summary" class="form-control" placeholder="Nhập...">
-                        <?=$product['summary']?>
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                    <label class="form-label">Mô tả sản phẩm:</label>
-                        <textarea name="description" class="form-control" placeholder="Nhập...">
-                        <?=$product['description']?>
-                        </textarea>
-                    </div>
-                    
-                   
-                    <div class="form-group row">
-                        <div class="col-sm-4 mb-sm-0">
-                        <input type="text" class="form-control form-control-user"
-                            id="stock" name="stock" aria-describedby="emailHelp"
-                            placeholder="Số lượng nhập:" value="<?=$product['stock']?>"> 
-                        </div>
-                        <div class="col-sm-4 mb-sm-0">
-                        <input type="text" class="form-control form-control-user"
-                            id="giagoc" name="giagoc" aria-describedby="emailHelp"
-                            placeholder="Giá gốc"  value="<?=$product['price']?>">
-                        </div>
-                        <div class="col-sm-4 mb-sm-0">
-                        <input type="text" class="form-control form-control-user"
-                            id="giaban" name="giaban" aria-describedby="emailHelp"
-                            placeholder="Giá bán:"  value="<?=$product['disscounted_price']?>">
-                        </div>
-                    </div>
-                   
-                    <div class="form-group">
-                        <label class="form-label">Danh mục:</label>
-                        <select class="form-control" name="danhmuc">
-                            <option>Chọn danh mục</option>
-                            <?php 
-    // require('../db/conn.php');
-    $sql_str = "select * from categories order by name";
-    $result = mysqli_query($conn, $sql_str);
-    while ($row = mysqli_fetch_assoc($result)){
-        ?>
-        <option value="<?php echo $row['id'];?>"
-            <?php
-                if ($row['name'] == $product['cname'])
-                    echo "selected";
-
-            ?>
-        ><?php echo $row['name'];?></option>
-        <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                    <label class="form-label">Thương hiệu:</label>
-                   
-                        <select class="form-control" name="thuonghieu">
-                        <option>Chọn thương hiệu</option>
-
-                        <?php 
-    // require('../db/conn.php');
-    $sql_str = "select * from brands order by name";
-    $result = mysqli_query($conn, $sql_str);
-    while ($row = mysqli_fetch_assoc($result)){
-        ?>
-            <option value="<?php echo $row['id'];?>"
-            
-                <?php
-                if ($row['name'] == $product['bname'])
-                    echo "selected=true";
-
-                ?>
-            ><?php echo $row['name'];?></option>
-        <?php } ?>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" name="btnUpdate">Cập nhật</button>
-                    </form>
-                    <hr>
-                    
-                </div>
+      <div class="p-5">
+        <h1 class="h4 text-gray-900 mb-4 text-center">Cập nhật sản phẩm</h1>
+        <form method="post" enctype="multipart/form-data">
+          
+          <!-- Tên -->
+          <div class="form-group">
+            <input type="text" name="name" class="form-control" 
+                   placeholder="Tên sản phẩm" 
+                   value="<?= htmlspecialchars($product['pname']) ?>" required>
+          </div>
+          
+          <!-- Ảnh mới (nếu có) + hiển thị ảnh cũ -->
+          <div class="form-group">
+            <label>Các hình ảnh mới (bỏ trống để giữ ảnh cũ)</label>
+            <input type="file" name="anhs[]" multiple class="form-control">
+            <div class="mt-2">
+              <?php foreach (explode(';', $product['images']) as $img): ?>
+                <img src="<?= htmlspecialchars($img) ?>" height="80">
+              <?php endforeach; ?>
             </div>
-        </div>
+          </div>
+
+          <!-- Summary (CKEditor) -->
+          <div class="form-group">
+            <label>Tóm tắt sản phẩm</label>
+            <textarea id="summary-editor" name="summary" class="form-control" rows="4">
+<?= htmlspecialchars($product['summary']) ?></textarea>
+          </div>
+
+          <!-- Description (CKEditor) -->
+          <div class="form-group">
+            <label>Mô tả sản phẩm</label>
+            <textarea id="description-editor" name="description" class="form-control" rows="6">
+<?= htmlspecialchars($product['description']) ?></textarea>
+          </div>
+
+          <!-- Stock, Price, Discount -->
+          <div class="form-row">
+            <div class="col">
+              <input type="number" name="stock" class="form-control" 
+                     placeholder="Số lượng" 
+                     value="<?= $product['stock'] ?>" required>
+            </div>
+            <div class="col">
+              <input type="number" step="0.01" name="giagoc" class="form-control" 
+                     placeholder="Giá gốc" 
+                     value="<?= $product['price'] ?>" required>
+            </div>
+            <div class="col">
+              <input type="number" step="0.01" name="giaban" class="form-control" 
+                     placeholder="Giá bán" 
+                     value="<?= $product['disscounted_price'] ?>" required>
+            </div>
+          </div>
+
+          <!-- Danh mục -->
+          <div class="form-group mt-3">
+            <label>Danh mục</label>
+            <select name="danhmuc" class="form-control" required>
+              <option value="" disabled>Chọn danh mục</option>
+              <?php
+                $cats = mysqli_query($conn, "SELECT id,name FROM categories");
+                while ($c = mysqli_fetch_assoc($cats)): ?>
+                <option value="<?= $c['id'] ?>"
+                  <?= $c['id']==$product['category_id']?'selected':''?>>
+                  <?= htmlspecialchars($c['name']) ?>
+                </option>
+              <?php endwhile; ?>
+            </select>
+          </div>
+
+          <!-- Thương hiệu -->
+          <div class="form-group">
+            <label>Thương hiệu</label>
+            <select name="thuonghieu" class="form-control" required>
+              <option value="" disabled>Chọn thương hiệu</option>
+              <?php
+                $bds = mysqli_query($conn, "SELECT id,name FROM brands");
+                while ($b = mysqli_fetch_assoc($bds)): ?>
+                <option value="<?= $b['id'] ?>"
+                  <?= $b['id']==$product['brand_id']?'selected':''?>>
+                  <?= htmlspecialchars($b['name']) ?>
+                </option>
+              <?php endwhile; ?>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" name="btnUpdate">
+            Cập nhật
+          </button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
-</div>
+<!-- CKEditor từ CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+  [ 'summary-editor', 'description-editor' ].forEach(id => {
+    ClassicEditor
+      .create(document.getElementById(id), {
+        toolbar: [
+          'heading','|','bold','italic','underline','link',
+          'bulletedList','numberedList','insertTable','imageUpload',
+          'blockQuote','undo','redo'
+        ],
+        ckfinder: {
+          uploadUrl: 'fileupload.php'
+        }
+      })
+      .catch(err => console.error(err));
+  });
+</script>
 
-      
-<?php
-require('includes/footer.php');
-}
-?>
+<?php require('includes/footer.php'); ?>
+
