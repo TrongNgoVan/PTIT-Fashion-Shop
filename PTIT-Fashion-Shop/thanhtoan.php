@@ -178,9 +178,29 @@
 
                 // Điều hướng đến trang thanh toán online
                 header("Location: thanhtoanonline.php");
+                exit();
+            } elseif ($payment_method == 'Thanh toan vnpay') {
+                $_SESSION['donhang'] = [
+                    'order_id' => $last_order_id,
+                    'user_id' => $uid,
+                    'name' => $name_luu,
+                    'address' => $address_luu,
+                    'phone' => $phone_luu,
+                    'email' => $email,
+                    'total' => $total_end,
+                    'tiendachuyen' => $tiendachuyen,
+                    'shipping_method' => $shipping_method,
+                    'payment_method' => $payment_method,
+                    'status' => 'Chưa thanh toán'
+                ];
+
+                // Điều hướng đến trang tạo thanh toán VNPay
+                header("Location: vnpay_create_payment.php");
+                exit();
             } else {
-                // Nếu không phải Thanh toán Online, điều hướng đến trang cảm ơn
+                // Nếu không phải cac thanh toan tren, điều hướng đến trang cảm ơn
                 header("Location: thankyou.php");
+                exit();
             }
 
             // Xóa session thanh toán
@@ -385,6 +405,14 @@
                                                     <div class="payment-card">
                                                         <input type="radio" name="payment_method" value="card">
                                                         <img src="img/visadebit.png" alt="Visa Debit">
+                                                    </div>
+                                                </label>
+                                                <!--thanh toán VNPay -->
+                                                <label class="payment-item">
+                                                    <span class="payment-label">VNPay</span>
+                                                    <div class="payment-card">
+                                                        <input type="radio" name="payment_method" value="Thanh toan vnpay">
+                                                        <img src="img/vnpay.jpg" alt="vnpay">
                                                     </div>
                                                 </label>
                                             </div>
