@@ -223,7 +223,7 @@
 
 
                                     <!-- Phần form viết đánh giá -->
-                                    <div class="write-review-section">
+                                    <!-- <div class="write-review-section">
 
                                         <form id="commentForm">
 
@@ -243,7 +243,7 @@
                                                 <textarea name="comment" id="comment" rows="3" placeholder="Chia sẻ cảm nhận của bạn về sản phẩm..." required></textarea>
                                             </div>
                                         </form>
-                                    </div>
+                                    </div> -->
 
                                     <div class="reviews-divider"></div>
                                     <!-- Khu vực hiển thị comment -->

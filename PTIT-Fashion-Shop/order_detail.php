@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -22,7 +23,9 @@
     <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
 </head>
+
 <body>
+
     <?php
     session_start();
     $is_homepage = false;
@@ -31,18 +34,19 @@
         exit();
     }
     ?>
-    
+
     <?php require('components/header.php'); ?>
 
     <?php
     // Lấy id đơn hàng
     $id = $_GET['id'];
-    
+
     // Kết nối CSDL
     require('db/conn.php');
 
     // Hàm định dạng tiền tệ
-    function formatCurrency($amount) {
+    function formatCurrency($amount)
+    {
         return number_format($amount, 0, ',', '.') . ' VNĐ';
     }
 
@@ -104,12 +108,12 @@
     if ($payment_status === "Thanh toán thừa") {
         $payment_diff = $amount_paid - $total_price;
         if ($payment_diff > 0) {
-            $diff_str = "Thanh toán thừa: " . formatCurrency($payment_diff)."Shop iu sẽ hoàn tiền sớm cho bạn nhé^^!!!";
+            $diff_str = "Thanh toán thừa: " . formatCurrency($payment_diff) . "Shop iu sẽ hoàn tiền sớm cho bạn nhé^^!!!";
         }
     } elseif ($payment_status === "Thanh toán thiếu") {
         $payment_diff = $total_price - $amount_paid;
         if ($payment_diff > 0) {
-            $diff_str = "Thanh toán thiếu: " . formatCurrency($payment_diff) ." -> Vui lòng thanh toán đủ khi nhận hàng bạn nhé!!!" ;
+            $diff_str = "Thanh toán thiếu: " . formatCurrency($payment_diff) . " -> Vui lòng thanh toán đủ khi nhận hàng bạn nhé!!!";
         }
     }
     ?>
@@ -118,7 +122,7 @@
     <div class="container mt-4">
         <div class="card shadow-lg border-0 p-4">
             <div class="d-flex justify-content-between align-items-center text-center">
-                <?php for ($i = 0; $i < count($status_steps); $i++): 
+                <?php for ($i = 0; $i < count($status_steps); $i++):
                     $completed = ($status_index !== -1 && $i <= $status_index) ? "completed" : "";
                     $date_text = isset($status_dates[$status_steps[$i]]) ? date("H:i d-m-Y", strtotime($status_dates[$status_steps[$i]])) : "";
                 ?>
@@ -174,6 +178,7 @@
             align-items: center;
             width: 120px;
         }
+
         .icon {
             width: 50px;
             height: 50px;
@@ -186,23 +191,28 @@
             justify-content: center;
             font-size: 20px;
         }
+
         .line {
             flex: 1;
             height: 4px;
             background-color: #ccc;
             margin: 0 10px;
         }
+
         .completed .icon,
-        .completed + .line {
+        .completed+.line {
             background-color: #28a745;
         }
+
         .date {
             font-size: 12px;
             color: gray;
         }
+
         .small-currency {
             font-size: 1.1rem;
         }
+
         .discount {
             color: red;
             font-weight: bold;
@@ -259,11 +269,12 @@
                                         <th>Giá</th>
                                         <th>Số lượng</th>
                                         <th>Thành Tiền</th>
+                                        <th>Đánh giá</th> <!-- cột mới -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT *, products.name AS pname, order_details.price AS oprice  
+                                    $sql = "SELECT *, products.name AS pname, order_details.status AS review_status, order_details.price AS oprice  
                                             FROM products, order_details
                                             WHERE products.id = order_details.product_id 
                                             AND order_id = $id";
@@ -280,6 +291,25 @@
                                             <td class="text-end"><?= number_format($row1['oprice'], 0, '', '.') ?> VNĐ</td>
                                             <td class="text-center"><?= $row1['qty'] ?></td>
                                             <td class="text-end"><?= number_format($row1['total'], 0, '', '.') ?> VNĐ</td>
+
+                                            <td class="text-center">
+                                                <?php
+                                                // Hiện nút đánh giá chỉ khi đơn đã Delivered và review_status = 'chưa đánh giá'
+                                                if ($order_status === 'Delivered' && $row1['review_status'] == 0):
+                                                ?>
+                                                    <button
+                                                        class="btn btn-sm btn-primary review-btn"
+                                                        data-detail-id="<?= $row1['id'] ?>"
+                                                        data-product-id="<?= $row1['product_id'] ?>">
+                                                        Đánh giá
+                                                    </button>
+
+                                                <?php
+                                                elseif ($row1['review_status'] == 1):
+                                                ?>
+                                                    <span class="text-success">Đã đánh giá</span>
+                                                <?php endif; ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -314,5 +344,74 @@
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        $(function() {
+            // khi click vào nút Đánh giá
+            $('.review-btn').on('click', function() {
+                const detailId = $(this).data('detail-id');
+                const pid = $(this).data('product-id');
+                $('#reviewForm [name="order_detail_id"]').val(detailId);
+                $('#reviewForm [name="product_id"]').val(pid);
+                $('#reviewModal').modal('show');
+            });
+
+
+            // xử lý submit form qua AJAX
+            $('#reviewForm').on('submit', function(e) {
+                e.preventDefault();
+                $.post('comment.php', $(this).serialize(), function(resp) {
+                    if (resp.success) {
+                        $('#reviewModal').modal('hide');
+                        // update chỉ đúng ô vừa đánh giá
+                        $(`button.review-btn[data-detail-id="${resp.order_detail_id}"]`)
+                            .closest('td').html('<span class="text-success">Đã đánh giá</span>');
+                    } else {
+                        alert(resp.message || 'Gửi đánh giá thất bại');
+                    }
+                }, 'json');
+            });
+
+        });
+    </script>
+
+
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="reviewForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Đánh giá sản phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="product_id">
+                        <input type="hidden" name="order_detail_id">
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Số sao</label>
+                            <select name="rating" id="rating" class="form-select" required>
+                                <option value="5">5 ⭐</option>
+                                <option value="4">4 ⭐</option>
+                                <option value="3">3 ⭐</option>
+                                <option value="2">2 ⭐</option>
+                                <option value="1">1 ⭐</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Nội dung</label>
+                            <textarea name="comment" id="comment" class="form-control" rows="3" required
+                                placeholder="Chia sẻ cảm nhận của bạn..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>
