@@ -22,6 +22,93 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/my.css" type="text/css">
     <link rel="icon" href="img/ptit.png" type="image/x-icon">
+    <style>
+        .action-btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 10px;
+            transition: 0.25s ease;
+            min-width: 160px;
+            color: white;
+            margin-right: 36px;
+        }
+
+        .action-btn.btn-danger {
+            background-color: #ba1604;
+        }
+
+        .action-btn.btn-warning {
+            background-color: #3205d6;
+        }
+
+        .action-btn.btn-info {
+            background-color: #049548;
+        }
+
+        .action-btn:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: scale(1.03);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: not-allowed;
+            background-color: #bdc3c7 !important;
+            color: white;
+            box-shadow: none;
+        }
+    </style>
+    <style>
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            /* Mặc định màu xám */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .line {
+            flex: 1;
+            height: 4px;
+            background-color: #ccc;
+            margin: 0 10px;
+        }
+
+        .completed .icon,
+        .completed+.line {
+            background-color: #28a745;
+        }
+
+        .date {
+            font-size: 12px;
+            color: gray;
+        }
+
+        .small-currency {
+            font-size: 1.1rem;
+        }
+
+        .discount {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -171,53 +258,10 @@
         </div>
     </div>
 
-    <style>
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 120px;
-        }
 
-        .icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #ccc;
-            /* Mặc định màu xám */
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
 
-        .line {
-            flex: 1;
-            height: 4px;
-            background-color: #ccc;
-            margin: 0 10px;
-        }
 
-        .completed .icon,
-        .completed+.line {
-            background-color: #28a745;
-        }
 
-        .date {
-            font-size: 12px;
-            color: gray;
-        }
-
-        .small-currency {
-            font-size: 1.1rem;
-        }
-
-        .discount {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
 
     <!-- Thông tin khách hàng & chi tiết đơn hàng -->
     <div class="container mt-4">
@@ -332,6 +376,46 @@
             </div>
         </div>
     </div>
+    <?php
+    $canCancel   = in_array($order_status, ['Processing', 'Confirmed']);
+    $canExchange = $order_status === 'Delivered';
+    $canReturn   = $order_status === 'Delivered';
+    ?>
+    <div class="container mt-4">
+        <div class="card shadow-lg border-0 p-4">
+            <h5 class="text-center mb-4">Thao tác đơn hàng</h5>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <!-- Hủy đơn hàng -->
+                <button
+                    id="cancelOrder"
+                    class="btn action-btn btn-danger request-btn"
+                    data-type="cancel"
+                    <?= $canCancel ? '' : 'disabled' ?>>
+                    Hủy đơn hàng
+                </button>
+
+                <!-- Trả hàng -->
+                <button
+                    id="returnOrder"
+                    class="btn action-btn btn-warning text-white request-btn"
+                    data-type="return"
+                    <?= $canReturn ? '' : 'disabled' ?>>
+                    Trả hàng
+                </button>
+
+                <!-- Đổi hàng -->
+                <button
+                    id="exchangeOrder"
+                    class="btn action-btn btn-info text-white request-btn"
+                    data-type="exchange"
+                    <?= $canExchange ? '' : 'disabled' ?>>
+                    Đổi hàng
+                </button>
+            </div>
+        </div>
+    </div>
+
+
 
     <?php require('components/footer.php'); ?>
 
@@ -372,7 +456,77 @@
             });
 
         });
+
+        $(function(){
+  // Bắt click tất cả nút .request-btn
+  $('.request-btn').on('click', function(){
+    if ($(this).is(':disabled')) return;           // không làm gì nếu disabled
+
+    const type = $(this).data('type');             // 'cancel'|'return'|'exchange'
+    const labels = {
+      cancel:   'Hủy đơn hàng',
+      return:   'Trả hàng',
+      exchange: 'Đổi hàng'
+    };
+
+    // Cập nhật modal
+    $('#actionModalLabel').text(labels[type]);
+    $('#actionSubmitBtn').text('Gửi ' + labels[type]);
+    $('#actionType').val(type);
+    $('#actionReason').val('');                    // xoá nội dung cũ
+
+    // Hiển thị modal
+    new bootstrap.Modal(document.getElementById('actionModal')).show();
+  });
+
+  // Xử lý submit form
+  $('#actionForm').on('submit', function(e){
+    e.preventDefault();
+    const form = $(this);
+    const data = form.serialize();
+
+    $.post('order_request.php', data, function(resp){
+      if (resp.success) {
+        $('#actionModal').modal('hide');
+        alert('Gửi yêu cầu thành công!');
+        setTimeout(()=> location.reload(), 500);
+      } else {
+        alert(resp.message || 'Có lỗi, vui lòng thử lại.');
+      }
+    }, 'json')
+    .fail(function(){
+      alert('Không thể kết nối đến server.');
+    });
+  });
+});
+
     </script>
+    
+
+    <!-- Action Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="actionForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actionModalLabel">Yêu cầu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="order_id" value="<?= $id ?>">
+        <input type="hidden" name="type" id="actionType">
+        <div class="mb-3">
+          <label for="actionReason" class="form-label">Lý do</label>
+          <textarea name="reason" id="actionReason" class="form-control" rows="3" required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="submit" class="btn btn-primary" id="actionSubmitBtn">Gửi</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 
     <!-- Review Modal -->
