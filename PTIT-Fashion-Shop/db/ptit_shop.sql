@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 15, 2025 lúc 11:21 AM
+-- Thời gian đã tạo: Th5 09, 2025 lúc 08:25 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -67,8 +67,8 @@ CREATE TABLE `banner` (
 --
 
 INSERT INTO `banner` (`id`, `image_path`, `hot_text`, `link_url`, `status`) VALUES
-(1, 'http://localhost/PTIT_SHOP/quantri/img/banner/banner.jpg', 'Giảm giá 50% cho đơn hàng đầu tiên! Mua ngay kẻo lỡ, sản phẩm hot nhất tháng 3!', '#', 1),
-(2, 'http://localhost/PTIT_SHOP/quantri/img/banner/1744607703_Toa_nha_A2_PTIT.jpg', 'Sale sập sàn 30/4 - 1/5 cho các sản phẩm quần áo mùa hè!!!', '#', 0);
+(1, 'http://localhost/PTIT_SHOP/quantri/img/banner/banner.jpg', 'Giảm giá 50% cho đơn hàng đầu tiên! Mua ngay kẻo lỡ, sản phẩm hot nhất tháng 3!', '#', 0),
+(2, 'http://localhost/PTIT_SHOP/quantri/img/banner/1744607703_Toa_nha_A2_PTIT.jpg', 'Sale sập sàn 30/4 - 1/5 cho các sản phẩm quần áo mùa hè!!!', '#', 1);
 
 -- --------------------------------------------------------
 
@@ -162,11 +162,11 @@ CREATE TABLE `magiamgia` (
 --
 
 INSERT INTO `magiamgia` (`id`, `code`, `loai_giam_gia`, `gia_tri_giam`, `dieu_kien_giam`, `mo_ta`, `image`, `ngay_het_han`, `so_luot_su_dung`, `so_luot_gioi_han`) VALUES
-(1, 'PTIT30', 'tien', 30000.00, 99000.00, 'Mã giảm giá hot nhất dịp lễ 30/4', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-05-01', 5, 10),
-(2, 'SALE50', 'phan_tram', 50.00, 150000.00, 'Giảm giá 50% cho đơn hàng trên 150k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-05-05', 2, 20),
-(3, 'NEWUSER10', 'phan_tram', 10.00, 0.00, 'Giảm 10% cho khách hàng mới', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-06-01', 0, 100),
-(4, 'FREESHIP', 'tien', 20000.00, 50000.00, 'Giảm 20k phí vận chuyển cho đơn từ 50k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-04-30', 3, 50),
-(5, 'SUMMER15', 'phan_tram', 15.00, 100000.00, 'Ưu đãi hè: Giảm 15% đơn từ 100k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-07-01', 7, 30),
+(1, 'PTIT30', 'tien', 30000.00, 99000.00, 'Mã giảm giá hot nhất dịp lễ 30/4', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-05-01', 6, 10),
+(2, 'SALE50', 'phan_tram', 50.00, 150000.00, 'Giảm giá 50% cho đơn hàng trên 150k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-05-05', 3, 20),
+(3, 'NEWUSER10', 'phan_tram', 10.00, 0.00, 'Giảm 10% cho khách hàng mới', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-06-01', 16, 100),
+(4, 'FREESHIP', 'tien', 20000.00, 50000.00, 'Giảm 20k phí vận chuyển cho đơn từ 50k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-04-30', 6, 50),
+(5, 'SUMMER15', 'phan_tram', 15.00, 100000.00, 'Ưu đãi hè: Giảm 15% đơn từ 100k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-07-01', 12, 30),
 (6, 'NEW001', 'tien', 20000.00, 0.00, 'Tưng bừng khai trương, giảm giá cho tất cả mặt hàng', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/1744636255_logo_cntt_ptit.png', '2025-03-15', 12, 50);
 
 -- --------------------------------------------------------
@@ -287,7 +287,38 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `phone`, `email`, `status`, `created_at`, `updated_at`, `total_price`, `tiensanpham`, `phivanchuyen`, `giamgia`, `tiendachuyen`, `transport`, `pay`, `status_pay`) VALUES
 (55, 1, 'Phạm Trong', '13 Hồ Tùng Mậu, Phường Mai Dịch, Quận Cầu Giấy, Thành phố Hà Nội', '0342561234', 'vantrongngo1607@gmail.com', 'Confirmed', '2025-04-13 08:10:59', '2025-04-13 08:10:59', 3075000, 3070000, 25000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(59, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-14 13:59:22', '2025-04-14 13:59:22', 115000, 100000, 35000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán');
+(59, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-14 13:59:22', '2025-04-14 13:59:22', 115000, 100000, 35000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
+(60, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:26:26', '2025-04-16 15:26:26', 95000, 100000, 15000, 20000, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(61, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:29:42', '2025-04-16 15:29:42', 883888, 888888, 25000, 30000, 0, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(62, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:31:30', '2025-04-16 15:31:30', 66500, 35000, 35000, 3500, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(63, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Delivered', '2025-04-16 15:32:19', '2025-04-16 15:32:19', 524444, 1023888, 25000, 524444, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(64, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-17 14:03:44', '2025-04-17 14:03:44', 9270, 10300, 0, 1030, 9270, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Đã thanh toán'),
+(65, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-17 14:06:03', '2025-04-17 14:06:03', 33000, 28000, 25000, 20000, 5000, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Thanh toán thiếu'),
+(66, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:38:11', '2025-04-24 09:38:11', 9000, 10000, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(67, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:38:37', '2025-04-24 09:38:37', -1000, 0, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(68, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:39:49', '2025-04-24 09:39:49', -2000, 0, 0, 2000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(69, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:51:21', '2025-04-24 09:51:21', 0, 0, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(70, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:51:32', '2025-04-24 09:51:32', 0, 0, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(71, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:56:29', '2025-04-24 09:56:29', 45000, 20000, 25000, 0, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(72, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:57:28', '2025-04-24 09:57:28', -1000, 0, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(73, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:57:45', '2025-04-24 09:57:45', 31500, 10000, 25000, 3500, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(74, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:57:55', '2025-04-24 09:57:55', 6500, 10000, 0, 3500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(75, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:15:10', '2025-04-24 10:15:10', -2000, 0, 0, 2000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(76, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:16:45', '2025-04-24 10:16:45', 131750, 155000, 0, 23250, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(77, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:24:16', '2025-04-24 10:24:16', -5000, 0, 0, 5000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(78, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:49:56', '2025-04-24 10:49:56', -30000, 0, 0, 30000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(79, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:50:30', '2025-04-24 10:50:30', 191250, 200000, 25000, 33750, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(80, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:56:48', '2025-04-24 10:56:48', 170000, 200000, 0, 30000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(81, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:27:12', '2025-04-24 19:27:12', -15500, 0, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(82, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:27:55', '2025-04-24 19:27:55', 171000, 155000, 35000, 19000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
+(83, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:29:43', '2025-04-24 19:29:43', 136000, 155000, 0, 19000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(84, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:30:18', '2025-04-24 19:30:18', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(85, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:30:48', '2025-04-24 19:30:48', -20000, 0, 0, 20000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(86, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:49:17', '2025-04-24 19:49:17', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(87, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:50:46', '2025-04-24 19:50:46', 108000, 120000, 0, 12000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(88, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:52:43', '2025-04-24 19:52:43', 102000, 120000, 0, 18000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(89, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 21:08:47', '2025-04-24 21:08:47', 155000, 155000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(90, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 21:08:59', '2025-04-24 21:08:59', 75000, 75000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán');
 
 -- --------------------------------------------------------
 
@@ -302,6 +333,7 @@ CREATE TABLE `order_details` (
   `price` double NOT NULL,
   `qty` tinyint(4) NOT NULL,
   `total` double NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -310,10 +342,63 @@ CREATE TABLE `order_details` (
 -- Đang đổ dữ liệu cho bảng `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `qty`, `total`, `created_at`, `updated_at`) VALUES
-(57, 55, 25, 1000000, 3, 3000000, '2025-04-13 08:10:59', '2025-04-13 08:10:59'),
-(58, 55, 20, 35000, 2, 70000, '2025-04-13 08:10:59', '2025-04-13 08:10:59'),
-(62, 59, 23, 100000, 1, 100000, '2025-04-14 13:59:22', '2025-04-14 13:59:22');
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `qty`, `total`, `status`, `created_at`, `updated_at`) VALUES
+(57, 55, 25, 1000000, 3, 3000000, 0, '2025-04-13 08:10:59', '2025-04-13 08:10:59'),
+(58, 55, 20, 35000, 2, 70000, 0, '2025-04-13 08:10:59', '2025-04-13 08:10:59'),
+(62, 59, 23, 100000, 1, 100000, 0, '2025-04-14 13:59:22', '2025-04-14 13:59:22'),
+(63, 60, 23, 100000, 1, 100000, 0, '2025-04-16 15:26:26', '2025-04-16 15:26:26'),
+(64, 61, 21, 888888, 1, 888888, 0, '2025-04-16 15:29:42', '2025-04-16 15:29:42'),
+(65, 62, 20, 35000, 1, 35000, 0, '2025-04-16 15:31:30', '2025-04-16 15:31:30'),
+(66, 63, 23, 100000, 1, 100000, 1, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
+(67, 63, 21, 888888, 1, 888888, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
+(68, 63, 20, 35000, 1, 35000, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
+(69, 64, 30, 300, 1, 300, 0, '2025-04-17 14:03:44', '2025-04-17 14:03:44'),
+(70, 64, 13, 5000, 2, 10000, 0, '2025-04-17 14:03:44', '2025-04-17 14:03:44'),
+(71, 65, 15, 28000, 1, 28000, 0, '2025-04-17 14:06:03', '2025-04-17 14:06:03'),
+(72, 66, 13, 5000, 2, 10000, 0, '2025-04-24 09:38:11', '2025-04-24 09:38:11'),
+(73, 67, 13, 5000, 2, 10000, 0, '2025-04-24 09:38:37', '2025-04-24 09:38:37'),
+(74, 68, 13, 5000, 4, 20000, 0, '2025-04-24 09:39:49', '2025-04-24 09:39:49'),
+(75, 69, 13, 5000, 4, 20000, 0, '2025-04-24 09:51:21', '2025-04-24 09:51:21'),
+(76, 70, 13, 5000, 4, 20000, 0, '2025-04-24 09:51:32', '2025-04-24 09:51:32'),
+(77, 71, 13, 5000, 4, 20000, 0, '2025-04-24 09:56:29', '2025-04-24 09:56:29'),
+(78, 72, 13, 5000, 2, 10000, 0, '2025-04-24 09:57:28', '2025-04-24 09:57:28'),
+(79, 75, 13, 5000, 4, 20000, 0, '2025-04-24 10:15:10', '2025-04-24 10:15:10'),
+(80, 76, 13, 5000, 31, 155000, 0, '2025-04-24 10:16:45', '2025-04-24 10:16:45'),
+(81, 77, 13, 5000, 10, 50000, 0, '2025-04-24 10:24:16', '2025-04-24 10:24:16'),
+(82, 78, 23, 100000, 2, 200000, 0, '2025-04-24 10:49:56', '2025-04-24 10:49:56'),
+(83, 81, 27, 75000, 1, 75000, 0, '2025-04-24 19:27:12', '2025-04-24 19:27:12'),
+(84, 81, 24, 80000, 1, 80000, 0, '2025-04-24 19:27:12', '2025-04-24 19:27:12'),
+(85, 82, 27, 75000, 1, 75000, 0, '2025-04-24 19:27:55', '2025-04-24 19:27:55'),
+(86, 82, 24, 80000, 1, 80000, 0, '2025-04-24 19:27:55', '2025-04-24 19:27:55'),
+(87, 83, 27, 75000, 1, 75000, 0, '2025-04-24 19:29:43', '2025-04-24 19:29:43'),
+(88, 83, 24, 80000, 1, 80000, 0, '2025-04-24 19:29:43', '2025-04-24 19:29:43'),
+(89, 84, 27, 75000, 1, 75000, 0, '2025-04-24 19:30:18', '2025-04-24 19:30:18'),
+(90, 84, 24, 80000, 1, 80000, 0, '2025-04-24 19:30:18', '2025-04-24 19:30:18'),
+(91, 85, 27, 75000, 1, 75000, 0, '2025-04-24 19:30:48', '2025-04-24 19:30:48'),
+(92, 85, 24, 80000, 1, 80000, 0, '2025-04-24 19:30:48', '2025-04-24 19:30:48'),
+(93, 86, 27, 75000, 1, 75000, 0, '2025-04-24 19:49:17', '2025-04-24 19:49:17'),
+(94, 86, 24, 80000, 1, 80000, 0, '2025-04-24 19:49:17', '2025-04-24 19:49:17'),
+(95, 87, 28, 120000, 1, 120000, 0, '2025-04-24 19:50:46', '2025-04-24 19:50:46'),
+(96, 88, 28, 120000, 1, 120000, 0, '2025-04-24 19:52:43', '2025-04-24 19:52:43'),
+(97, 89, 27, 75000, 1, 75000, 0, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
+(98, 89, 24, 80000, 1, 80000, 0, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
+(99, 90, 27, 75000, 1, 75000, 0, '2025-04-24 21:08:59', '2025-04-24 21:08:59');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `order_requests`
+--
+
+CREATE TABLE `order_requests` (
+  `id` bigint(20) NOT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `type` enum('cancel','return','exchange') NOT NULL,
+  `reason` text NOT NULL,
+  `status` enum('pending','approved','rejected') DEFAULT 'pending',
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -355,8 +440,8 @@ CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `summary` text NOT NULL,
+  `description` mediumtext NOT NULL,
+  `summary` mediumtext NOT NULL,
   `stock` tinyint(3) UNSIGNED NOT NULL,
   `unit` varchar(50) DEFAULT NULL,
   `price` double NOT NULL,
@@ -375,26 +460,42 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `slug`, `description`, `summary`, `stock`, `unit`, `price`, `disscounted_price`, `images`, `category_id`, `brand_id`, `status`, `created_at`, `updated_at`) VALUES
 (12, 'Áo sơ mi trắng', '-o-s-mi-tr-ng', 'Chất liệu: Cotton 100%\r\nSize: 31-32-33\r\nCân nặng phù hợp: 55 - 60 - 65 kg\r\nChiều cao: 1m60 - 1m65 - 1m70\r\n', '    Áo sơ mi trắng dài tay cổ cao chất liệu mềm mịn, thoáng mát', 255, 'chục', 35000, 30000, 'uploads/67bb82d37f45b.jpg;uploads/67bb82d380827.jpg;uploads/67bb82d381018.jpg', 1, 5, 'Active', NULL, NULL),
-(13, 'Áo Sơ mi kẻ sọc cộc tay', '-o-s-mi-k-s-c-c-c-tay', 'Chất liệu : Cotton 50%, Lụa 50%\r\nSize: 35-36-37', 'Áo Sơ mi kẻ sọc cộc tay chất liệu thoáng mát', 255, 'kí', 50000, 45000, 'uploads/67bb8556e34d6coctay.jpg', 1, 5, 'Active', NULL, NULL),
+(13, 'Áo Sơ mi kẻ sọc cộc tay', '-o-s-mi-k-s-c-c-c-tay', '                        Chất liệu : Cotton 50%, Lụa 50%\r\nSize: 35-36-37                        ', '                        Áo Sơ mi kẻ sọc cộc tay chất liệu thoáng mát                        ', 186, 'kí', 10000, 5000, 'uploads/67bb8556e34d6coctay.jpg', 1, 5, 'Active', NULL, NULL),
 (14, 'Áo Sơ mi', '-o-s-mi', 'Chất liệu Thư giãn', 'Áo sơ mi thoáng mát dành cho nam và nữ đều mặc được', 255, 'kí', 60000, 50000, 'uploads/67bb85dca3401somi.jpg', 1, 5, 'Active', NULL, NULL),
-(15, 'Quần bò ống suông', 'qu-n-b-ng-su-ng', '', '', 255, 'kí', 30000, 28000, 'uploads/67bb8658b18b0bo.jpg', 4, 5, 'Active', NULL, NULL),
+(15, 'Quần bò ống suông', 'qu-n-b-ng-su-ng', '', '', 254, 'kí', 30000, 28000, 'uploads/67bb8658b18b0bo.jpg', 4, 5, 'Active', NULL, NULL),
 (16, 'Áo gió mỏng', '-o-gi-m-ng', '', '', 255, 'kí', 129999, 99000, 'uploads/67bb863b411f2gio.jpg', 6, 5, 'Active', NULL, NULL),
 (17, 'Áo sơ mi PTIT', '-o-s-mi-ptit', '', '', 255, 'kí', 129000, 12000, 'uploads/67bb86cc90081c4.jpg', 1, 5, 'Active', NULL, NULL),
-(18, 'Áo sơ mi vải lụa ', '-o-s-mi-v-i-l-a-', '                        Đường Phèn Quảng Ngãi - Hương Vị Độc Đáo từ Miền Trung\r\n\r\nMiền Trung Việt Nam nổi tiếng với văn hóa ẩm thực đa dạng và độc đáo. \"Đường Phèn Quảng Ngãi\" là một món đặc sản truyền thống từ vùng đất Quảng Ngãi, nổi bật với hương vị độc đáo và giá trị lịch sử.\r\n\r\nĐặc Điểm Của Đường Phèn Quảng Ngãi:\r\n\r\n    Nguyên Liệu Chất Lượng: Đường Phèn Quảng Ngãi được sản xuất từ mía tươi, đường và nước cốt nước mía. Sự tươi mát và chất lượng của nguyên liệu là một trong những yếu tố quan trọng tạo nên hương vị đặc biệt của sản phẩm.\r\n\r\n    Cách Chế Biến Truyền Thống: Sản phẩm này thường được sản xuất bằng phương pháp thủ công truyền thống. Quá trình nấu đường phèn đòi hỏi sự khéo léo và kỹ thuật của người làm đường, đảm bảo hương vị và chất lượng tốt nhất.\r\n\r\n    Hương Vị Đặc Biệt: Đường Phèn Quảng Ngãi có hương vị độc đáo với vị ngọt tự nhiên từ đường và nước mía. Sự kết hợp này tạo nên một hương vị đặc biệt, không giống bất kỳ sản phẩm đường nào khác.\r\n\r\n    Sử Dụng Đa Dạng: Đường Phèn Quảng Ngãi có thể được sử dụng trong nhiều món ăn và đồ uống như trà, café, bánh ngọt, và nhiều món ăn khác. Sự đa dạng này tạo ra nhiều cơ hội để thưởng thức hương vị đặc biệt của đường phèn.\r\n\r\n    Giá Trị Lịch Sử và Văn Hóa: Đường Phèn Quảng Ngãi không chỉ là một sản phẩm ẩm thực mà còn có giá trị lịch sử và văn hóa lớn. Nó đã tồn tại và được sản xuất theo cách truyền thống trong nhiều thế hệ và là một phần không thể thiếu của văn hóa ẩm thực của Quảng Ngãi.\r\n\r\nThưởng Thức Đường Phèn Quảng Ngãi:\r\n\r\nĐường Phèn Quảng Ngãi là một sản phẩm đặc biệt và độc đáo của vùng đất Trung Việt. Hương vị đặc biệt và giá trị lịch sử của sản phẩm này làm cho nó trở thành một phần không thể thiếu của ẩm thực và văn hóa ẩm thực Quảng Ngãi. Hãy thưởng thức hương vị ngọt ngào của Đường Phèn Quảng Ngãi và khám phá sự đặc biệt của sản phẩm này, một phần không thể thiếu của hậu quảng đại của miền Trung.\r\n                                                ', '                        Đường Phèn Quảng Ngãi là một món đặc sản truyền thống có hương vị độc đáo từ vùng đất Quảng Ngãi, miền Trung Việt Nam. Hãy khám phá sự đặc biệt và giá trị của sản phẩm này trong bài viết dưới đây.\r\n                                                ', 255, 'kí', 87000, 80000, 'uploads/67bb86aa5625fquanau.jpg', 1, 5, 'Active', NULL, NULL),
+(18, 'Áo sơ mi vải lụa ', '-o-s-mi-v-i-l-a-', '', '', 255, 'kí', 87000, 80000, 'uploads/67bb86aa5625fquanau.jpg', 1, 5, 'Active', NULL, NULL),
 (19, 'Áo Phao Dày dặn ', '-o-phao-d-y-d-n-', '', '', 255, 'kí', 90000, 80000, 'uploads/67bb8804339bdgio.jpg', 6, 5, 'Active', NULL, NULL),
-(20, 'Quản tây lịch lãm ống rộng', 'qu-n-t-y-l-ch-l-m-ng-r-ng', '', '', 255, 'túi', 90000, 35000, 'uploads/67bb8827474b5quanau.jpg', 2, 5, 'Active', NULL, NULL),
-(21, 'Áo Hoodie lông chuột ấm áp', '-o-hoodie-l-ng-chu-t-m-p', '                        Mạch nha là món ăn được làm nhiều tại huyện Mộ Đức, phía nam tỉnh Quảng Ngãi. Thích hợp ăn với bánh tráng vào những buổi trưa hay chiều. Ngoài ra mạch nha còn dùng làm nguyên liệu cho các thức ăn như ..\r\n                                                ', '                        Được làm từ lúa non, với vị ngọt và thơm của lúa, không làm từ đường\r\n                                                ', 255, 'lon', 8888888, 888888, 'uploads/67bb885047899hodi.jpg', 9, 5, 'Active', NULL, NULL),
+(20, 'Quản tây lịch lãm ống rộng', 'qu-n-t-y-l-ch-l-m-ng-r-ng', '', '', 253, 'túi', 90000, 35000, 'uploads/67bb8827474b5quanau.jpg', 2, 5, 'Active', NULL, NULL),
+(21, 'Áo Hoodie lông chuột ấm áp', '-o-hoodie-l-ng-chu-t-m-p', '', '', 254, 'lon', 8888888, 888888, 'uploads/67bb885047899hodi.jpg', 9, 5, 'Active', NULL, NULL),
 (22, 'Áo Polo Bưu Chính', '-o-polo-b-u-ch-nh', '', '', 255, 'lít', 999999, 90000, 'uploads/67bb87c2d96bbpolo.jpg', 3, 5, 'Active', NULL, NULL),
-(23, 'Áo Varsity Bưu Chính', '-o-varsity-b-u-ch-nh', '', '', 255, 'lít', 120000, 100000, 'uploads/67bb87e5653a3c3.jpg', 5, 5, 'Active', NULL, NULL),
-(24, 'Quần jean Nam Nữ', 'qu-n-jean-nam-n-', '', '\r\n                                                ', 255, 'lạng', 90000, 80000, 'uploads/67bb860d57fc5bo.jpg', 4, 5, 'Active', NULL, NULL),
+(23, 'Áo Varsity Bưu Chính', '-o-varsity-b-u-ch-nh', '', '', 252, 'lít', 120000, 100000, 'uploads/67bb87e5653a3c3.jpg', 5, 5, 'Active', NULL, NULL),
+(24, 'Quần jean Nam Nữ', 'qu-n-jean-nam-n-', '', '\r\n                                                ', 248, 'lạng', 90000, 80000, 'uploads/67bb860d57fc5bo.jpg', 4, 5, 'Active', NULL, NULL),
 (25, 'Áo Bomber PTIT', '-o-bomber-ptit', '                                                ', '                                                ', 200, 'kí', 1200000, 1000000, 'uploads/67bb877e5a7c5c2.jpg', 5, 5, 'Active', NULL, NULL),
 (26, 'Áo Hoodie Form rộng', '-o-hoodie-form-r-ng', '', '', 255, 'kí', 9999999, 8000000, 'uploads/67bb875ddfd12hodi.jpg', 9, 5, 'Active', NULL, NULL),
-(27, 'Quần bò ống loe', 'qu-n-b-ng-loe', '\r\n                                                ', '', 255, 'kí', 80000, 75000, 'uploads/67bb87248d049bo.jpg', 4, 5, 'Active', NULL, NULL),
-(28, 'Áo Jacket PTIT', '-o-jacket-ptit', '', '', 255, 'kí', 125000, 120000, 'uploads/67bb86fe106a0c1.jpg', 5, 5, 'Active', NULL, NULL),
+(27, 'Quần bò ống loe', 'qu-n-b-ng-loe', '\r\n                                                ', '', 247, 'kí', 80000, 75000, 'uploads/67bb87248d049bo.jpg', 4, 5, 'Active', NULL, NULL),
+(28, 'Áo Jacket PTIT', '-o-jacket-ptit', '', '', 253, 'kí', 125000, 120000, 'uploads/67bb86fe106a0c1.jpg', 5, 5, 'Active', NULL, NULL),
 (29, 'Áo Polo PTIT', '-o-polo-ptit', '', '', 255, 'kí', 99999, 99900, 'uploads/67bb8626e8fa9polo.jpg', 3, 5, 'Active', NULL, NULL),
-(30, 'Quần Âu form Regular', 'qu-n-u-form-regular', '', '', 3, 'kí', 300, 300, 'uploads/67bb87a345754quanau.jpg', 2, 5, 'Active', NULL, NULL),
+(30, 'Quần Âu form Regular', 'qu-n-u-form-regular', '', '', 2, 'kí', 300, 300, 'uploads/67bb87a345754quanau.jpg', 2, 5, 'Active', NULL, NULL),
 (31, 'áo AI PTIT', '-o-ai-ptit', '                        Áo unisex dành cho cả nam và nữ                        ', '                        Áo Polo khoa Trí tuệ nhân tạo PTIT                        ', 100, NULL, 250000, 210000, 'uploads/67fd428501345_AI_Logo.png', 3, 5, 'Active', NULL, NULL),
-(32, 'Áo đôi tình nhân', '-o-i-t-nh-nh-n', 'Áo T--Shirt cọc tay unisex', 'Áo đôi cho các cặp nam nữ mặc đi biển', 250, NULL, 300000, 230000, 'uploads/67fd45d12fc0c_logoptit2.png', 1, 10, 'Active', NULL, NULL);
+(32, 'Áo đôi tình nhân', '-o-i-t-nh-nh-n', 'Áo T--Shirt cọc tay unisex', 'Áo đôi cho các cặp nam nữ mặc đi biển', 250, NULL, 300000, 230000, 'uploads/67fd45d12fc0c_logoptit2.png', 1, 10, 'Active', NULL, NULL),
+(33, 'Test', 'test', '<h2><i>ThÃ´ng sá»‘ ká»¹ thuáº­t</i></h2><ol><li><strong>Chiá»u dÃ i: 20cm</strong></li><li><strong>Chiá»u rá»™ng: 40cm</strong></li></ol><figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/hd2.jpg\"></figure>', '', 255, NULL, 250000, 200000, 'uploads/681c966e32981_AI_Chalange.jpg', 4, 5, 'Active', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `product_details`
+--
+
+CREATE TABLE `product_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `size` varchar(20) DEFAULT NULL,
+  `color` varchar(30) DEFAULT NULL,
+  `price` double NOT NULL,
+  `stock` int(10) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -433,7 +534,8 @@ INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `comment`, `rating`, `crea
 (18, 1, 25, 'được', 4, '2025-02-28 08:37:59', NULL),
 (19, 1, 23, 'hi', 4, '2025-02-28 20:48:38', NULL),
 (20, 1, 23, 'bực', 1, '2025-02-28 20:50:09', NULL),
-(21, 1, 25, 'chả ra gì', 1, '2025-04-12 10:44:16', NULL);
+(21, 1, 25, 'chả ra gì', 1, '2025-04-12 10:44:16', NULL),
+(22, 5, 23, 'xáº¥u quÃ¡ haizzz', 3, '2025-05-08 17:43:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -458,10 +560,8 @@ CREATE TABLE `thongtinnhanhang` (
 
 INSERT INTO `thongtinnhanhang` (`id`, `id_user`, `tennguoinhan`, `sodienthoai`, `diachi`, `xa`, `huyen`, `tinh`) VALUES
 (3, 1, 'Ngọ Văn Trọng', '0904708498', 'số nhà 22 Thôn Ngọ Hạ', 'Xã Thăng Bình', 'Huyện Nông Cống', 'Tỉnh Thanh Hóa'),
-(4, 1, 'Trương Vĩnh Tiến', '0367983423', 'nhà 15 Ngõ 6', 'Phường Văn Quán', 'Quận Hà Đông', 'Thành phố Hà Nội'),
-(5, 1, 'Phạm Trong', '0342561234', '13 Hồ Tùng Mậu', 'Phường Mai Dịch', 'Quận Cầu Giấy', 'Thành phố Hà Nội'),
-(6, 1, 'Lê Vịnh', '0874563267', '12 Nguyễn Trãi', 'Phường Thanh Xuân Bắc', 'Quận Thanh Xuân', 'Thành phố Hà Nội'),
-(7, 5, 'Hải Hàm Rồng', '0823542765', '22 Phố Quang Trung', 'Phường Hàm Rồng', 'Thành phố Thanh Hóa', 'Tỉnh Thanh Hóa');
+(7, 5, 'Hải Hàm Rồng', '0823542765', '22 Phố Quang Trung', 'Phường Hàm Rồng', 'Thành phố Thanh Hóa', 'Tỉnh Thanh Hóa'),
+(8, 5, 'VinhLV', '09', '13 Đường Giải Phóng', 'Phường Thanh Trì', 'Quận Hoàng Mai', 'Thành phố Hà Nội');
 
 -- --------------------------------------------------------
 
@@ -573,6 +673,13 @@ ALTER TABLE `order_details`
   ADD KEY `order_details_product_id_foreign` (`product_id`);
 
 --
+-- Chỉ mục cho bảng `order_requests`
+--
+ALTER TABLE `order_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
 -- Chỉ mục cho bảng `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -594,6 +701,13 @@ ALTER TABLE `products`
   ADD UNIQUE KEY `products_slug_unique` (`slug`),
   ADD KEY `products_category_id_foreign` (`category_id`),
   ADD KEY `products_brand_id_foreign` (`brand_id`);
+
+--
+-- Chỉ mục cho bảng `product_details`
+--
+ALTER TABLE `product_details`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ux_prod_size_color` (`product_id`,`size`,`color`);
 
 --
 -- Chỉ mục cho bảng `reviews`
@@ -679,13 +793,19 @@ ALTER TABLE `newscategories`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT cho bảng `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+
+--
+-- AUTO_INCREMENT cho bảng `order_requests`
+--
+ALTER TABLE `order_requests`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
@@ -697,19 +817,25 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT cho bảng `product_details`
+--
+ALTER TABLE `product_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT cho bảng `thongtinnhanhang`
 --
 ALTER TABLE `thongtinnhanhang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -729,11 +855,23 @@ ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
+-- Các ràng buộc cho bảng `order_requests`
+--
+ALTER TABLE `order_requests`
+  ADD CONSTRAINT `order_requests_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+
+--
 -- Các ràng buộc cho bảng `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
   ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+--
+-- Các ràng buộc cho bảng `product_details`
+--
+ALTER TABLE `product_details`
+  ADD CONSTRAINT `product_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `thongtinnhanhang`
