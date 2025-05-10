@@ -71,6 +71,8 @@ if ($type === 'cancel' && $current_status === 'Processing') {
 }
 
 // 3. Nếu là yêu cầu return/exchange → kiểm tra số ngày
+// nguyên tắc nghiệp vụ là khi họ đã nhận hàng thì họ phải thanh toán ( đúng hơn là thanh toán khi nhận hàng), nên không cần kiểm tra trạng thái thanh toán nữa
+
 if (in_array($type, ['return', 'exchange'])) {
     $now = new DateTime();
     $created = new DateTime($created_at);
@@ -90,6 +92,8 @@ if (in_array($type, ['return', 'exchange'])) {
         exit;
     }
 }
+
+
 
 // 4. Ghi vào bảng order_requests
 $image_sql = $imagePath ? "'" . mysqli_real_escape_string($conn, $imagePath) . "'" : "NULL";

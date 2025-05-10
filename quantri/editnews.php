@@ -131,14 +131,14 @@ if (isset($_POST['btnUpdate'])){
                     </div>
                     <div class="form-group">
                         <label class="form-label">Tóm tắt tin:</label>
-                        <textarea name="summary" class="form-control" placeholder="Nhập...">
-                        <?=$news['sumary']?>
+                        <textarea id="summary-editor" name="summary" class="form-control" placeholder="Nhập...">
+                        <?=htmlspecialchars($news['sumary'])?>
                         </textarea>
                     </div>
                     <div class="form-group">
                     <label class="form-label">Nội dung tin:</label>
-                        <textarea name="description" class="form-control" placeholder="Nhập...">
-                        <?=$news['description']?>
+                        <textarea id="description-editor"  name="description" class="form-control" placeholder="Nhập...">
+                        <?=htmlspecialchars($news['description'])?>
                         </textarea>
                     </div>
                     
@@ -178,6 +178,23 @@ if (isset($_POST['btnUpdate'])){
 
 </div>
 
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+  [ 'summary-editor', 'description-editor' ].forEach(id => {
+    ClassicEditor
+      .create(document.getElementById(id), {
+        toolbar: [
+          'heading','|','bold','italic','underline','link',
+          'bulletedList','numberedList','insertTable','imageUpload',
+          'blockQuote','undo','redo'
+        ],
+        ckfinder: {
+          uploadUrl: 'fileupload.php'
+        }
+      })
+      .catch(err => console.error(err));
+  });
+</script>
       
 <?php
 require('includes/footer.php');
