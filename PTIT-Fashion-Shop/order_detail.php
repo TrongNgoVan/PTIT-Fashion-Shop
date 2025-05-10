@@ -400,9 +400,9 @@
         'exchange' => 'Đổi hàng'
     ];
     $statusLabels = [
-        'pending'  => ['text-warning', 'Chờ xử lý'],
-        'approved' => ['text-success', 'Đã duyệt'],
-        'rejected' => ['text-danger',  'Đã từ chối']
+        'pending'  => ['text-warning', 'Cửa hàng Đang xử lý'],
+        'approved' => ['text-success', 'Cửa hàng Đã duyệt'],
+        'rejected' => ['text-danger',  ' Cửa hàng Đã từ chối']
     ];
     ?>
     <div class="container mt-4">
@@ -449,6 +449,7 @@
                 <div class="text-center py-2 border-top">
                     <span class="fw-bold">Yêu cầu <?= $lblType ?>:</span>
                     <span class="text-muted small">Được gửi lúc (<?= $time1 ?>)</span>
+                    <span> || </span>
                     <span class="<?= $cls ?>"><?= $lblStatus ?></span>
                     <span class="text-muted small">(<?= $time2 ?>)</span>
                 </div>
@@ -529,31 +530,31 @@
                 }, 'json');
             });
 
-           // Xóa đánh giá
-$('#deleteReviewBtn').on('click', function () {
-    if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
-    const detailId = $('#reviewForm [name="order_detail_id"]').val();
+            // Xóa đánh giá
+            $('#deleteReviewBtn').on('click', function() {
+                if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
+                const detailId = $('#reviewForm [name="order_detail_id"]').val();
 
-    $.post('delete_review.php', {
-        order_detail_id: detailId
-    }, function (resp) {
-        if (resp.success) {
-            $('#reviewModal').modal('hide');
+                $.post('delete_review.php', {
+                    order_detail_id: detailId
+                }, function(resp) {
+                    if (resp.success) {
+                        $('#reviewModal').modal('hide');
 
-            // Trả lại nút đánh giá (review-btn)
-            const $cell = $(`button.view-review-btn[data-detail-id="${detailId}"]`).closest('td');
-            $cell.html(`
+                        // Trả lại nút đánh giá (review-btn)
+                        const $cell = $(`button.view-review-btn[data-detail-id="${detailId}"]`).closest('td');
+                        $cell.html(`
                 <button class="btn btn-sm btn-primary review-btn" 
                     data-detail-id="${detailId}" 
                     data-product-id="${resp.product_id}">
                     Đánh giá
                 </button>
             `);
-        } else {
-            alert(resp.message || 'Xóa đánh giá thất bại');
-        }
-    }, 'json');
-});
+                    } else {
+                        alert(resp.message || 'Xóa đánh giá thất bại');
+                    }
+                }, 'json');
+            });
 
 
             // --- Các script khác cho request-btn (giữ nguyên) ---
