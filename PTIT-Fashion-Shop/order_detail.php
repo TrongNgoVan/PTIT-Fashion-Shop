@@ -663,7 +663,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="requestImage" class="form-label">Hình ảnh (tuỳ chọn)</label>
+                        <label for="requestImage" class="form-label">Ảnh minh chứng</label>
                         <input type="file" name="request_image" id="requestImage" class="form-control" accept="image/*">
                         <img id="requestPreview" src="" class="img-fluid mt-2" style="display:none; max-height:150px;">
                     </div>

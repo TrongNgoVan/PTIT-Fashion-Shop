@@ -144,7 +144,7 @@ require('includes/header.php');
                                     <th>Loại</th>
                                     <th>Trạng thái xử lý</th>
                                     <th>Lý do</th>
-                                    <th>Hình ảnh</th> <!-- <--- thêm cột này -->
+                                    <th>Ảnh minh chứng</th> <!-- <--- thêm cột này -->
                                     <th>Thời gian cập nhật</th>
                                 </tr>
                             </thead>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require('db/conn.php');
 
@@ -24,14 +24,15 @@ if (isset($_FILES['request_image']) && $_FILES['request_image']['error'] === UPL
 }
 
 // 1. Lấy trạng thái hiện tại và ngày tạo
-$res = mysqli_query($conn, 
-    "SELECT status, created_at 
+$res = mysqli_query(
+    $conn,
+    "SELECT status, status_pay, created_at 
      FROM orders 
      WHERE id = $order_id"
 );
 if (!$res || mysqli_num_rows($res) === 0) {
     echo json_encode([
-        'success' => false, 
+        'success' => false,
         'message' => 'Đơn hàng không tồn tại.'
     ]);
     exit;
@@ -42,7 +43,15 @@ $created_at     = $row['created_at'];
 
 // 2. Nếu là yêu cầu hủy, và đang ở Processing → hủy ngay
 if ($type === 'cancel' && $current_status === 'Processing') {
-    $upd = mysqli_query($conn,
+    if ($row['status_pay'] === 'Đã thanh toán' || $row['status_pay'] === 'Thanh toán thiếu' || $row['status_pay'] === 'Thanh toán thừa') {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Đơn hàng đã thanh toán, không thể hủy.'
+        ]);
+        exit;
+    }
+    $upd = mysqli_query(
+        $conn,
         "UPDATE orders
          SET status = 'Cancelled'
          WHERE id = $order_id"
@@ -109,4 +118,3 @@ if (mysqli_query($conn, $sql)) {
 }
 
 mysqli_close($conn);
-?>
