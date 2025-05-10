@@ -337,22 +337,21 @@
                                             <td class="text-end"><?= number_format($row1['total'], 0, '', '.') ?> VNĐ</td>
 
                                             <td class="text-center">
-                                                <?php
-                                                // Hiện nút đánh giá chỉ khi đơn đã Delivered và review_status = 'chưa đánh giá'
-                                                if ($order_status === 'Delivered' && $row1['review_status'] == 0):
-                                                ?>
+                                                <?php if ($order_status === 'Delivered' && $row1['review_status'] == 0): ?>
                                                     <button
                                                         class="btn btn-sm btn-primary review-btn"
                                                         data-detail-id="<?= $row1['id'] ?>"
                                                         data-product-id="<?= $row1['product_id'] ?>">
                                                         Đánh giá
                                                     </button>
-
-                                                <?php
-                                                elseif ($row1['review_status'] == 1):
-                                                ?>
-                                                    <span class="text-success">Đã đánh giá</span>
+                                                <?php elseif ($row1['review_status'] == 1): ?>
+                                                    <button
+                                                        class="btn btn-sm btn-link view-review-btn text-success"
+                                                        data-detail-id="<?= $row1['id'] ?>">
+                                                        Đã đánh giá
+                                                    </button>
                                                 <?php endif; ?>
+
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -474,76 +473,125 @@
     <script src="js/main.js"></script>
     <script>
         $(function() {
-            // khi click vào nút Đánh giá
-            $('.review-btn').on('click', function() {
+            // Mở modal
+            $(document).on('click', '.review-btn, .view-review-btn', function() {
                 const detailId = $(this).data('detail-id');
-                const pid = $(this).data('product-id');
+                const pid = $(this).data('product-id') || null;
+                const isNew = $(this).hasClass('review-btn');
+
+                // Đặt form
                 $('#reviewForm [name="order_detail_id"]').val(detailId);
-                $('#reviewForm [name="product_id"]').val(pid);
+                if (pid) $('#reviewForm [name="product_id"]').val(pid);
+
+                // Chuyển tiêu đề + nút + delete-button
+                if (isNew) {
+                    $('#reviewModalTitle').text('Đánh giá sản phẩm');
+                    $('#reviewSubmitBtn').text('Gửi đánh giá');
+                    $('#deleteReviewBtn').hide();
+                    $('#reviewForm')[0].reset();
+                } else {
+                    $('#reviewModalTitle').text('Cập nhật đánh giá');
+                    $('#reviewSubmitBtn').text('Cập nhật đánh giá');
+                    $('#deleteReviewBtn').show(); // hiện nút xóa
+                    // load dữ liệu cũ
+                    $.getJSON('get_review.php', {
+                            order_detail_id: detailId
+                        })
+                        .done(function(res) {
+                            $('#reviewForm [name="rating"]').val(res.rating);
+                            $('#reviewForm [name="comment"]').val(res.comment);
+                        })
+                        .fail(function() {
+                            $('#reviewForm')[0].reset();
+                        });
+                }
+
                 $('#reviewModal').modal('show');
             });
 
-
-            // xử lý submit form qua AJAX
+            // Submit (insert/update)
             $('#reviewForm').on('submit', function(e) {
                 e.preventDefault();
                 $.post('comment.php', $(this).serialize(), function(resp) {
                     if (resp.success) {
                         $('#reviewModal').modal('hide');
-                        // update chỉ đúng ô vừa đánh giá
-                        $(`button.review-btn[data-detail-id="${resp.order_detail_id}"]`)
-                            .closest('td').html('<span class="text-success">Đã đánh giá</span>');
+                        const odId = resp.order_detail_id;
+                        const $td = $(`button.review-btn[data-detail-id="${odId}"]`).closest('td');
+                        if ($td.length) {
+                            // lần đầu
+                            $td.html(`<button class="btn btn-sm btn-link view-review-btn text-success" data-detail-id="${odId}">Đã đánh giá</button>`);
+                        } else {
+                            alert('Cập nhật đánh giá thành công!');
+                        }
                     } else {
                         alert(resp.message || 'Gửi đánh giá thất bại');
                     }
                 }, 'json');
             });
 
-        });
+           // Xóa đánh giá
+$('#deleteReviewBtn').on('click', function () {
+    if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
+    const detailId = $('#reviewForm [name="order_detail_id"]').val();
 
-        $(function() {
-            // Bắt click tất cả nút .request-btn
+    $.post('delete_review.php', {
+        order_detail_id: detailId
+    }, function (resp) {
+        if (resp.success) {
+            $('#reviewModal').modal('hide');
+
+            // Trả lại nút đánh giá (review-btn)
+            const $cell = $(`button.view-review-btn[data-detail-id="${detailId}"]`).closest('td');
+            $cell.html(`
+                <button class="btn btn-sm btn-primary review-btn" 
+                    data-detail-id="${detailId}" 
+                    data-product-id="${resp.product_id}">
+                    Đánh giá
+                </button>
+            `);
+        } else {
+            alert(resp.message || 'Xóa đánh giá thất bại');
+        }
+    }, 'json');
+});
+
+
+            // --- Các script khác cho request-btn (giữ nguyên) ---
             $('.request-btn').on('click', function() {
-                if ($(this).is(':disabled')) return; // không làm gì nếu disabled
-
-                const type = $(this).data('type'); // 'cancel'|'return'|'exchange'
+                if ($(this).is(':disabled')) return;
+                const type = $(this).data('type');
                 const labels = {
                     cancel: 'Hủy đơn hàng',
                     return: 'Trả hàng',
                     exchange: 'Đổi hàng'
                 };
-
-                // Cập nhật modal
                 $('#actionModalLabel').text(labels[type]);
                 $('#actionSubmitBtn').text('Gửi ' + labels[type]);
                 $('#actionType').val(type);
-                $('#actionReason').val(''); // xoá nội dung cũ
-
-                // Hiển thị modal
+                $('#actionReason').val('');
                 new bootstrap.Modal(document.getElementById('actionModal')).show();
             });
 
-            // Xử lý submit form
             $('#actionForm').on('submit', function(e) {
                 e.preventDefault();
-                const form = $(this);
-                const data = form.serialize();
-
-                $.post('order_request.php', data, function(resp) {
-                        if (resp.success) {
-                            $('#actionModal').modal('hide');
-                            alert('Gửi yêu cầu thành công!');
-                            setTimeout(() => location.reload(), 500);
-                        } else {
-                            alert(resp.message || 'Có lỗi, vui lòng thử lại.');
-                        }
-                    }, 'json')
-                    .fail(function() {
-                        alert('Không thể kết nối đến server.');
-                    });
+                $.post('order_request.php', $(this).serialize(), function(resp) {
+                    if (resp.success) {
+                        $('#actionModal').modal('hide');
+                        alert('Gửi yêu cầu thành công!');
+                        setTimeout(() => location.reload(), 500);
+                    } else {
+                        alert(resp.message || 'Có lỗi, vui lòng thử lại.');
+                    }
+                }, 'json').fail(function() {
+                    alert('Không thể kết nối đến server.');
+                });
             });
         });
     </script>
+
+
+
+
 
 
     <!-- Action Modal -->
@@ -578,7 +626,7 @@
             <div class="modal-content">
                 <form id="reviewForm">
                     <div class="modal-header">
-                        <h5 class="modal-title">Đánh giá sản phẩm</h5>
+                        <h5 class="modal-title" id="reviewModalTitle">Đánh giá sản phẩm</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -601,13 +649,17 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-danger me-auto" id="deleteReviewBtn" style="display: none;">
+                            Xóa đánh giá
+                        </button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                        <button type="submit" class="btn btn-primary" id="reviewSubmitBtn">Gửi đánh giá</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 
 </body>
 
