@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 10, 2025 lúc 11:07 AM
+-- Thời gian đã tạo: Th5 10, 2025 lúc 11:24 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -125,22 +125,6 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `img`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `failed_jobs`
---
-
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `magiamgia`
 --
 
@@ -168,35 +152,6 @@ INSERT INTO `magiamgia` (`id`, `code`, `loai_giam_gia`, `gia_tri_giam`, `dieu_ki
 (4, 'FREESHIP', 'tien', 20000.00, 50000.00, 'Giảm 20k phí vận chuyển cho đơn từ 50k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-04-30', 6, 50),
 (5, 'SUMMER15', 'phan_tram', 15.00, 100000.00, 'Ưu đãi hè: Giảm 15% đơn từ 100k', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/ptit.png', '2025-07-01', 12, 30),
 (6, 'NEW001', 'tien', 20000.00, 0.00, 'Tưng bừng khai trương, giảm giá cho tất cả mặt hàng', 'http://localhost/PTIT_SHOP/quantri/img/magiamgia/1744636255_logo_cntt_ptit.png', '2025-03-15', 12, 50);
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2023_10_03_123426_create_admins_table', 1),
-(6, '2023_10_03_130747_create_categories_table', 2),
-(7, '2023_10_03_130946_create_brands_table', 2),
-(8, '2023_10_03_132635_create_products_table', 3),
-(9, '2023_10_03_135606_create_reviews_table', 4),
-(10, '2023_10_04_080710_create_orders_table', 5),
-(11, '2023_10_04_081411_create_order_details_table', 6);
 
 -- --------------------------------------------------------
 
@@ -410,36 +365,6 @@ INSERT INTO `order_requests` (`id`, `order_id`, `type`, `reason`, `status`, `cre
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `personal_access_tokens`
---
-
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
-  `last_used_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `products`
 --
 
@@ -527,7 +452,7 @@ CREATE TABLE `reviews` (
 
 INSERT INTO `reviews` (`id`, `order_detail_id`, `user_id`, `product_id`, `rating`, `comment`, `created_at`, `updated_at`) VALUES
 (4, 97, 1, 27, 4, 'dep qua', '2025-05-10 06:47:13', '2025-05-10 07:02:06'),
-(5, 98, 1, 24, 5, '<figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/Screenshot 2024-07-25 113622.png\"></figure><ol><li>fdfsd</li><li>dsad</li><li><i>fdf</i></li><li>dsa</li></ol>', '2025-05-10 08:57:28', '2025-05-10 08:57:28');
+(5, 98, 1, 24, 5, '<figure class=\"image\"><img src=\"/PTIT_SHOP/PTIT-Fashion-Shop/upload/Screenshot 2024-07-25 113622.png\"></figure><ol><li>fdfsd</li><li>dsad</li><li><i>fdf</i></li><li>dsa</li></ol>', '2025-05-10 08:57:28', '2025-05-10 09:14:47');
 
 -- --------------------------------------------------------
 
@@ -618,24 +543,11 @@ ALTER TABLE `categories`
   ADD UNIQUE KEY `categories_slug_unique` (`slug`);
 
 --
--- Chỉ mục cho bảng `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
-
---
 -- Chỉ mục cho bảng `magiamgia`
 --
 ALTER TABLE `magiamgia`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `code` (`code`);
-
---
--- Chỉ mục cho bảng `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `news`
@@ -670,20 +582,6 @@ ALTER TABLE `order_details`
 ALTER TABLE `order_requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_id` (`order_id`);
-
---
--- Chỉ mục cho bảng `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Chỉ mục cho bảng `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
 -- Chỉ mục cho bảng `products`
@@ -753,22 +651,10 @@ ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT cho bảng `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT cho bảng `magiamgia`
 --
 ALTER TABLE `magiamgia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT cho bảng `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `news`
@@ -799,12 +685,6 @@ ALTER TABLE `order_details`
 --
 ALTER TABLE `order_requests`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT cho bảng `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
