@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 09, 2025 lúc 08:25 PM
+-- Thời gian đã tạo: Th5 10, 2025 lúc 11:07 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -286,7 +286,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `phone`, `email`, `status`, `created_at`, `updated_at`, `total_price`, `tiensanpham`, `phivanchuyen`, `giamgia`, `tiendachuyen`, `transport`, `pay`, `status_pay`) VALUES
-(55, 1, 'Phạm Trong', '13 Hồ Tùng Mậu, Phường Mai Dịch, Quận Cầu Giấy, Thành phố Hà Nội', '0342561234', 'vantrongngo1607@gmail.com', 'Confirmed', '2025-04-13 08:10:59', '2025-04-13 08:10:59', 3075000, 3070000, 25000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(55, 1, 'Phạm Trong', '13 Hồ Tùng Mậu, Phường Mai Dịch, Quận Cầu Giấy, Thành phố Hà Nội', '0342561234', 'vantrongngo1607@gmail.com', 'Shipping', '2025-04-13 08:10:59', '2025-04-13 08:10:59', 3075000, 3070000, 25000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
 (59, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-14 13:59:22', '2025-04-14 13:59:22', 115000, 100000, 35000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
 (60, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:26:26', '2025-04-16 15:26:26', 95000, 100000, 15000, 20000, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
 (61, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:29:42', '2025-04-16 15:29:42', 883888, 888888, 25000, 30000, 0, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
@@ -316,9 +316,9 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `phone`, `email`, `sta
 (85, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:30:48', '2025-04-24 19:30:48', -20000, 0, 0, 20000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
 (86, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:49:17', '2025-04-24 19:49:17', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
 (87, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:50:46', '2025-04-24 19:50:46', 108000, 120000, 0, 12000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(88, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:52:43', '2025-04-24 19:52:43', 102000, 120000, 0, 18000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(89, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 21:08:47', '2025-04-24 21:08:47', 155000, 155000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(90, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 21:08:59', '2025-04-24 21:08:59', 75000, 75000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán');
+(88, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Shipping', '2025-04-24 19:52:43', '2025-04-24 19:52:43', 102000, 120000, 0, 18000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(89, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-22 21:08:47', '2025-04-24 21:08:47', 155000, 155000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(90, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Cancelled', '2025-04-24 21:08:59', '2025-04-24 21:08:59', 75000, 75000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán');
 
 -- --------------------------------------------------------
 
@@ -349,7 +349,7 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `qty`, `to
 (63, 60, 23, 100000, 1, 100000, 0, '2025-04-16 15:26:26', '2025-04-16 15:26:26'),
 (64, 61, 21, 888888, 1, 888888, 0, '2025-04-16 15:29:42', '2025-04-16 15:29:42'),
 (65, 62, 20, 35000, 1, 35000, 0, '2025-04-16 15:31:30', '2025-04-16 15:31:30'),
-(66, 63, 23, 100000, 1, 100000, 1, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
+(66, 63, 23, 100000, 1, 100000, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
 (67, 63, 21, 888888, 1, 888888, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
 (68, 63, 20, 35000, 1, 35000, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
 (69, 64, 30, 300, 1, 300, 0, '2025-04-17 14:03:44', '2025-04-17 14:03:44'),
@@ -380,8 +380,8 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `qty`, `to
 (94, 86, 24, 80000, 1, 80000, 0, '2025-04-24 19:49:17', '2025-04-24 19:49:17'),
 (95, 87, 28, 120000, 1, 120000, 0, '2025-04-24 19:50:46', '2025-04-24 19:50:46'),
 (96, 88, 28, 120000, 1, 120000, 0, '2025-04-24 19:52:43', '2025-04-24 19:52:43'),
-(97, 89, 27, 75000, 1, 75000, 0, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
-(98, 89, 24, 80000, 1, 80000, 0, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
+(97, 89, 27, 75000, 1, 75000, 1, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
+(98, 89, 24, 80000, 1, 80000, 1, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
 (99, 90, 27, 75000, 1, 75000, 0, '2025-04-24 21:08:59', '2025-04-24 21:08:59');
 
 -- --------------------------------------------------------
@@ -399,6 +399,13 @@ CREATE TABLE `order_requests` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `order_requests`
+--
+
+INSERT INTO `order_requests` (`id`, `order_id`, `type`, `reason`, `status`, `created_at`, `updated_at`) VALUES
+(1, 89, 'cancel', 'khong co nhu cau', 'rejected', '2025-05-10 02:06:15', '2025-05-10 10:39:44');
 
 -- --------------------------------------------------------
 
@@ -505,37 +512,22 @@ CREATE TABLE `product_details` (
 
 CREATE TABLE `reviews` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `order_detail_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `comment` text NOT NULL,
-  `rating` tinyint(4) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `rating` tinyint(1) NOT NULL,
+  `comment` mediumtext NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `reviews`
 --
 
-INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `comment`, `rating`, `created_at`, `updated_at`) VALUES
-(1, 1, 20, 'quần đẹp, vừa form', 5, '2025-02-27 04:45:09', NULL),
-(2, 2, 25, 'đúng áo của học viên hoàng gia có khác, mặc vào như vua', 4, '2025-02-26 04:48:00', NULL),
-(3, 3, 25, 'áo đẹp, không mỏng cũng k quá dày, form vừa vặn', 5, '2025-02-25 04:49:05', NULL),
-(4, 1, 25, 'không còn gì để bàn cãi, đúng chất hoàng gia', 5, '2025-02-24 04:49:48', NULL),
-(5, 0, 0, 'oke', 4, '2025-02-27 18:10:21', NULL),
-(6, 1, 25, 'oke đấy', 4, '2025-02-27 18:12:10', NULL),
-(7, 1, 21, 'đẹp đó', 4, '2025-02-27 18:15:37', NULL),
-(8, 1, 21, 'đẹp đó', 4, '2025-02-27 18:16:26', NULL),
-(9, 1, 21, 'tuyệt', 5, '2025-02-27 18:16:57', NULL),
-(10, 1, 20, 'uầy áo đẹp vãi chưởng', 1, '2025-02-27 18:19:05', NULL),
-(11, 1, 20, 'sao lại có cái áo đép thế này', 3, '2025-02-27 18:21:35', NULL),
-(15, 1, 23, 'tuyệt', 5, '2025-02-27 19:13:28', NULL),
-(17, 1, 23, 'TẠM', 3, '2025-02-27 19:28:52', NULL),
-(18, 1, 25, 'được', 4, '2025-02-28 08:37:59', NULL),
-(19, 1, 23, 'hi', 4, '2025-02-28 20:48:38', NULL),
-(20, 1, 23, 'bực', 1, '2025-02-28 20:50:09', NULL),
-(21, 1, 25, 'chả ra gì', 1, '2025-04-12 10:44:16', NULL),
-(22, 5, 23, 'xáº¥u quÃ¡ haizzz', 3, '2025-05-08 17:43:39', NULL);
+INSERT INTO `reviews` (`id`, `order_detail_id`, `user_id`, `product_id`, `rating`, `comment`, `created_at`, `updated_at`) VALUES
+(4, 97, 1, 27, 4, 'dep qua', '2025-05-10 06:47:13', '2025-05-10 07:02:06'),
+(5, 98, 1, 24, 5, '<figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/Screenshot 2024-07-25 113622.png\"></figure><ol><li>fdfsd</li><li>dsad</li><li><i>fdf</i></li><li>dsa</li></ol>', '2025-05-10 08:57:28', '2025-05-10 08:57:28');
 
 -- --------------------------------------------------------
 
@@ -714,8 +706,9 @@ ALTER TABLE `product_details`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `reviews_user_id_foreign` (`user_id`),
-  ADD KEY `reviews_product_id_foreign` (`product_id`);
+  ADD UNIQUE KEY `uq_order_detail` (`order_detail_id`),
+  ADD KEY `idx_user` (`user_id`),
+  ADD KEY `idx_product` (`product_id`);
 
 --
 -- Chỉ mục cho bảng `thongtinnhanhang`
@@ -805,7 +798,7 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT cho bảng `order_requests`
 --
 ALTER TABLE `order_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
@@ -829,7 +822,7 @@ ALTER TABLE `product_details`
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `thongtinnhanhang`
@@ -872,6 +865,14 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_details`
   ADD CONSTRAINT `product_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `fk_reviews_order_detail` FOREIGN KEY (`order_detail_id`) REFERENCES `order_details` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_reviews_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_reviews_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `thongtinnhanhang`
