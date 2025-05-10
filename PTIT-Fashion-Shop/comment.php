@@ -15,54 +15,81 @@ $product_id      = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
 $rating          = isset($_POST['rating']) ? (int) $_POST['rating'] : 0;
 $comment         = isset($_POST['comment']) ? trim($_POST['comment']) : '';
 
-// 3. Xác định xem đã có review cho order_detail_id này chưa
-$checkStmt = $conn->prepare("
-    SELECT id 
-    FROM reviews 
-    WHERE order_detail_id = ?
-    LIMIT 1
-");
+// 3. Xử lý upload hình ảnh (nếu có)
+$imagePath = null;
+if (isset($_FILES['review_image']) && $_FILES['review_image']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = __DIR__ . '/uploads/reviews/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+    $ext = pathinfo($_FILES['review_image']['name'], PATHINFO_EXTENSION);
+    $newName = uniqid('rev_') . '.' . $ext;
+    $target = $uploadDir . $newName;
+    if (move_uploaded_file($_FILES['review_image']['tmp_name'], $target)) {
+        $imagePath = 'uploads/reviews/' . $newName;
+    }
+}
+
+// 4. Kiểm tra xem đã có review cho order_detail_id này chưa
+$checkStmt = $conn->prepare(
+    "SELECT id, image FROM reviews WHERE order_detail_id = ? LIMIT 1"
+);
 $checkStmt->bind_param("i", $order_detail_id);
 $checkStmt->execute();
 $checkStmt->store_result();
+$checkStmt->bind_result($reviewId, $oldImage);
+$hasReview = $checkStmt->num_rows > 0;
+$checkStmt->fetch();
 
-if ($checkStmt->num_rows > 0) {
-    // 4a. Nếu đã có: UPDATE
-    $updateStmt = $conn->prepare("
-        UPDATE reviews 
-        SET rating      = ?,
-            comment     = ?,
-            updated_at  = NOW()
-        WHERE order_detail_id = ?
-    ");
-    $updateStmt->bind_param("isi", $rating, $comment, $order_detail_id);
+if ($hasReview) {
+    // 4a. UPDATE review
+    // Nếu upload mới, xóa file cũ
+    if ($imagePath && $oldImage) {
+        $oldFile = __DIR__ . '/' . $oldImage;
+        if (file_exists($oldFile)) unlink($oldFile);
+    }
+
+    $updateQuery = 
+        "UPDATE reviews
+         SET rating = ?, comment = ?, updated_at = NOW()";
+    if ($imagePath) {
+        $updateQuery .= ", image = ?";
+    }
+    $updateQuery .= " WHERE order_detail_id = ?";
+
+    $updateStmt = $conn->prepare($updateQuery);
+    if ($imagePath) {
+        $updateStmt->bind_param("issi", $rating, $comment, $imagePath, $order_detail_id);
+    } else {
+        $updateStmt->bind_param("isi", $rating, $comment, $order_detail_id);
+    }
     $ok = $updateStmt->execute();
     $updateStmt->close();
 } else {
-    // 4b. Nếu chưa có: INSERT mới
-    $insertStmt = $conn->prepare("
-        INSERT INTO reviews
-            (order_detail_id, user_id, product_id, rating, comment, created_at, updated_at)
-        VALUES
-            (?, ?, ?, ?, ?, NOW(), NOW())
-    ");
-    $insertStmt->bind_param("iiiis", 
+    // 4b. INSERT review mới
+    $insertStmt = $conn->prepare(
+        "INSERT INTO reviews
+         (order_detail_id, user_id, product_id, rating, comment, image, created_at, updated_at)
+         VALUES
+         (?, ?, ?, ?, ?, ?, NOW(), NOW())"
+    );
+    $insertStmt->bind_param(
+        "iiiiss", 
         $order_detail_id, 
         $user_id, 
         $product_id, 
         $rating, 
-        $comment
+        $comment,
+        $imagePath
     );
     $ok = $insertStmt->execute();
     $insertStmt->close();
 
-    // 5. Cập nhật status của order_details (chỉ khi insert mới)
+    // 5. Cập nhật status của order_details nếu insert thành công
     if ($ok) {
-        $updDetail = $conn->prepare("
-            UPDATE order_details
-            SET status = 1
-            WHERE id = ?
-        ");
+        $updDetail = $conn->prepare(
+            "UPDATE order_details SET status = 1 WHERE id = ?"
+        );
         $updDetail->bind_param("i", $order_detail_id);
         $updDetail->execute();
         $updDetail->close();
@@ -83,3 +110,4 @@ if ($ok) {
         'message' => $conn->error
     ]);
 }
+?>

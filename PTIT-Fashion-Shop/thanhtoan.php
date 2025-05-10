@@ -160,7 +160,7 @@
             }
 
             // Lưu thông tin đơn hàng vào session nếu là Thanh toán Online
-            if ($payment_method == 'Thanh toán Online') {
+            if ($payment_method == 'Online') {
 
                 $_SESSION['donhang'] = [
                     'order_id' => $last_order_id,
@@ -179,7 +179,7 @@
                 // Điều hướng đến trang thanh toán online
                 header("Location: thanhtoanonline.php");
                 exit();
-            } elseif ($payment_method == 'Thanh toan vnpay') {
+            } elseif ($payment_method == 'vnpay') {
                 $_SESSION['donhang'] = [
                     'order_id' => $last_order_id,
                     'user_id' => $uid,
@@ -203,7 +203,7 @@
                 exit();
             }
 
-            // Xóa session thanh toán
+            // Xóa session thanh toán   
             unset($_SESSION["thanhtoan"]);
             exit();
         }
@@ -377,17 +377,17 @@
                                             <div class="payment-cards">
                                                 <!-- COD -->
                                                 <label class="payment-item">
-                                                    <span class="payment-label">Thanh toán khi nhận hàng</span>
+                                                    <span class="payment-label">COD</span>
                                                     <div class="payment-card">
-                                                        <input type="radio" name="payment_method" value="Thanh toán khi nhận hàng" checked>
+                                                        <input type="radio" name="payment_method" value="COD" checked>
                                                         <img src="img/cod.png" alt="COD">
                                                     </div>
                                                 </label>
                                                 <!-- Online Banking -->
                                                 <label class="payment-item">
-                                                    <span class="payment-label">Thanh toán Online</span>
+                                                    <span class="payment-label">Online</span>
                                                     <div class="payment-card">
-                                                        <input type="radio" name="payment_method" value="Thanh toán Online">
+                                                        <input type="radio" name="payment_method" value="Online">
                                                         <img src="img/banking.jpg" alt="Banking">
                                                     </div>
                                                 </label>
@@ -401,7 +401,7 @@
                                                 </label>
                                                 <!-- Debit Card -->
                                                 <label class="payment-item">
-                                                    <span class="payment-label">Thẻ ghi nợ / Debit Card</span>
+                                                    <span class="payment-label">Debit Card</span>
                                                     <div class="payment-card">
                                                         <input type="radio" name="payment_method" value="card">
                                                         <img src="img/visadebit.png" alt="Visa Debit">
@@ -411,7 +411,7 @@
                                                 <label class="payment-item">
                                                     <span class="payment-label">VNPay</span>
                                                     <div class="payment-card">
-                                                        <input type="radio" name="payment_method" value="Thanh toan vnpay">
+                                                        <input type="radio" name="payment_method" value="vnpay">
                                                         <img src="img/vnpay.jpg" alt="vnpay">
                                                     </div>
                                                 </label>

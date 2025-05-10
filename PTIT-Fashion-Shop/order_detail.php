@@ -501,6 +501,12 @@
                         .done(function(res) {
                             $('#reviewForm [name="rating"]').val(res.rating);
                             $('#reviewForm [name="comment"]').val(res.comment);
+                            if (res.image) {
+                                $('#previewImage').attr('src', res.image).show();
+                                // nếu muốn lưu image path để xóa / override cũng có thể đặt vào hidden input
+                            } else {
+                                $('#previewImage').hide();
+                            }
                         })
                         .fail(function() {
                             $('#reviewForm')[0].reset();
@@ -510,25 +516,49 @@
                 $('#reviewModal').modal('show');
             });
 
-            // Submit (insert/update)
+            $('#reviewImage').on('change', function() {
+                const file = this.files[0];
+                if (!file) return $('#previewImage').hide();
+                const url = URL.createObjectURL(file);
+                $('#previewImage').attr('src', url).show();
+            });
+
+
             $('#reviewForm').on('submit', function(e) {
                 e.preventDefault();
-                $.post('comment.php', $(this).serialize(), function(resp) {
-                    if (resp.success) {
-                        $('#reviewModal').modal('hide');
-                        const odId = resp.order_detail_id;
-                        const $td = $(`button.review-btn[data-detail-id="${odId}"]`).closest('td');
-                        if ($td.length) {
-                            // lần đầu
-                            $td.html(`<button class="btn btn-sm btn-link view-review-btn text-success" data-detail-id="${odId}">Đã đánh giá</button>`);
+                const formEl = this;
+                const formData = new FormData(formEl);
+
+                $.ajax({
+                    url: 'comment.php',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false, // bắt buộc
+                    processData: false, // bắt buộc
+                    dataType: 'json',
+                    success(resp) {
+                        if (resp.success) {
+                            $('#reviewModal').modal('hide');
+                            const odId = resp.order_detail_id;
+                            const $td = $(`button.review-btn[data-detail-id="${odId}"]`).closest('td');
+                            if ($td.length) {
+                                // lần đầu
+                                $td.html(`<button class="btn btn-sm btn-link view-review-btn text-success" data-detail-id="${odId}">Đã đánh giá</button>`);
+                            } else {
+                                alert('Cập nhật đánh giá thành công!');
+                            }
                         } else {
-                            alert('Cập nhật đánh giá thành công!');
+                            alert(resp.message || 'Gửi đánh giá thất bại');
                         }
-                    } else {
-                        alert(resp.message || 'Gửi đánh giá thất bại');
+                    },
+                    error() {
+                        alert('Không thể kết nối đến server.');
                     }
-                }, 'json');
+                });
             });
+
+
+
 
             // Xóa đánh giá
             $('#deleteReviewBtn').on('click', function() {
@@ -625,7 +655,7 @@
     <div class="modal fade" id="reviewModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="reviewForm">
+                <form id="reviewForm" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="reviewModalTitle">Đánh giá sản phẩm</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -647,6 +677,11 @@
                             <label for="comment" class="form-label">Nội dung</label>
                             <textarea name="comment" id="comment" class="form-control" rows="3" required
                                 placeholder="Chia sẻ cảm nhận của bạn..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewImage" class="form-label">Hình ảnh</label>
+                            <input type="file" name="review_image" id="reviewImage" class="form-control" accept="image/*">
+                            <img id="previewImage" src="" alt="" class="img-fluid mt-2" style="display:none; max-height:150px;">
                         </div>
                     </div>
                     <div class="modal-footer">
