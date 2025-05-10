@@ -9,8 +9,9 @@ $res_order = mysqli_query($conn, $sql_order);
 $order = mysqli_fetch_assoc($res_order);
 
 // Lấy danh sách tất cả yêu cầu với đơn này
-$rqAllRes = mysqli_query($conn, 
-  "SELECT id, type, status, reason, created_at, updated_at
+$rqAllRes = mysqli_query(
+    $conn,
+    "SELECT id, type, status, reason,image,  created_at, updated_at
    FROM order_requests
    WHERE order_id = $id
    ORDER BY created_at DESC"
@@ -21,7 +22,8 @@ $hasRequests = ($rqAllRes && mysqli_num_rows($rqAllRes) > 0);
 if (isset($_POST['btnUpdate'])) {
     $status = $_POST['status'];
     mysqli_query($conn, "UPDATE orders SET status = '$status' WHERE id = $id");
-    header('Location: ./listorders.php'); exit;
+    header('Location: ./listorders.php');
+    exit;
 }
 
 require('includes/header.php');
@@ -45,10 +47,10 @@ require('includes/header.php');
                             'status_pay' => 'Trạng thái thanh toán',
                         ];
                         foreach ($fields as $field => $label): ?>
-                        <div class="mb-2 row">
-                            <div class="col-4 fw-bold"><?= $label ?>:</div>
-                            <div class="col-8"><?= htmlspecialchars($order[$field]) ?></div>
-                        </div>
+                            <div class="mb-2 row">
+                                <div class="col-4 fw-bold"><?= $label ?>:</div>
+                                <div class="col-8"><?= htmlspecialchars($order[$field]) ?></div>
+                            </div>
                         <?php endforeach; ?>
                         <div class="mb-3 row">
                             <label class="col-4 col-form-label fw-bold">Trạng thái đơn:</label>
@@ -83,25 +85,25 @@ require('includes/header.php');
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
-                        $sql_details = "SELECT p.name AS pname, od.qty, od.price
+                            <?php
+                            $sql_details = "SELECT p.name AS pname, od.qty, od.price
                                         FROM order_details od
                                         JOIN products p ON p.id = od.product_id
                                         WHERE od.order_id = $id";
-                        $res_details = mysqli_query($conn, $sql_details);
-                        $no = 1;
-                        while ($d = mysqli_fetch_assoc($res_details)) {
-                            $total = $d['qty'] * $d['price'];
-                            echo '<tr>';
-                            echo '<td>' . $no . '</td>';
-                            echo '<td>' . htmlspecialchars($d['pname']) . '</td>';
-                            echo '<td>' . number_format($d['price'], 0, ',', '.') . ' VNĐ</td>';
-                            echo '<td>' . $d['qty'] . '</td>';
-                            echo '<td>' . number_format($total, 0, ',', '.') . ' VNĐ</td>';
-                            echo '</tr>';
-                            $no++;
-                        }
-                        ?>
+                            $res_details = mysqli_query($conn, $sql_details);
+                            $no = 1;
+                            while ($d = mysqli_fetch_assoc($res_details)) {
+                                $total = $d['qty'] * $d['price'];
+                                echo '<tr>';
+                                echo '<td>' . $no . '</td>';
+                                echo '<td>' . htmlspecialchars($d['pname']) . '</td>';
+                                echo '<td>' . number_format($d['price'], 0, ',', '.') . ' VNĐ</td>';
+                                echo '<td>' . $d['qty'] . '</td>';
+                                echo '<td>' . number_format($total, 0, ',', '.') . ' VNĐ</td>';
+                                echo '</tr>';
+                                $no++;
+                            }
+                            ?>
                         </tbody>
                     </table>
                     <div class="mt-3">
@@ -132,37 +134,70 @@ require('includes/header.php');
                 <h5 class="modal-title">Tất cả yêu cầu đơn #<?= $id ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-           <form method="post" action="request_update.php?id=<?= $id ?>">
+            <form method="post" action="request_update.php?id=<?= $id ?>">
                 <div class="modal-body">
                     <?php if ($hasRequests): ?>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered align-middle">
                             <thead>
                                 <tr>
                                     <th>Thời gian gửi</th>
                                     <th>Loại</th>
                                     <th>Trạng thái xử lý</th>
                                     <th>Lý do</th>
-                                    <th>Thời gian cập nhật </th>
+                                    <th>Hình ảnh</th> <!-- <--- thêm cột này -->
+                                    <th>Thời gian cập nhật</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $typeLabels = ['cancel' => 'Hủy đơn', 'return' => 'Trả hàng', 'exchange' => 'Đổi hàng'];
-                                $stLabels = ['pending' => 'Chờ xử lý', 'approved' => 'Đã duyệt', 'rejected' => 'Từ chối'];
+                                $typeLabels = [
+                                    'cancel'   => 'Hủy đơn',
+                                    'return'   => 'Trả hàng',
+                                    'exchange' => 'Đổi hàng'
+                                ];
+                                $stLabels = [
+                                    'pending'  => 'Chờ xử lý',
+                                    'approved' => 'Đã duyệt',
+                                    'rejected' => 'Từ chối'
+                                ];
+
                                 while ($rq = mysqli_fetch_assoc($rqAllRes)) {
                                     echo '<tr>';
+                                    // Thời gian gửi
                                     echo '<td>' . date('d-m-Y H:i', strtotime($rq['created_at'])) . '</td>';
+                                    // Loại
                                     echo '<td>' . htmlspecialchars($typeLabels[$rq['type']] ?? $rq['type']) . '</td>';
-                                    echo '<td>';
-                                    echo '<select name="status[' . $rq['id'] . ']" class="form-select">';
+                                    // Select trạng thái xử lý
+                                    echo '<td><select name="status[' . $rq['id'] . ']" class="form-select form-select-sm">';
                                     foreach ($stLabels as $val => $txt) {
-                                        $s = ($rq['status'] === $val) ? 'selected' : '';
-                                        echo '<option value="' . $val . '" ' . $s . '>' . $txt . '</option>';
+                                        $sel = ($rq['status'] === $val) ? 'selected' : '';
+                                        echo '<option value="' . $val . '" ' . $sel . '>' . $txt . '</option>';
                                     }
-                                    echo '</select>';
+                                    echo '</select></td>';
+                                    // Lý do
+                                    echo '<td>' . nl2br(htmlspecialchars($rq['reason'])) . '</td>';
+                                    // Hình ảnh
+                                    echo '<td class="text-center">';
+                                    if (!empty($rq['image'])) {
+                                        $imgs = json_decode($rq['image'], true);
+                                        if (!is_array($imgs)) {
+                                            $imgs = [$rq['image']];
+                                        }
+                                        foreach ($imgs as $img) {
+                                            // Thêm domain phía trước đường dẫn ảnh
+                                            $src = 'http://localhost/PTIT_SHOP/PTIT-Fashion-Shop/' . ltrim($img, '/');
+                                            $src = htmlspecialchars($src);
+                                            echo '<img src="' . $src . '" '
+                                                . 'style="width:60px; height:60px; object-fit:cover; margin:2px; cursor:pointer;" '
+                                                . 'onclick="window.open(\'' . $src . '\', \'_blank\')">';
+                                        }
+                                    } else {
+                                        echo '<span class="text-muted">—</span>';
+                                    }
+
                                     echo '</td>';
-                                    echo '<td>' . htmlspecialchars($rq['reason']) . '</td>';
-                                     echo '<td>' . date('d-m-Y H:i', strtotime($rq['updated_at'])) . '</td>';
+                                    // Thời gian cập nhật
+                                    echo '<td>' . date('d-m-Y H:i', strtotime($rq['updated_at'])) . '</td>';
                                     echo '</tr>';
                                 }
                                 ?>
@@ -182,8 +217,3 @@ require('includes/header.php');
 </div>
 
 <?php require('includes/footer.php'); ?>
-
-
-
-
-

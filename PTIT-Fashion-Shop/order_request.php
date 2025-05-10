@@ -1,17 +1,34 @@
-<?php
+<?php 
 session_start();
 require('db/conn.php');
 
 $order_id = intval($_POST['order_id']);
-$type     = $_POST['type'];            // cancel|return|exchange
+$type     = $_POST['type']; // cancel|return|exchange
 $reason   = mysqli_real_escape_string($conn, $_POST['reason']);
+$imagePath = null;
+
+// 0. Xử lý upload hình ảnh (nếu có)
+if (isset($_FILES['request_image']) && $_FILES['request_image']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = __DIR__ . '/uploads/requests/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $ext = pathinfo($_FILES['request_image']['name'], PATHINFO_EXTENSION);
+    $newName = uniqid('req_') . '.' . $ext;
+    $fullPath = $uploadDir . $newName;
+
+    if (move_uploaded_file($_FILES['request_image']['tmp_name'], $fullPath)) {
+        $imagePath = 'uploads/requests/' . $newName; // Lưu đường dẫn tương đối để dùng trong web
+    }
+}
 
 // 1. Lấy trạng thái hiện tại và ngày tạo
 $res = mysqli_query($conn, 
     "SELECT status, created_at 
      FROM orders 
-     WHERE id = $order_id
-    ");
+     WHERE id = $order_id"
+);
 if (!$res || mysqli_num_rows($res) === 0) {
     echo json_encode([
         'success' => false, 
@@ -28,8 +45,8 @@ if ($type === 'cancel' && $current_status === 'Processing') {
     $upd = mysqli_query($conn,
         "UPDATE orders
          SET status = 'Cancelled'
-         WHERE id = $order_id
-        ");
+         WHERE id = $order_id"
+    );
     if ($upd) {
         echo json_encode([
             'success' => true,
@@ -44,7 +61,7 @@ if ($type === 'cancel' && $current_status === 'Processing') {
     exit;
 }
 
-// 3. Nếu là yêu cầu return/ exchange → kiểm tra số ngày
+// 3. Nếu là yêu cầu return/exchange → kiểm tra số ngày
 if (in_array($type, ['return', 'exchange'])) {
     $now = new DateTime();
     $created = new DateTime($created_at);
@@ -66,10 +83,14 @@ if (in_array($type, ['return', 'exchange'])) {
 }
 
 // 4. Ghi vào bảng order_requests
-$sql = "INSERT INTO order_requests
-        (order_id, type, reason)
-        VALUES
-        ($order_id, '$type', '$reason')";
+$image_sql = $imagePath ? "'" . mysqli_real_escape_string($conn, $imagePath) . "'" : "NULL";
+$sql = "
+    INSERT INTO order_requests
+    (order_id, type, reason, image)
+    VALUES
+    ($order_id, '$type', '$reason', $image_sql)
+";
+
 if (mysqli_query($conn, $sql)) {
     mysqli_query($conn, "
         UPDATE orders
@@ -86,3 +107,6 @@ if (mysqli_query($conn, $sql)) {
         'message' => 'Lỗi hệ thống, vui lòng thử lại sau.'
     ]);
 }
+
+mysqli_close($conn);
+?>

@@ -474,150 +474,169 @@
     <script src="js/main.js"></script>
     <script>
         $(function() {
-            // Mở modal
-            $(document).on('click', '.review-btn, .view-review-btn', function() {
-                const detailId = $(this).data('detail-id');
-                const pid = $(this).data('product-id') || null;
-                const isNew = $(this).hasClass('review-btn');
+                    // Mở modal
+                    $(document).on('click', '.review-btn, .view-review-btn', function() {
+                        const detailId = $(this).data('detail-id');
+                        const pid = $(this).data('product-id') || null;
+                        const isNew = $(this).hasClass('review-btn');
 
-                // Đặt form
-                $('#reviewForm [name="order_detail_id"]').val(detailId);
-                if (pid) $('#reviewForm [name="product_id"]').val(pid);
+                        // Đặt form
+                        $('#reviewForm [name="order_detail_id"]').val(detailId);
+                        if (pid) $('#reviewForm [name="product_id"]').val(pid);
 
-                // Chuyển tiêu đề + nút + delete-button
-                if (isNew) {
-                    $('#reviewModalTitle').text('Đánh giá sản phẩm');
-                    $('#reviewSubmitBtn').text('Gửi đánh giá');
-                    $('#deleteReviewBtn').hide();
-                    $('#reviewForm')[0].reset();
-                } else {
-                    $('#reviewModalTitle').text('Cập nhật đánh giá');
-                    $('#reviewSubmitBtn').text('Cập nhật đánh giá');
-                    $('#deleteReviewBtn').show(); // hiện nút xóa
-                    // load dữ liệu cũ
-                    $.getJSON('get_review.php', {
-                            order_detail_id: detailId
-                        })
-                        .done(function(res) {
-                            $('#reviewForm [name="rating"]').val(res.rating);
-                            $('#reviewForm [name="comment"]').val(res.comment);
-                            if (res.image) {
-                                $('#previewImage').attr('src', res.image).show();
-                                // nếu muốn lưu image path để xóa / override cũng có thể đặt vào hidden input
-                            } else {
-                                $('#previewImage').hide();
-                            }
-                        })
-                        .fail(function() {
+                        // Chuyển tiêu đề + nút + delete-button
+                        if (isNew) {
+                            $('#reviewModalTitle').text('Đánh giá sản phẩm');
+                            $('#reviewSubmitBtn').text('Gửi đánh giá');
+                            $('#deleteReviewBtn').hide();
                             $('#reviewForm')[0].reset();
-                        });
-                }
-
-                $('#reviewModal').modal('show');
-            });
-
-            $('#reviewImage').on('change', function() {
-                const file = this.files[0];
-                if (!file) return $('#previewImage').hide();
-                const url = URL.createObjectURL(file);
-                $('#previewImage').attr('src', url).show();
-            });
-
-
-            $('#reviewForm').on('submit', function(e) {
-                e.preventDefault();
-                const formEl = this;
-                const formData = new FormData(formEl);
-
-                $.ajax({
-                    url: 'comment.php',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false, // bắt buộc
-                    processData: false, // bắt buộc
-                    dataType: 'json',
-                    success(resp) {
-                        if (resp.success) {
-                            $('#reviewModal').modal('hide');
-                            const odId = resp.order_detail_id;
-                            const $td = $(`button.review-btn[data-detail-id="${odId}"]`).closest('td');
-                            if ($td.length) {
-                                // lần đầu
-                                $td.html(`<button class="btn btn-sm btn-link view-review-btn text-success" data-detail-id="${odId}">Đã đánh giá</button>`);
-                            } else {
-                                alert('Cập nhật đánh giá thành công!');
-                            }
                         } else {
-                            alert(resp.message || 'Gửi đánh giá thất bại');
+                            $('#reviewModalTitle').text('Cập nhật đánh giá');
+                            $('#reviewSubmitBtn').text('Cập nhật đánh giá');
+                            $('#deleteReviewBtn').show(); // hiện nút xóa
+                            // load dữ liệu cũ
+                            $.getJSON('get_review.php', {
+                                    order_detail_id: detailId
+                                })
+                                .done(function(res) {
+                                    $('#reviewForm [name="rating"]').val(res.rating);
+                                    $('#reviewForm [name="comment"]').val(res.comment);
+                                    if (res.image) {
+                                        $('#previewImage').attr('src', res.image).show();
+                                        // nếu muốn lưu image path để xóa / override cũng có thể đặt vào hidden input
+                                    } else {
+                                        $('#previewImage').hide();
+                                    }
+                                })
+                                .fail(function() {
+                                    $('#reviewForm')[0].reset();
+                                });
                         }
-                    },
-                    error() {
-                        alert('Không thể kết nối đến server.');
-                    }
-                });
-            });
+
+                        $('#reviewModal').modal('show');
+                    });
+
+                    $('#reviewImage').on('change', function() {
+                        const file = this.files[0];
+                        if (!file) return $('#previewImage').hide();
+                        const url = URL.createObjectURL(file);
+                        $('#previewImage').attr('src', url).show();
+                    });
+
+
+                    $('#reviewForm').on('submit', function(e) {
+                        e.preventDefault();
+                        const formEl = this;
+                        const formData = new FormData(formEl);
+
+                        $.ajax({
+                            url: 'comment.php',
+                            type: 'POST',
+                            data: formData,
+                            contentType: false, // bắt buộc
+                            processData: false, // bắt buộc
+                            dataType: 'json',
+                            success(resp) {
+                                if (resp.success) {
+                                    $('#reviewModal').modal('hide');
+                                    const odId = resp.order_detail_id;
+                                    const $td = $(`button.review-btn[data-detail-id="${odId}"]`).closest('td');
+                                    if ($td.length) {
+                                        // lần đầu
+                                        $td.html(`<button class="btn btn-sm btn-link view-review-btn text-success" data-detail-id="${odId}">Đã đánh giá</button>`);
+                                    } else {
+                                        alert('Cập nhật đánh giá thành công!');
+                                    }
+                                } else {
+                                    alert(resp.message || 'Gửi đánh giá thất bại');
+                                }
+                            },
+                            error() {
+                                alert('Không thể kết nối đến server.');
+                            }
+                        });
+                    });
 
 
 
 
-            // Xóa đánh giá
-            $('#deleteReviewBtn').on('click', function() {
-                if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
-                const detailId = $('#reviewForm [name="order_detail_id"]').val();
+                    // Xóa đánh giá
+                    $('#deleteReviewBtn').on('click', function() {
+                        if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
+                        const detailId = $('#reviewForm [name="order_detail_id"]').val();
 
-                $.post('delete_review.php', {
-                    order_detail_id: detailId
-                }, function(resp) {
-                    if (resp.success) {
-                        $('#reviewModal').modal('hide');
+                        $.post('delete_review.php', {
+                            order_detail_id: detailId
+                        }, function(resp) {
+                            if (resp.success) {
+                                $('#reviewModal').modal('hide');
 
-                        // Trả lại nút đánh giá (review-btn)
-                        const $cell = $(`button.view-review-btn[data-detail-id="${detailId}"]`).closest('td');
-                        $cell.html(`
+                                // Trả lại nút đánh giá (review-btn)
+                                const $cell = $(`button.view-review-btn[data-detail-id="${detailId}"]`).closest('td');
+                                $cell.html(`
                 <button class="btn btn-sm btn-primary review-btn" 
                     data-detail-id="${detailId}" 
                     data-product-id="${resp.product_id}">
                     Đánh giá
                 </button>
             `);
-                    } else {
-                        alert(resp.message || 'Xóa đánh giá thất bại');
-                    }
-                }, 'json');
-            });
+                            } else {
+                                alert(resp.message || 'Xóa đánh giá thất bại');
+                            }
+                        }, 'json');
+                    });
 
 
-            // --- Các script khác cho request-btn (giữ nguyên) ---
-            $('.request-btn').on('click', function() {
-                if ($(this).is(':disabled')) return;
-                const type = $(this).data('type');
-                const labels = {
-                    cancel: 'Hủy đơn hàng',
-                    return: 'Trả hàng',
-                    exchange: 'Đổi hàng'
-                };
-                $('#actionModalLabel').text(labels[type]);
-                $('#actionSubmitBtn').text('Gửi ' + labels[type]);
-                $('#actionType').val(type);
-                $('#actionReason').val('');
-                new bootstrap.Modal(document.getElementById('actionModal')).show();
-            });
+                    // --- Các script khác cho request-btn (giữ nguyên) ---
+                    $('.request-btn').on('click', function() {
+                        if ($(this).is(':disabled')) return;
+                        const type = $(this).data('type');
+                        const labels = {
+                            cancel: 'Hủy đơn hàng',
+                            return: 'Trả hàng',
+                            exchange: 'Đổi hàng'
+                        };
+                        $('#actionModalLabel').text(labels[type]);
+                        $('#actionSubmitBtn').text('Gửi ' + labels[type]);
+                        $('#actionType').val(type);
+                        $('#actionReason').val('');
+                        new bootstrap.Modal(document.getElementById('actionModal')).show();
+                    });
+                    $('#requestImage').on('change', function() {
+                        const file = this.files[0];
+                        if (!file) return $('#requestPreview').hide();
+                        const url = URL.createObjectURL(file);
+                        $('#requestPreview').attr('src', url).show();
+                    });
 
-            $('#actionForm').on('submit', function(e) {
-                e.preventDefault();
-                $.post('order_request.php', $(this).serialize(), function(resp) {
-                    if (resp.success) {
-                        $('#actionModal').modal('hide');
-                        alert('Gửi yêu cầu thành công!');
-                        setTimeout(() => location.reload(), 500);
-                    } else {
-                        alert(resp.message || 'Có lỗi, vui lòng thử lại.');
-                    }
-                }, 'json').fail(function() {
-                    alert('Không thể kết nối đến server.');
+
+                    $('#actionForm').on('submit', function(e) {
+                        e.preventDefault();
+                        const formEl = this;
+                        const formData = new FormData(formEl);
+
+                        $.ajax({
+                            url: 'order_request.php',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            dataType: 'json',
+                            success(resp) {
+                                if (resp.success) {
+                                    $('#actionModal').modal('hide');
+                                    alert('Gửi yêu cầu thành công!');
+                                    setTimeout(() => location.reload(), 500);
+                                } else {
+                                    alert(resp.message || 'Có lỗi, vui lòng thử lại.');
+                                }
+                            },
+                            error() {
+                                alert('Không thể kết nối đến server.');
+                            }
+                        });
+                    });
                 });
-            });
-        });
     </script>
 
 
@@ -628,7 +647,8 @@
     <!-- Action Modal -->
     <div class="modal fade" id="actionModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form id="actionForm" class="modal-content">
+            <!-- thêm enctype -->
+            <form id="actionForm" class="modal-content" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="actionModalLabel">Yêu cầu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -636,9 +656,16 @@
                 <div class="modal-body">
                     <input type="hidden" name="order_id" value="<?= $id ?>">
                     <input type="hidden" name="type" id="actionType">
+
                     <div class="mb-3">
                         <label for="actionReason" class="form-label">Lý do</label>
                         <textarea name="reason" id="actionReason" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="requestImage" class="form-label">Hình ảnh (tuỳ chọn)</label>
+                        <input type="file" name="request_image" id="requestImage" class="form-control" accept="image/*">
+                        <img id="requestPreview" src="" class="img-fluid mt-2" style="display:none; max-height:150px;">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -648,6 +675,7 @@
             </form>
         </div>
     </div>
+
 
 
 
