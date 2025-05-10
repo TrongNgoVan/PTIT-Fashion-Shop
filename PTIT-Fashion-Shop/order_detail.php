@@ -377,14 +377,40 @@
         </div>
     </div>
     <?php
+    // Quyền thao tác
     $canCancel   = in_array($order_status, ['Processing', 'Confirmed']);
     $canExchange = $order_status === 'Delivered';
     $canReturn   = $order_status === 'Delivered';
+
+    // Lấy yêu cầu mới nhất (nếu có)
+    $rqRes = mysqli_query($conn, "
+      SELECT type, status, created_at, updated_at
+      FROM order_requests
+      WHERE order_id = $id
+      ORDER BY created_at DESC
+      LIMIT 1
+    ");
+    $latestRq = ($rqRes && mysqli_num_rows($rqRes) > 0)
+        ? mysqli_fetch_assoc($rqRes)
+        : null;
+
+    // Nhãn tiếng Việt cho type và status
+    $typeLabels = [
+        'cancel'   => 'Hủy đơn',
+        'return'   => 'Trả hàng',
+        'exchange' => 'Đổi hàng'
+    ];
+    $statusLabels = [
+        'pending'  => ['text-warning', 'Chờ xử lý'],
+        'approved' => ['text-success', 'Đã duyệt'],
+        'rejected' => ['text-danger',  'Đã từ chối']
+    ];
     ?>
     <div class="container mt-4">
         <div class="card shadow-lg border-0 p-4">
             <h5 class="text-center mb-4">Thao tác đơn hàng</h5>
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap mb-3">
                 <!-- Hủy đơn hàng -->
                 <button
                     id="cancelOrder"
@@ -412,8 +438,26 @@
                     Đổi hàng
                 </button>
             </div>
+
+            <?php if ($latestRq):
+                $lblType   = $typeLabels[$latestRq['type']] ?? ucfirst($latestRq['type']);
+                list($cls, $lblStatus) = $statusLabels[$latestRq['status']]
+                    ?? ['text-secondary', 'Không xác định'];
+                $time1 = date("H:i d-m-Y", strtotime($latestRq['created_at']));
+                $time2 = date("H:i d-m-Y", strtotime($latestRq['updated_at']));
+
+            ?>
+                <div class="text-center py-2 border-top">
+                    <span class="fw-bold">Yêu cầu <?= $lblType ?>:</span>
+                    <span class="text-muted small">Được gửi lúc (<?= $time1 ?>)</span>
+                    <span class="<?= $cls ?>"><?= $lblStatus ?></span>
+                    <span class="text-muted small">(<?= $time2 ?>)</span>
+                </div>
+            <?php endif; ?>
+
         </div>
     </div>
+
 
 
 
@@ -457,75 +501,74 @@
 
         });
 
-        $(function(){
-  // Bắt click tất cả nút .request-btn
-  $('.request-btn').on('click', function(){
-    if ($(this).is(':disabled')) return;           // không làm gì nếu disabled
+        $(function() {
+            // Bắt click tất cả nút .request-btn
+            $('.request-btn').on('click', function() {
+                if ($(this).is(':disabled')) return; // không làm gì nếu disabled
 
-    const type = $(this).data('type');             // 'cancel'|'return'|'exchange'
-    const labels = {
-      cancel:   'Hủy đơn hàng',
-      return:   'Trả hàng',
-      exchange: 'Đổi hàng'
-    };
+                const type = $(this).data('type'); // 'cancel'|'return'|'exchange'
+                const labels = {
+                    cancel: 'Hủy đơn hàng',
+                    return: 'Trả hàng',
+                    exchange: 'Đổi hàng'
+                };
 
-    // Cập nhật modal
-    $('#actionModalLabel').text(labels[type]);
-    $('#actionSubmitBtn').text('Gửi ' + labels[type]);
-    $('#actionType').val(type);
-    $('#actionReason').val('');                    // xoá nội dung cũ
+                // Cập nhật modal
+                $('#actionModalLabel').text(labels[type]);
+                $('#actionSubmitBtn').text('Gửi ' + labels[type]);
+                $('#actionType').val(type);
+                $('#actionReason').val(''); // xoá nội dung cũ
 
-    // Hiển thị modal
-    new bootstrap.Modal(document.getElementById('actionModal')).show();
-  });
+                // Hiển thị modal
+                new bootstrap.Modal(document.getElementById('actionModal')).show();
+            });
 
-  // Xử lý submit form
-  $('#actionForm').on('submit', function(e){
-    e.preventDefault();
-    const form = $(this);
-    const data = form.serialize();
+            // Xử lý submit form
+            $('#actionForm').on('submit', function(e) {
+                e.preventDefault();
+                const form = $(this);
+                const data = form.serialize();
 
-    $.post('order_request.php', data, function(resp){
-      if (resp.success) {
-        $('#actionModal').modal('hide');
-        alert('Gửi yêu cầu thành công!');
-        setTimeout(()=> location.reload(), 500);
-      } else {
-        alert(resp.message || 'Có lỗi, vui lòng thử lại.');
-      }
-    }, 'json')
-    .fail(function(){
-      alert('Không thể kết nối đến server.');
-    });
-  });
-});
-
+                $.post('order_request.php', data, function(resp) {
+                        if (resp.success) {
+                            $('#actionModal').modal('hide');
+                            alert('Gửi yêu cầu thành công!');
+                            setTimeout(() => location.reload(), 500);
+                        } else {
+                            alert(resp.message || 'Có lỗi, vui lòng thử lại.');
+                        }
+                    }, 'json')
+                    .fail(function() {
+                        alert('Không thể kết nối đến server.');
+                    });
+            });
+        });
     </script>
-    
+
 
     <!-- Action Modal -->
-<div class="modal fade" id="actionModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <form id="actionForm" class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="actionModalLabel">Yêu cầu</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" name="order_id" value="<?= $id ?>">
-        <input type="hidden" name="type" id="actionType">
-        <div class="mb-3">
-          <label for="actionReason" class="form-label">Lý do</label>
-          <textarea name="reason" id="actionReason" class="form-control" rows="3" required></textarea>
+    <div class="modal fade" id="actionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="actionForm" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actionModalLabel">Yêu cầu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" value="<?= $id ?>">
+                    <input type="hidden" name="type" id="actionType">
+                    <div class="mb-3">
+                        <label for="actionReason" class="form-label">Lý do</label>
+                        <textarea name="reason" id="actionReason" class="form-control" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary" id="actionSubmitBtn">Gửi</button>
+                </div>
+            </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-        <button type="submit" class="btn btn-primary" id="actionSubmitBtn">Gửi</button>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
 
 
 
