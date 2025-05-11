@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 10, 2025 lúc 11:24 AM
+-- Thời gian đã tạo: Th5 11, 2025 lúc 04:58 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -44,9 +44,9 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `email_verified_at`, `password`, `phone`, `address`, `status`, `type`) VALUES
-(1, 'Ngọ Văn Trọng', 'ngovantrong1308@gmail.com', '2025-02-13 05:02:40', '123', '0904708498', 'Thanh Hóa', 'Active', 'Admin'),
-(2, 'Nguyễn Hoàng Hải', 'nhhai@gmail.com', '2025-02-15 05:02:40', '123', '0909090909', 'Thanh Hóa', 'Active', 'Admin'),
-(3, 'Tạ Kiều Yến', 'tkyen@gmail.com', '2025-02-15 05:02:40', '123', '0879675765', 'Hà Nội', 'Active', 'Admin');
+(1, 'Ngọ Văn Trọng', 'ngovantrong1308@gmail.com', '2025-02-12 22:02:40', '123', '0904708498', 'Thanh Hóa', 'Active', 'Admin'),
+(2, 'Nguyễn Hoàng Hải', 'nhhai@gmail.com', '2025-02-14 22:02:40', '123', '0909090909', 'Thanh Hóa', 'Active', 'Admin'),
+(3, 'Tạ Kiều Yến', 'tkyen@gmail.com', '2025-02-14 22:02:40', '123', '0879675765', 'Hà Nội', 'Active', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE `banner` (
   `hot_text` varchar(255) NOT NULL,
   `link_url` varchar(255) DEFAULT '#',
   `status` tinyint(1) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `banner`
@@ -139,7 +139,7 @@ CREATE TABLE `magiamgia` (
   `ngay_het_han` date DEFAULT NULL,
   `so_luot_su_dung` int(11) DEFAULT 0,
   `so_luot_gioi_han` int(11) DEFAULT 10
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `magiamgia`
@@ -161,30 +161,22 @@ INSERT INTO `magiamgia` (`id`, `code`, `loai_giam_gia`, `gia_tri_giam`, `dieu_ki
 
 CREATE TABLE `news` (
   `id` bigint(20) NOT NULL,
-  `title` varchar(100) NOT NULL,
+  `title` tinytext NOT NULL,
   `avatar` varchar(200) NOT NULL,
-  `slug` varchar(100) NOT NULL,
-  `sumary` text NOT NULL,
-  `description` text NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `sumary` mediumtext NOT NULL,
+  `description` mediumtext NOT NULL,
   `newscategory_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `news`
 --
 
 INSERT INTO `news` (`id`, `title`, `avatar`, `slug`, `sumary`, `description`, `newscategory_id`, `created_at`, `updated_at`) VALUES
-(6, '20 Cách phối màu quần áo nam, nữ theo nguyên tắc bảng màu hot nhất', 'uploads/news/67c030a76238bScreenshot 2025-02-27 162950.png', '20-c-ch-ph-i-m-u-qu-n-o-nam-n-theo-nguy-n-t-c-b-ng-m-u-hot-nh-t', '                                                                        Bạn sẽ mất bao lâu vào buổi sáng để chọn một bộ trang phục phù hợp với phong cách của mình để đón ngày mới? Nếu bạn đang băn khoăn không biết phối màu như thế nào để set đồ của mình hài hòa và ấn tượng thì hãy tham khảo ngay những cách phối màu quần áo dưới đây nhé!                                                                        ', '                                                                        Bánh xe màu sắc là gì?\r\nBánh xe màu sắc là một vòng tròn mô tả mối liên kết rõ ràng nhất giữa các màu cấp 1 (màu cơ bản), màu cấp 2 và cấp 3. \r\n\r\nVòng tròn màu được tạo thành từ 12 màu cơ bản. Nếu kết hợp bất kỳ hai màu nào trong số chúng sẽ tạo ra một màu mới. Đây là điểm xuất phát cho việc tạo ra tất cả các màu bổ sung.\r\n\r\nBánh xe màu gồm 12 ô màu, với mỗi ô vuông đại diện cho một màu cơ bản và được chia thành các nan đều nhau. Mỗi vòng cung màu có 8 cấp độ màu từ đậm đến nhạt.\r\nCấu tạo của bánh xe màu sắc\r\nMàu cơ bản (màu cấp 1)\r\nĐỏ, vàng và xanh (xanh dương) là những màu cơ bản. Đây là ba màu cơ bản tạo nên tất cả các màu hiện nay. Chúng được “trộn” với nhau theo một tỷ lệ nhất định để tạo ra các màu sắc khác. Đây cũng được coi là ba tông màu “dữ dội” nhất và đáng chú ý nhất, khó pha trộn và khó kết hợp với các tông màu khác.\r\nMàu cấp 2\r\nMàu cấp 2 bao gồm 3 màu: Cam, Xanh lá và Tím. Màu phụ được tạo ra bằng cách kết hợp hai màu cơ bản (màu cấp 1) theo đúng tỷ lệ: màu cam là sự kết hợp giữa màu đỏ và vàng, màu tím là sự kết hợp giữa màu xanh lam và màu đỏ, còn màu xanh lá cây là từ màu xanh lam và màu vàng. Các màu cấp 2 do là sự pha trộn nên sắc độ của chúng nhẹ nhàng hơn. \r\n\r\nMàu cấp 3\r\nBánh xe màu sắc có sáu màu cấp 3: Cam vàng, cam đỏ, Tím đỏ, Tím lam, Lục vàng và cuối cùng là lục lam. \r\n\r\nMàu cấp 3 được tạo ra bằng cách kết hợp màu cấp 1 với màu cấp 2 với tỷ lệ 1:1. Màu thứ ba, giống như màu thứ cấp, được xen kẽ giữa các màu, do đó độ lệch nhẹ hơn đáng kể.                                                                        ', 4, '2025-02-24 03:44:10', '2025-04-15 00:43:44'),
-(7, 'Chương trình khuyến mãi tháng 2 – Valentine ngọt ngào 💖', 'uploads/news/67c3a796827f5Screenshot 2025-03-02 073240.png', 'ch-ng-tr-nh-khuy-n-m-i-th-ng-2-valentine-ng-t-ng-o-', '                        Giảm 14% cho đơn hàng từ 200K vào ngày 14/02                        ', '                        🌹 Thời gian áp dụng: 01/02 - 14/02\r\n🎁 Áp dụng cho tất cả khách hàng\r\n\r\n🎀 ƯU ĐÃI ĐẶC BIỆT CHO CẶP ĐÔI\r\n❤️ Mua 1 tặng 1 cho các sản phẩm đôi (áo đôi, cốc đôi, trang sức đôi, v.v.)\r\n💑 Giảm 14% cho đơn hàng từ 214K vào ngày 14/02\r\n\r\n💝 QUÀ TẶNG YÊU THƯƠNG\r\n🎁 Đơn hàng từ 500K: Tặng thiệp Valentine kèm lời nhắn miễn phí\r\n🎁 Đơn hàng từ 1 triệu: Nhận ngay hộp socola cao cấp\r\n\r\n🚚 MIỄN PHÍ VẬN CHUYỂN\r\n🚀 Freeship toàn quốc cho đơn hàng từ 200K\r\n\r\n🔥 Lưu ý: Chương trình có thể kết thúc sớm nếu số lượng quà tặng và ưu đãi hết hạn.\r\n\r\n💌 Nhanh tay đặt hàng ngay để chuẩn bị món quà hoàn hảo cho người thương!                        ', 1, '2025-02-24 03:44:10', '2025-02-24 03:57:10'),
-(8, 'Chương Trình Khuyến Mãi Tháng 4 - Rộn Ràng Đón Hè, Ưu Đãi Cực Đã! ☀️', 'uploads/news/67c3a6b081cd7Screenshot 2025-03-02 072901.png', 'ch-ng-tr-nh-khuy-n-m-i-th-ng-4---r-n-r-ng-n-h-u-i-c-c-', '                                                                        Giảm đến 60% cho mỗi đơn hàng\r\n                                                                                                                                                                                                ', '                                                Thời gian áp dụng: 01/04 - 30/04\r\n\r\nTháng 4 về mang theo những chương trình ưu đãi siêu khủng! Cơ hội tuyệt vời để bạn sắm sửa cho mùa hè sôi động với giá cực sốc!\r\n\r\n🔥 Chương trình ưu đãi tháng 4:\r\n✅ Flash Sale mỗi ngày - Giảm đến 60% từ 12h - 14h.\r\n✅ Nhập mã \"HE2024\" giảm 15% cho đơn hàng từ 400K.\r\n✅ Mua combo - giá hời: Combo 2 sản phẩm giảm thêm 10%.\r\n✅ Tặng quà giá trị cho 100 khách hàng đầu tiên mỗi tuần.\r\n\r\n💥 Ưu đãi đặc biệt dịp 30/4 - 1/5:\r\n🎁 Quay số trúng thưởng với hóa đơn từ 1 triệu đồng.\r\n🚚 Miễn phí vận chuyển toàn quốc không giới hạn giá trị đơn hàng!\r\n\r\n📌 Mua sắm ngay tại [Tên Shop] để không bỏ lỡ các ưu đãi HOT nhất tháng 4!                                                ', 1, '2025-02-24 03:44:10', '2025-02-24 03:57:55'),
-(9, 'Bộ sưu tập mới dành cho sinh viên – Đẹp, chất, giá sinh viên! 🎉', 'uploads/news/67c3a9588c6f0Screenshot 2025-03-02 074148.png', 'b-s-u-t-p-m-i-d-nh-cho-sinh-vi-n-p-ch-t-gi-sinh-vi-n-', '                        Phong cách trẻ trung, năng động, phù hợp cho mọi hoàn cảnh – từ đi học, đi chơi đến dạo phố.                        ', '👕 1. Áo thun basic – Must-have item!\r\n✔ Form rộng thoải mái, chất liệu cotton thoáng mát.\r\n✔ Đa dạng màu sắc dễ phối đồ, phù hợp mọi phong cách.\r\n✔ Mix & match cực dễ với quần jeans, quần jogger hay chân váy.\r\n\r\n🧥 2. Áo khoác trendy – Thời trang & tiện lợi\r\n✔ Áo khoác gió, hoodie, cardigan… vừa giữ ấm, vừa nâng tầm phong cách.\r\n✔ Thiết kế trẻ trung, phù hợp cả nam và nữ.\r\n✔ Có túi rộng đựng điện thoại, ví tiền tiện lợi.\r\n\r\n👖 3. Quần jeans, jogger – Cá tính & năng động\r\n✔ Quần jeans baggy, ống rộng, skinny phù hợp mọi dáng người.\r\n✔ Quần jogger thoải mái, dễ phối đồ, chuẩn style sinh viên.\r\n✔ Chất vải bền đẹp, mặc lâu không sờn, không bai nhão.\r\n\r\n🎀 4. Phụ kiện thời trang – Hoàn thiện outfit\r\n✔ Mũ lưỡi trai, túi tote, vớ cao cổ… giúp outfit thêm nổi bật.\r\n✔ Giá siêu mềm, dễ dàng sắm ngay mà không cần đắn đo.\r\n✔ Mẫu mã hot trend, theo kịp xu hướng.\r\n\r\n🔥 Ưu đãi đặc biệt dành cho sinh viên:\r\n✅ Giảm ngay 10% khi nhập mã STUDENT10.\r\n✅ Freeship toàn quốc cho đơn hàng từ 300K.\r\n✅ Mua ngay - Nhận quà hấp dẫn (Áp dụng cho 100 đơn hàng đầu tiên).\r\n\r\n📌 Sắm ngay hôm nay để không bỏ lỡ những item hot nhất mùa này! 🚀', 3, '2025-02-24 03:44:10', '2025-02-24 03:44:39'),
-(10, 'Chương Trình Khuyến Mãi Tháng 3- Mua Sắm Tưng Bừng, Nhận Ngàn Ưu Đãi! 🎉', 'uploads/news/67c3a69f55c9eScreenshot 2025-03-02 073007.png', 'ch-ng-tr-nh-khuy-n-m-i-th-ng-3--mua-s-m-t-ng-b-ng-nh-n-ng-n-u-i-', '                                                       Giảm giá đến 50% cho hàng trăm sản phẩm hot.                                    ', '                                                Chào tháng 3 với hàng loạt ưu đãi siêu hấp dẫn! Đừng bỏ lỡ cơ hội mua sắm tiết kiệm và nhận nhiều quà tặng giá trị.\r\n  Thời gian áp dụng: 01/03 - 31/03   \r\n🔥 Ưu đãi HOT trong tháng 3:\r\n✅ Giảm giá đến 50% cho hàng trăm sản phẩm hot.\r\n✅ Mua 1 tặng 1 áp dụng cho các sản phẩm thời trang, phụ kiện.\r\n✅ Tặng voucher 100K khi đơn hàng từ 500K.\r\n✅ Freeship toàn quốc cho đơn từ 299K.\r\n\r\n💥 Ưu đãi đặc biệt vào ngày 8/3:\r\n🎁 Quà tặng đặc biệt cho khách hàng nữ khi mua sắm trong ngày Quốc tế Phụ nữ.\r\n💳 Tặng mã giảm 10% cho đơn hàng từ 300K trở lên.\r\n\r\n📌 Nhanh tay săn deal ngay tại [Tên Shop] để không bỏ lỡ!                                                ', 1, '2025-02-24 03:44:10', '2025-02-24 03:44:49'),
-(11, 'Mẹo chọn sản phẩm thời trang cho sinh viên – Đẹp, tiện lợi, tiết kiệm! 💡', 'uploads/news/67c3aa8a75f2cScreenshot 2025-03-02 074655.png', 'm-o-ch-n-s-n-ph-m-th-i-trang-cho-sinh-vi-n-p-ti-n-l-i-ti-t-ki-m-', 'mẹo chọn đồ giúp bạn luôn tự tin với phong cách của mình mà không tốn quá nhiều chi phí!', '👕 1. Ưu tiên những món đồ basic – Dễ phối, không lỗi mốt\r\n🔹 Áo thun trơn, sơ mi đơn giản, quần jeans luôn là lựa chọn hàng đầu.\r\n🔹 Những item này dễ phối với mọi phong cách, giúp bạn tiết kiệm khi không cần mua quá nhiều đồ.\r\n🔹 Màu sắc trung tính như trắng, đen, xám, xanh navy rất dễ kết hợp với các món đồ khác.\r\n\r\n🎯 2. Chọn đồ theo mục đích sử dụng – Không mua theo cảm hứng\r\n🔹 Đừng mua chỉ vì thấy đẹp, hãy cân nhắc xem nó có phù hợp với nhu cầu hàng ngày không.\r\n🔹 Đi học: Ưu tiên áo thun, quần jeans, balo tiện dụng.\r\n🔹 Đi chơi, đi làm thêm: Sơ mi, áo khoác nhẹ, quần âu giúp bạn trông chỉn chu hơn.\r\n🔹 Tập thể dục: Chọn đồ thể thao co giãn, thoải mái để dễ vận động.\r\n\r\n🛍 3. Mua đồ theo set – Tiết kiệm & dễ phối hơn\r\n🔹 Mua một bộ trang phục đã được phối sẵn giúp bạn tiết kiệm thời gian suy nghĩ.\r\n🔹 Set đồ thường có giá tốt hơn so với mua lẻ từng món.\r\n🔹 Có thể kết hợp chéo giữa các set để tạo ra nhiều outfit khác nhau.\r\n\r\n💰 4. Cân đối ngân sách – Không cần đồ đắt, chỉ cần phù hợp\r\n🔹 Hãy đặt ngân sách cụ thể cho việc mua sắm, tránh chi tiêu quá tay.\r\n🔹 Tận dụng các chương trình giảm giá, ưu đãi sinh viên để mua được đồ chất lượng với giá rẻ hơn.\r\n🔹 Đầu tư vào những món đồ chất lượng tốt thay vì mua nhiều đồ rẻ nhưng nhanh hỏng.\r\n\r\n🎀 5. Đừng quên phụ kiện – Điểm nhấn cho outfit\r\n🔹 Một chiếc túi tote, mũ lưỡi trai, đồng hồ đơn giản có thể giúp bạn trông phong cách hơn.\r\n🔹 Giày sneaker trắng, giày lười hoặc sandal là những lựa chọn phù hợp cho sinh viên vì dễ phối đồ và thoải mái.\r\n🔹 Chỉ cần một vài món phụ kiện nhỏ, bạn có thể biến đổi hoàn toàn set đồ của mình.\r\n\r\n🔥 Tóm lại: Hãy chọn đồ đơn giản, dễ phối, phù hợp với mục đích sử dụng, cân đối ngân sách và tận dụng ưu đãi để mua được những sản phẩm thời trang đẹp – tiện lợi – tiết kiệm nhất!\r\n\r\n📌 Áp dụng ngay những mẹo này để có tủ đồ chuẩn sinh viên mà vẫn chất lừ nhé! 🚀', 4, '2025-02-24 03:44:10', '2025-02-24 03:45:01'),
-(12, 'Bộ sưu tập mới: Thời trang cho sinh viên đi làm – Thanh lịch & năng động! ✨', 'uploads/news/67c3ab429b7abScreenshot 2025-03-02 074957.png', 'b-s-u-t-p-m-i-th-i-trang-cho-sinh-vi-n-i-l-m-thanh-l-ch-n-ng-ng-', 'Bộ sưu tập mới lần này mang đến những item phù hợp cho môi trường làm việc mà vẫn giúp bạn tự tin thể hiện phong cách! ', '👔 1. Sơ mi thanh lịch – Lịch sự nhưng không cứng nhắc\r\n✔ Chất vải cotton thoáng mát, không nhăn, phù hợp mặc cả ngày dài.\r\n✔ Thiết kế basic, dễ phối với quần jeans, quần tây hoặc chân váy.\r\n✔ Màu sắc nhã nhặn như trắng, xanh pastel, be giúp tạo cảm giác chuyên nghiệp.\r\n\r\n🧥 2. Blazer nhẹ – Nâng tầm phong cách\r\n✔ Không quá cứng nhắc như vest, blazer form rộng mang đến vẻ ngoài thanh lịch nhưng vẫn trẻ trung.\r\n✔ Phối dễ dàng với áo thun, sơ mi, hoặc váy để phù hợp mọi hoàn cảnh.\r\n✔ Chất vải nhẹ, dễ mặc, không tạo cảm giác gò bó khi di chuyển.\r\n\r\n👖 3. Quần âu & quần kaki – Thoải mái nhưng vẫn chuyên nghiệp\r\n✔ Quần ống suông, quần baggy giúp che khuyết điểm và tạo cảm giác thon gọn.\r\n✔ Chất vải mềm, co giãn nhẹ, phù hợp để di chuyển cả ngày mà không gây khó chịu.\r\n✔ Dễ phối với giày sneaker hoặc giày lười để tạo vẻ ngoài năng động.\r\n\r\n🎀 4. Phụ kiện tinh tế – Hoàn thiện diện mạo\r\n✔ Túi tote hoặc túi xách nhỏ gọn, tiện dụng cho laptop & tài liệu.\r\n✔ Đồng hồ tối giản giúp tăng thêm nét thanh lịch, chuyên nghiệp.\r\n✔ Giày loafer, giày mules hoặc sneaker trắng giúp outfit trở nên trẻ trung hơn.\r\n\r\n🔥 Ưu đãi đặc biệt dành cho sinh viên đi làm:\r\n✅ Giảm ngay 10% khi nhập mã WORK10.\r\n✅ Freeship toàn quốc cho đơn hàng từ 300K.\r\n✅ Mua ngay - Nhận quà hấp dẫn (Áp dụng cho 100 đơn hàng đầu tiên).\r\n\r\n📌 Sẵn sàng để tự tin đi làm với diện mạo hoàn hảo? Cập nhật ngay tủ đồ của bạn với bộ sưu tập mới này nhé! 🚀', 3, '2025-02-24 03:44:10', '2025-02-24 03:45:12'),
-(13, 'tin tức mới', 'uploads/news/67dbe03a4767emeomeo.jpg', 'tin-t-c-m-i', 'meomeo\r\n                        ', 'evfvf\r\n                        ', 1, '2025-03-20 16:30:34', '2025-03-20 16:30:34'),
-(14, 'Tưng bừng giảm giá, ngập tràn niềm vui!!!', 'uploads/news/67fd4a01ea7d4tammy.jpg', 't-ng-b-ng-gi-m-gi-ng-p-tr-n-ni-m-vui-', 'Bản tin khuyến mãi hot nhất dịp lễ 30/4 - 1/5             ', 'Khuyến mãi 30% cho các đơn đặt hàng trong dịp lễ, tri ân khách hàng thân thiết lên đến 50%\r\n                        ', 1, '2025-04-15 00:46:41', '2025-04-15 00:46:41');
+(16, 'Celebration of the 50th Anniversary of the Liberation of the South and National Reunification (April 30, 1975 / April 30, 2025)', 'uploads/news/news_681fa4041be19.jpg', 'celebration-of-the-50th-anniversary-of-the-liberation-of-the-south-and-national-reunification-april-30-1975-april-30-2025-', '<p><i><strong>On the morning of April 30, in Ho Chi Minh City, the Party Central Committee, the National Assembly, the President, the Government, the Central Committee of the Vietnam Fatherland Front and the People\'s Committee of Ho Chi Minh City solemnly held the ceremony to celebrate the 50th anniversary of the Liberation of the South and National Reunification (April 30, 1975 / April 30, 2025).</strong></i></p>', '<h2><i><strong>I. Attending the ceremony were:</strong></i></h2><ol><li>Attending the ceremony were: General Secretary To Lam; former General Secretary Nong Duc Manh; President Luong Cuong; former Presidents: Tran Duc Luong, Nguyen Minh Triet, Truong Tan Sang; Prime Minister Pham Minh Chinh; former Prime Minister Nguyen Tan Dung; National Assembly Chairman Tran Thanh Man; former National Assembly Chairmen: Nguyen Van An, Nguyen Thi Kim Ngan; Tran Cam Tu, Politburo member, Standing member of the Secretariat, Head of the Central Steering Committee for the celebration of major holidays and important events of the country; Do Van Chien, Politburo member, Secretary of the Party Central Committee, Chairman of the Central Committee of the Vietnam Fatherland Front; Nguyen Van Nen, Politburo member, Secretary of the Ho Chi Minh City Party Committee; Politburo members, former Politburo members; Party Central Committee Secretaries, former Party Central Committee Secretaries.</li></ol><figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/Screenshot 2025-05-11 014401.png\"></figure><p>&nbsp;</p><h2><i><strong>II. The leaders of the Ministry of National Defense attended the ceremony with the following comrades:&nbsp;</strong></i></h2><ol><li>The leaders of the Ministry of National Defense attended the ceremony with the following comrades: General Phan Van Giang, Politburo member, Deputy Secretary of the Central Military Commission, Minister of National Defense; Senior Lieutenant General Trinh Van Quyet, Secretary of the Party Central Committee, Standing Member of the Central Military Commission, Director of the General Department of Politics of the Vietnam People\'s Army (VPA); General Nguyen Tan Cuong, Party Central Committee member, Standing Member of the Central Military Commission, Chief of the General Staff of the Vietnam People\'s Army, Deputy Minister of National Defense; leaders and former leaders of the Ministry of National Defense. The ceremony was attended by leaders and former leaders of the Party and State; leaders of central ministries and branches; leaders of localities; veteran revolutionaries, Heroic Vietnamese Mothers, Heroes of the People\'s Armed Forces, Heroes of Labor, generals of the Army and Public Security; representatives of war veterans, former People\'s Public Security, former youth volunteers, former frontline workers, and forces participating in the Ho Chi Minh Campaign; representatives of martyrs\' relatives, families with meritorious services to the country, and many people from all walks of life.</li></ol><figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/Screenshot 2025-05-11 012503.png\"></figure><p>&nbsp;</p><blockquote><p>The ceremony was attended by leaders and former leaders of the Party and State; leaders of central ministries and branches; leaders of localities; veteran revolutionaries, Heroic Vietnamese Mothers, Heroes of the People\'s Armed Forces, Heroes of Labor, generals of the Army and Public Security; representatives of war veterans, former People\'s Public Security, former youth volunteers, former frontline workers, and forces participating in the Ho Chi Minh Campaign; representatives of martyrs\' relatives, families with meritorious services to the country, and many people from all walks of life.', 1, '2025-05-11 02:07:48', '2025-05-11 02:27:10');
 
 -- --------------------------------------------------------
 
@@ -199,16 +191,16 @@ CREATE TABLE `newscategories` (
   `status` enum('Active','Innactive') NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `newscategories`
 --
 
 INSERT INTO `newscategories` (`id`, `name`, `slug`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Danh mục A', 'danh-m-c-a', 'Active', NULL, NULL),
-(3, 'Danh mục B', 'danh-m-c-b', 'Active', NULL, NULL),
-(4, 'Danh mục C', 'danh-m-c-c', 'Active', NULL, NULL);
+(1, 'Danh muc A', 'danh-m-c-a', 'Active', NULL, NULL),
+(3, 'Danh muc B', 'danh-m-c-b', 'Active', NULL, NULL),
+(4, 'Danh muc C', 'danh-m-c-c', 'Active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -241,39 +233,39 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `phone`, `email`, `status`, `created_at`, `updated_at`, `total_price`, `tiensanpham`, `phivanchuyen`, `giamgia`, `tiendachuyen`, `transport`, `pay`, `status_pay`) VALUES
-(55, 1, 'Phạm Trong', '13 Hồ Tùng Mậu, Phường Mai Dịch, Quận Cầu Giấy, Thành phố Hà Nội', '0342561234', 'vantrongngo1607@gmail.com', 'Shipping', '2025-04-13 08:10:59', '2025-04-13 08:10:59', 3075000, 3070000, 25000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(59, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-14 13:59:22', '2025-04-14 13:59:22', 115000, 100000, 35000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
-(60, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:26:26', '2025-04-16 15:26:26', 95000, 100000, 15000, 20000, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
-(61, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:29:42', '2025-04-16 15:29:42', 883888, 888888, 25000, 30000, 0, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(62, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 15:31:30', '2025-04-16 15:31:30', 66500, 35000, 35000, 3500, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(63, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Delivered', '2025-04-16 15:32:19', '2025-04-16 15:32:19', 524444, 1023888, 25000, 524444, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(64, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-17 14:03:44', '2025-04-17 14:03:44', 9270, 10300, 0, 1030, 9270, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Đã thanh toán'),
-(65, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-17 14:06:03', '2025-04-17 14:06:03', 33000, 28000, 25000, 20000, 5000, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Thanh toán thiếu'),
-(66, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:38:11', '2025-04-24 09:38:11', 9000, 10000, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(67, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:38:37', '2025-04-24 09:38:37', -1000, 0, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(68, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:39:49', '2025-04-24 09:39:49', -2000, 0, 0, 2000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(69, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:51:21', '2025-04-24 09:51:21', 0, 0, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(70, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:51:32', '2025-04-24 09:51:32', 0, 0, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(71, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:56:29', '2025-04-24 09:56:29', 45000, 20000, 25000, 0, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
-(72, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:57:28', '2025-04-24 09:57:28', -1000, 0, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(73, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:57:45', '2025-04-24 09:57:45', 31500, 10000, 25000, 3500, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
-(74, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 09:57:55', '2025-04-24 09:57:55', 6500, 10000, 0, 3500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(75, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:15:10', '2025-04-24 10:15:10', -2000, 0, 0, 2000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(76, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:16:45', '2025-04-24 10:16:45', 131750, 155000, 0, 23250, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(77, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:24:16', '2025-04-24 10:24:16', -5000, 0, 0, 5000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(78, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:49:56', '2025-04-24 10:49:56', -30000, 0, 0, 30000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(79, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:50:30', '2025-04-24 10:50:30', 191250, 200000, 25000, 33750, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
-(80, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 10:56:48', '2025-04-24 10:56:48', 170000, 200000, 0, 30000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(81, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:27:12', '2025-04-24 19:27:12', -15500, 0, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(82, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:27:55', '2025-04-24 19:27:55', 171000, 155000, 35000, 19000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
-(83, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:29:43', '2025-04-24 19:29:43', 136000, 155000, 0, 19000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(84, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:30:18', '2025-04-24 19:30:18', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(85, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:30:48', '2025-04-24 19:30:48', -20000, 0, 0, 20000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(86, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:49:17', '2025-04-24 19:49:17', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(87, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 19:50:46', '2025-04-24 19:50:46', 108000, 120000, 0, 12000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(88, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Shipping', '2025-04-24 19:52:43', '2025-04-24 19:52:43', 102000, 120000, 0, 18000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
-(89, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-22 21:08:47', '2025-04-24 21:08:47', 155000, 155000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
-(90, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Cancelled', '2025-04-24 21:08:59', '2025-04-24 21:08:59', 75000, 75000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán');
+(55, 1, 'Phạm Trong', '13 Hồ Tùng Mậu, Phường Mai Dịch, Quận Cầu Giấy, Thành phố Hà Nội', '0342561234', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-13 01:10:59', '2025-04-13 01:10:59', 3075000, 3070000, 25000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(59, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-14 06:59:22', '2025-04-14 06:59:22', 115000, 100000, 35000, 20000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
+(60, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 08:26:26', '2025-04-16 08:26:26', 95000, 100000, 15000, 20000, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(61, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 08:29:42', '2025-04-16 08:29:42', 883888, 888888, 25000, 30000, 0, 'Vận Chuyển Thường', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(62, 5, 'Hải Hàm Rồng', '22 Phố Quang Trung, Phường Hàm Rồng, Thành phố Thanh Hóa, Tỉnh Thanh Hóa', '0823542765', 'ngovantrong1308@gmail.com', 'Processing', '2025-04-16 08:31:30', '2025-04-16 08:31:30', 66500, 35000, 35000, 3500, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(63, 5, 'VinhLV', '13 Đường Giải Phóng, Phường Thanh Trì, Quận Hoàng Mai, Thành phố Hà Nội', '09', 'ngovantrong1308@gmail.com', 'Delivered', '2025-04-16 08:32:19', '2025-04-16 08:32:19', 524444, 1023888, 25000, 524444, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(64, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-17 07:03:44', '2025-04-17 07:03:44', 9270, 10300, 0, 1030, 9270, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Đã thanh toán'),
+(65, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-17 07:06:03', '2025-04-17 07:06:03', 33000, 28000, 25000, 20000, 5000, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Thanh toán thiếu'),
+(66, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:38:11', '2025-04-24 02:38:11', 9000, 10000, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(67, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:38:37', '2025-04-24 02:38:37', -1000, 0, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(68, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:39:49', '2025-04-24 02:39:49', -2000, 0, 0, 2000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(69, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:51:21', '2025-04-24 02:51:21', 0, 0, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(70, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:51:32', '2025-04-24 02:51:32', 0, 0, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(71, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:56:29', '2025-04-24 02:56:29', 45000, 20000, 25000, 0, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(72, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:57:28', '2025-04-24 02:57:28', -1000, 0, 0, 1000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(73, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:57:45', '2025-04-24 02:57:45', 31500, 10000, 25000, 3500, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(74, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 02:57:55', '2025-04-24 02:57:55', 6500, 10000, 0, 3500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(75, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 03:15:10', '2025-04-24 03:15:10', -2000, 0, 0, 2000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(76, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 03:16:45', '2025-04-24 03:16:45', 131750, 155000, 0, 23250, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(77, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 03:24:16', '2025-04-24 03:24:16', -5000, 0, 0, 5000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(78, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 03:49:56', '2025-04-24 03:49:56', -30000, 0, 0, 30000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(79, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 03:50:30', '2025-04-24 03:50:30', 191250, 200000, 25000, 33750, 0, 'Vận Chuyển Thường', 'Thanh Toán Online', 'Chưa thanh toán'),
+(80, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 03:56:48', '2025-04-24 03:56:48', 170000, 200000, 0, 30000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(81, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 12:27:12', '2025-04-24 12:27:12', -15500, 0, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(82, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 12:27:55', '2025-04-24 12:27:55', 171000, 155000, 35000, 19000, 0, 'Vận Chuyển Hỏa Tốc', 'Thanh Toán Online', 'Chưa thanh toán'),
+(83, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-24 12:29:43', '2025-04-24 12:29:43', 136000, 155000, 0, 19000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(84, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Cancelled', '2025-04-24 12:30:18', '2025-04-24 12:30:18', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Đã thanh toán'),
+(85, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Processing', '2025-04-24 12:30:48', '2025-04-24 12:30:48', -20000, 0, 0, 20000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(86, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-24 12:49:17', '2025-04-24 12:49:17', 139500, 155000, 0, 15500, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(87, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-05-06 12:50:46', '2025-05-07 12:50:46', 108000, 120000, 0, 12000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(88, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-24 12:52:43', '2025-04-24 12:52:43', 102000, 120000, 0, 18000, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán'),
+(89, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Delivered', '2025-04-22 14:08:47', '2025-04-24 14:08:47', 155000, 155000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh toán khi nhận hàng', 'Chưa thanh toán'),
+(90, 1, 'Ngọ Văn Trọng', 'số nhà 22 Thôn Ngọ Hạ, Xã Thăng Bình, Huyện Nông Cống, Tỉnh Thanh Hóa', '0904708498', 'vantrongngo1607@gmail.com', 'Cancelled', '2025-04-24 14:08:59', '2025-04-24 14:08:59', 75000, 75000, 0, 0, 0, 'Nhận tại cửa hàng', 'Thanh Toán Online', 'Chưa thanh toán');
 
 -- --------------------------------------------------------
 
@@ -298,46 +290,46 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `qty`, `total`, `status`, `created_at`, `updated_at`) VALUES
-(57, 55, 25, 1000000, 3, 3000000, 0, '2025-04-13 08:10:59', '2025-04-13 08:10:59'),
-(58, 55, 20, 35000, 2, 70000, 0, '2025-04-13 08:10:59', '2025-04-13 08:10:59'),
-(62, 59, 23, 100000, 1, 100000, 0, '2025-04-14 13:59:22', '2025-04-14 13:59:22'),
-(63, 60, 23, 100000, 1, 100000, 0, '2025-04-16 15:26:26', '2025-04-16 15:26:26'),
-(64, 61, 21, 888888, 1, 888888, 0, '2025-04-16 15:29:42', '2025-04-16 15:29:42'),
-(65, 62, 20, 35000, 1, 35000, 0, '2025-04-16 15:31:30', '2025-04-16 15:31:30'),
-(66, 63, 23, 100000, 1, 100000, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
-(67, 63, 21, 888888, 1, 888888, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
-(68, 63, 20, 35000, 1, 35000, 0, '2025-04-16 15:32:19', '2025-04-16 15:32:19'),
-(69, 64, 30, 300, 1, 300, 0, '2025-04-17 14:03:44', '2025-04-17 14:03:44'),
-(70, 64, 13, 5000, 2, 10000, 0, '2025-04-17 14:03:44', '2025-04-17 14:03:44'),
-(71, 65, 15, 28000, 1, 28000, 0, '2025-04-17 14:06:03', '2025-04-17 14:06:03'),
-(72, 66, 13, 5000, 2, 10000, 0, '2025-04-24 09:38:11', '2025-04-24 09:38:11'),
-(73, 67, 13, 5000, 2, 10000, 0, '2025-04-24 09:38:37', '2025-04-24 09:38:37'),
-(74, 68, 13, 5000, 4, 20000, 0, '2025-04-24 09:39:49', '2025-04-24 09:39:49'),
-(75, 69, 13, 5000, 4, 20000, 0, '2025-04-24 09:51:21', '2025-04-24 09:51:21'),
-(76, 70, 13, 5000, 4, 20000, 0, '2025-04-24 09:51:32', '2025-04-24 09:51:32'),
-(77, 71, 13, 5000, 4, 20000, 0, '2025-04-24 09:56:29', '2025-04-24 09:56:29'),
-(78, 72, 13, 5000, 2, 10000, 0, '2025-04-24 09:57:28', '2025-04-24 09:57:28'),
-(79, 75, 13, 5000, 4, 20000, 0, '2025-04-24 10:15:10', '2025-04-24 10:15:10'),
-(80, 76, 13, 5000, 31, 155000, 0, '2025-04-24 10:16:45', '2025-04-24 10:16:45'),
-(81, 77, 13, 5000, 10, 50000, 0, '2025-04-24 10:24:16', '2025-04-24 10:24:16'),
-(82, 78, 23, 100000, 2, 200000, 0, '2025-04-24 10:49:56', '2025-04-24 10:49:56'),
-(83, 81, 27, 75000, 1, 75000, 0, '2025-04-24 19:27:12', '2025-04-24 19:27:12'),
-(84, 81, 24, 80000, 1, 80000, 0, '2025-04-24 19:27:12', '2025-04-24 19:27:12'),
-(85, 82, 27, 75000, 1, 75000, 0, '2025-04-24 19:27:55', '2025-04-24 19:27:55'),
-(86, 82, 24, 80000, 1, 80000, 0, '2025-04-24 19:27:55', '2025-04-24 19:27:55'),
-(87, 83, 27, 75000, 1, 75000, 0, '2025-04-24 19:29:43', '2025-04-24 19:29:43'),
-(88, 83, 24, 80000, 1, 80000, 0, '2025-04-24 19:29:43', '2025-04-24 19:29:43'),
-(89, 84, 27, 75000, 1, 75000, 0, '2025-04-24 19:30:18', '2025-04-24 19:30:18'),
-(90, 84, 24, 80000, 1, 80000, 0, '2025-04-24 19:30:18', '2025-04-24 19:30:18'),
-(91, 85, 27, 75000, 1, 75000, 0, '2025-04-24 19:30:48', '2025-04-24 19:30:48'),
-(92, 85, 24, 80000, 1, 80000, 0, '2025-04-24 19:30:48', '2025-04-24 19:30:48'),
-(93, 86, 27, 75000, 1, 75000, 0, '2025-04-24 19:49:17', '2025-04-24 19:49:17'),
-(94, 86, 24, 80000, 1, 80000, 0, '2025-04-24 19:49:17', '2025-04-24 19:49:17'),
-(95, 87, 28, 120000, 1, 120000, 0, '2025-04-24 19:50:46', '2025-04-24 19:50:46'),
-(96, 88, 28, 120000, 1, 120000, 0, '2025-04-24 19:52:43', '2025-04-24 19:52:43'),
-(97, 89, 27, 75000, 1, 75000, 1, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
-(98, 89, 24, 80000, 1, 80000, 1, '2025-04-24 21:08:48', '2025-04-24 21:08:48'),
-(99, 90, 27, 75000, 1, 75000, 0, '2025-04-24 21:08:59', '2025-04-24 21:08:59');
+(57, 55, 25, 1000000, 3, 3000000, 1, '2025-04-13 01:10:59', '2025-04-13 01:10:59'),
+(58, 55, 20, 35000, 2, 70000, 1, '2025-04-13 01:10:59', '2025-04-13 01:10:59'),
+(62, 59, 23, 100000, 1, 100000, 0, '2025-04-14 06:59:22', '2025-04-14 06:59:22'),
+(63, 60, 23, 100000, 1, 100000, 0, '2025-04-16 08:26:26', '2025-04-16 08:26:26'),
+(64, 61, 21, 888888, 1, 888888, 0, '2025-04-16 08:29:42', '2025-04-16 08:29:42'),
+(65, 62, 20, 35000, 1, 35000, 0, '2025-04-16 08:31:30', '2025-04-16 08:31:30'),
+(66, 63, 23, 100000, 1, 100000, 0, '2025-04-16 08:32:19', '2025-04-16 08:32:19'),
+(67, 63, 21, 888888, 1, 888888, 0, '2025-04-16 08:32:19', '2025-04-16 08:32:19'),
+(68, 63, 20, 35000, 1, 35000, 0, '2025-04-16 08:32:19', '2025-04-16 08:32:19'),
+(69, 64, 30, 300, 1, 300, 0, '2025-04-17 07:03:44', '2025-04-17 07:03:44'),
+(70, 64, 13, 5000, 2, 10000, 0, '2025-04-17 07:03:44', '2025-04-17 07:03:44'),
+(71, 65, 15, 28000, 1, 28000, 0, '2025-04-17 07:06:03', '2025-04-17 07:06:03'),
+(72, 66, 13, 5000, 2, 10000, 0, '2025-04-24 02:38:11', '2025-04-24 02:38:11'),
+(73, 67, 13, 5000, 2, 10000, 0, '2025-04-24 02:38:37', '2025-04-24 02:38:37'),
+(74, 68, 13, 5000, 4, 20000, 0, '2025-04-24 02:39:49', '2025-04-24 02:39:49'),
+(75, 69, 13, 5000, 4, 20000, 0, '2025-04-24 02:51:21', '2025-04-24 02:51:21'),
+(76, 70, 13, 5000, 4, 20000, 0, '2025-04-24 02:51:32', '2025-04-24 02:51:32'),
+(77, 71, 13, 5000, 4, 20000, 0, '2025-04-24 02:56:29', '2025-04-24 02:56:29'),
+(78, 72, 13, 5000, 2, 10000, 0, '2025-04-24 02:57:28', '2025-04-24 02:57:28'),
+(79, 75, 13, 5000, 4, 20000, 0, '2025-04-24 03:15:10', '2025-04-24 03:15:10'),
+(80, 76, 13, 5000, 31, 155000, 0, '2025-04-24 03:16:45', '2025-04-24 03:16:45'),
+(81, 77, 13, 5000, 10, 50000, 0, '2025-04-24 03:24:16', '2025-04-24 03:24:16'),
+(82, 78, 23, 100000, 2, 200000, 0, '2025-04-24 03:49:56', '2025-04-24 03:49:56'),
+(83, 81, 27, 75000, 1, 75000, 0, '2025-04-24 12:27:12', '2025-04-24 12:27:12'),
+(84, 81, 24, 80000, 1, 80000, 0, '2025-04-24 12:27:12', '2025-04-24 12:27:12'),
+(85, 82, 27, 75000, 1, 75000, 0, '2025-04-24 12:27:55', '2025-04-24 12:27:55'),
+(86, 82, 24, 80000, 1, 80000, 0, '2025-04-24 12:27:55', '2025-04-24 12:27:55'),
+(87, 83, 27, 75000, 1, 75000, 1, '2025-04-24 12:29:43', '2025-04-24 12:29:43'),
+(88, 83, 24, 80000, 1, 80000, 1, '2025-04-24 12:29:43', '2025-04-24 12:29:43'),
+(89, 84, 27, 75000, 1, 75000, 0, '2025-04-24 12:30:18', '2025-04-24 12:30:18'),
+(90, 84, 24, 80000, 1, 80000, 0, '2025-04-24 12:30:18', '2025-04-24 12:30:18'),
+(91, 85, 27, 75000, 1, 75000, 0, '2025-04-24 12:30:48', '2025-04-24 12:30:48'),
+(92, 85, 24, 80000, 1, 80000, 0, '2025-04-24 12:30:48', '2025-04-24 12:30:48'),
+(93, 86, 27, 75000, 1, 75000, 1, '2025-04-24 12:49:17', '2025-04-24 12:49:17'),
+(94, 86, 24, 80000, 1, 80000, 1, '2025-04-24 12:49:17', '2025-04-24 12:49:17'),
+(95, 87, 28, 120000, 1, 120000, 1, '2025-04-24 12:50:46', '2025-04-24 12:50:46'),
+(96, 88, 28, 120000, 1, 120000, 1, '2025-04-24 12:52:43', '2025-04-24 12:52:43'),
+(97, 89, 27, 75000, 1, 75000, 1, '2025-04-24 14:08:48', '2025-04-24 14:08:48'),
+(98, 89, 24, 80000, 1, 80000, 1, '2025-04-24 14:08:48', '2025-04-24 14:08:48'),
+(99, 90, 27, 75000, 1, 75000, 0, '2025-04-24 14:08:59', '2025-04-24 14:08:59');
 
 -- --------------------------------------------------------
 
@@ -350,17 +342,19 @@ CREATE TABLE `order_requests` (
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `type` enum('cancel','return','exchange') NOT NULL,
   `reason` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `status` enum('pending','approved','rejected') DEFAULT 'pending',
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `order_requests`
 --
 
-INSERT INTO `order_requests` (`id`, `order_id`, `type`, `reason`, `status`, `created_at`, `updated_at`) VALUES
-(1, 89, 'cancel', 'khong co nhu cau', 'rejected', '2025-05-10 02:06:15', '2025-05-10 10:39:44');
+INSERT INTO `order_requests` (`id`, `order_id`, `type`, `reason`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 89, 'cancel', 'khong co nhu cau', NULL, 'rejected', '2025-05-10 02:06:15', '2025-05-10 10:39:44'),
+(2, 87, 'return', 'ao rach', 'uploads/requests/req_681f8d9194118.png', 'approved', '2025-05-11 00:32:01', '2025-05-11 00:37:03');
 
 -- --------------------------------------------------------
 
@@ -412,7 +406,7 @@ INSERT INTO `products` (`id`, `name`, `slug`, `description`, `summary`, `stock`,
 (30, 'Quần Âu form Regular', 'qu-n-u-form-regular', '', '', 2, 'kí', 300, 300, 'uploads/67bb87a345754quanau.jpg', 2, 5, 'Active', NULL, NULL),
 (31, 'áo AI PTIT', '-o-ai-ptit', '                        Áo unisex dành cho cả nam và nữ                        ', '                        Áo Polo khoa Trí tuệ nhân tạo PTIT                        ', 100, NULL, 250000, 210000, 'uploads/67fd428501345_AI_Logo.png', 3, 5, 'Active', NULL, NULL),
 (32, 'Áo đôi tình nhân', '-o-i-t-nh-nh-n', 'Áo T--Shirt cọc tay unisex', 'Áo đôi cho các cặp nam nữ mặc đi biển', 250, NULL, 300000, 230000, 'uploads/67fd45d12fc0c_logoptit2.png', 1, 10, 'Active', NULL, NULL),
-(33, 'Test', 'test', '<h2><i>ThÃ´ng sá»‘ ká»¹ thuáº­t</i></h2><ol><li><strong>Chiá»u dÃ i: 20cm</strong></li><li><strong>Chiá»u rá»™ng: 40cm</strong></li></ol><figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/hd2.jpg\"></figure>', '', 255, NULL, 250000, 200000, 'uploads/681c966e32981_AI_Chalange.jpg', 4, 5, 'Active', NULL, NULL);
+(33, 'Test', 'test', '<h2><i><strong>Thông số kỹ thuật</strong></i></h2><ol><li><strong>Chiều dài: 20cm</strong></li><li><strong>Chiều rộng: 40cm</strong></li></ol><figure class=\"image\"><img src=\"/PTIT_SHOP/quantri/upload/hd2.jpg\"></figure>', '', 255, NULL, 250000, 200000, 'uploads/681c966e32981_AI_Chalange.jpg', 4, 5, 'Active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -442,6 +436,7 @@ CREATE TABLE `reviews` (
   `product_id` bigint(20) UNSIGNED NOT NULL,
   `rating` tinyint(1) NOT NULL,
   `comment` mediumtext NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -450,9 +445,17 @@ CREATE TABLE `reviews` (
 -- Đang đổ dữ liệu cho bảng `reviews`
 --
 
-INSERT INTO `reviews` (`id`, `order_detail_id`, `user_id`, `product_id`, `rating`, `comment`, `created_at`, `updated_at`) VALUES
-(4, 97, 1, 27, 4, 'dep qua', '2025-05-10 06:47:13', '2025-05-10 07:02:06'),
-(5, 98, 1, 24, 5, '<figure class=\"image\"><img src=\"/PTIT_SHOP/PTIT-Fashion-Shop/upload/Screenshot 2024-07-25 113622.png\"></figure><ol><li>fdfsd</li><li>dsad</li><li><i>fdf</i></li><li>dsa</li></ol>', '2025-05-10 08:57:28', '2025-05-10 09:14:47');
+INSERT INTO `reviews` (`id`, `order_detail_id`, `user_id`, `product_id`, `rating`, `comment`, `image`, `created_at`, `updated_at`) VALUES
+(4, 97, 1, 27, 4, 'dep qua', 'uploads/reviews/rev_681f6e8b2d8ff.jpg', '2025-05-09 23:47:13', '2025-05-10 08:19:39'),
+(5, 98, 1, 24, 5, 'tuyet voi', 'uploads/reviews/rev_681f6bf0d324f.jpg', '2025-05-10 01:57:28', '2025-05-10 08:08:32'),
+(6, 96, 1, 28, 3, 'hoi do', 'uploads/reviews/rev_681f753a26ceb.jpg', '2025-05-10 08:48:10', '2025-05-10 08:48:10'),
+(7, 95, 1, 28, 5, 'cung dep day', 'uploads/reviews/rev_681f7552ec2ab.jpg', '2025-05-10 08:48:34', '2025-05-10 08:48:34'),
+(8, 57, 1, 25, 5, 'dep tuyet', 'uploads/reviews/rev_681f75ef9c2da.png', '2025-05-10 08:51:11', '2025-05-10 08:51:11'),
+(9, 58, 1, 20, 4, 'tam thoi', 'uploads/reviews/rev_681f762112c45.png', '2025-05-10 08:52:01', '2025-05-10 08:52:01'),
+(10, 93, 1, 27, 1, 'qua te', 'uploads/reviews/rev_681f76a5db0bc.png', '2025-05-10 08:54:13', '2025-05-10 08:54:13'),
+(11, 94, 1, 24, 3, 'táº¡m', 'uploads/reviews/rev_681f76c4ed9d1.png', '2025-05-10 08:54:44', '2025-05-10 08:54:44'),
+(12, 87, 1, 27, 5, 'oke qua tot', 'uploads/reviews/rev_681f76e870329.png', '2025-05-10 08:55:20', '2025-05-10 08:55:20'),
+(13, 88, 1, 24, 4, 'binh thuong', 'uploads/reviews/rev_681f770f311dc.png', '2025-05-10 08:55:59', '2025-05-10 08:55:59');
 
 -- --------------------------------------------------------
 
@@ -660,7 +663,7 @@ ALTER TABLE `magiamgia`
 -- AUTO_INCREMENT cho bảng `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `newscategories`
@@ -684,7 +687,7 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT cho bảng `order_requests`
 --
 ALTER TABLE `order_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -702,7 +705,7 @@ ALTER TABLE `product_details`
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `thongtinnhanhang`
