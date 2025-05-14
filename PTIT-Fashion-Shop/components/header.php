@@ -164,13 +164,27 @@
         border-radius: 50%;
         cursor: pointer;
     }
+
+    .hero__search__form .input-group {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero__search__form button {
+        width: 100px;  
+        background:  #b30000;
+        border: #b30000;
+    }
+
+    .hero__search__form .btn:hover {
+        background-color: #990000;
+    }
+
 </style>
 
 
 <body>
-
-
-
     <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -225,74 +239,45 @@
             ?>
         </div>
 
-
-
-
-
-
-
         <div class="container">
             <div class="row">
-                <!-- <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.php"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div> -->
                 <div class="col-lg-6">
-                    <!-- <div class="hero__search"> -->
                     <div class="hero__search__form">
-                        <form action="timkiem.php" method="get">
-                      
-                            <select name="danhmuc">
-                                <option value='*'>Tất cả danh mục</option>
-                                <?php
-
-                                $sql_str = "select * from categories order by name";
-                                $result = mysqli_query($conn, $sql_str);
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                ?>
-                                    <option value=<?= $row['id'] ?>><?= $row['name'] ?></option>
-                                <?php } ?>
-                            </select>
-                            <!-- </div> -->
-                            <input type="text" name="tukhoa" placeholder="Bạn cần tìm gì?">
-                            <button type="submit" class="site-btn">Tìm</button>
+                        <form action="timkiem.php" method="get" class="d-flex">
+                            <!-- Thanh tìm kiếm -->
+                            <div class="input-group flex-grow-1">
+                                <input type="text" name="tukhoa" class="form-control" placeholder="Bạn cần tìm gì?">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Tìm</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-
-                    <!-- </div> -->
                 </div>
 
-
-                <div class="col-lg-3">
+                <div class="col-lg-3 ml-auto">
                     <div class="header__cart">
                         <ul>
-                            <!-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> -->
                             <li><a><b>Giỏ Hàng</b></a></li>
-
                             <li><a href="./cart.php"><i class="fa fa-shopping-cart"></i> <span id="cartCount">
-                                        <?php
-                                        $cart = [];
-                                        if (isset($_SESSION['cart'])) {
-                                            $cart = $_SESSION['cart'];
-                                        }
-                                        // print_r($cart);exit;
-                                        $count = 0;  //hien thi so luong san pham trong gio hang
-
-                                        foreach ($cart as $item) {
-                                            $count += 1;
-                                        }
-                                        //hien thi so luong
-                                        echo $count;
-                                        ?>
-                                    </span></a></li>
+                                <?php
+                                $cart = [];
+                                if (isset($_SESSION['cart'])) {
+                                    $cart = $_SESSION['cart'];
+                                }
+                                $count = 0;  // Hiển thị số lượng sản phẩm trong giỏ hàng
+                                foreach ($cart as $item) {
+                                    $count += 1;
+                                }
+                                echo $count;
+                                ?>
+                            </span></a></li>
                         </ul>
-
                     </div>
                 </div>
             </div>
-
         </div>
+
     </header>
     <!-- Header Section End -->
 
@@ -307,13 +292,13 @@
     <!-- <section class="hero"> -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3 mb-lg-3">
                 <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
                         <span>Danh mục thời trang</span>
                     </div>
-                    <ul>
+                    <ul class="list-unstyled">
                         <?php
 
                         $sql_str = "select * from categories order by name";

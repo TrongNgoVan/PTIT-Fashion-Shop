@@ -1,8 +1,3 @@
-<!-- Nhận xét về tốc độ hệ thống:
-code rất loạn, logic các thứ đang rất rối loạn, không theo 1 kiến trúc nào cả , có nhiều phần lặp đi lặp lại,thừa, hệ thống chậm hẳn, khó cho việc maintain bảo trì và phát triển. 
-
--->
-
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -98,39 +93,22 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
         z-index: 1000;
         text-align: center;
     }
-   /* Overlay full màn hình */
-
-
-
-    
+   /* Overlay full màn hình */   
 </style>
-
 <body>
-
-
-
-
     <?php
     session_start();
     $is_homepage = true;
-
     require_once('components/header.php');
     ?>
 
-
-
-
-
-   
-
-    <section class="featured spad">
+    <section class="featured spad mb-4">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
                         <h2>Sản phẩm nổi bật</h2>
                     </div>
-                    
                 </div>
             </div>
             <div class="row featured__filter">
@@ -140,8 +118,8 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                 while ($row = mysqli_fetch_assoc($result)) {
                     $anh_arr = explode(';', $row['images']);
                 ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 mix <?= $row['cslug'] ?>">
-                        <div class="featured__item">
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mix <?= $row['cslug'] ?>">
+                        <div class="card h-100 shadow-sm">
                             <div class="featured__item__pic set-bg" data-setbg="<?= "/PTIT_SHOP/quantri/" . $anh_arr[0] ?>">
                             <!--  trình duyệt đã truy cập trực tiếp đến server thì chỉ cần đường dẫn tuương đối là được, thuận lợi trong trường hợp đổi IP -->
                                 <ul class="featured__item__pic__hover">
@@ -165,16 +143,11 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                         </div>
                     </div>
                 <?php } ?>
-
-
             </div>
         </div>
     </section>
 
-
-
-
-    <section class="from-blog spad">
+    <section class="from-blog spad mb-4">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -191,12 +164,12 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                 while ($row = mysqli_fetch_assoc($result)) {
 
                 ?>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="blog__item">
+                    <div class="col-lg-4 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 shadow-sm">
                             <div class="blog__item__pic">
                                 <img src="<?= '/PTIT_SHOP/quantri/' . $row['avatar'] ?>" alt="">
                             </div>
-                            <div class="blog__item__text">
+                            <div class="blog__item__text p-3">
                                 <ul>
                                     <li><i class="fa fa-calendar-o"></i> <?= $row['updated_at'] ?></li>
                                     <li><i class="fa fa-comment-o"></i> 5</li>
@@ -217,8 +190,7 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
         <a href="https://zalo.me/0904708498" target="_blank">
             <img src="img/zalo.png"
                 alt="Zalo" width="50" height="50"
-                class="contact-icon shake"
-                style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+                class="contact-icon shake rounded-circle shadow">
         </a>
 
         <br>
@@ -227,8 +199,7 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
         <a href="tel:0904708498">
             <img src="https://cdn-icons-png.flaticon.com/128/724/724664.png"
                 alt="Gọi điện" width="50" height="50"
-                class="contact-icon blink"
-                style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+                class="contact-icon blink rounded-circle shadow">
         </a>
     </div>
 
@@ -261,6 +232,12 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 
     <script>
         $(document).ready(function() {

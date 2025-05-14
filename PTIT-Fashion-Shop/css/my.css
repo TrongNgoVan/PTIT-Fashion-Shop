@@ -144,18 +144,11 @@
     align-items: center;
     justify-content: center;
     background-color: #fff;
-    border: 2px solid #b30000;
-    border-radius: 4px;
     overflow: hidden;
     margin-top: 10px; /* Khoảng cách nhỏ phía trên */
-}
-.hero__search__form select {
-    border: none;
-    padding: 8px 10px;
-    outline: none;
-    background-color: #fff;
-    font-size: 14px;
-    color: #333;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 .hero__search__form input[type="text"] {
     flex: 1;
@@ -163,15 +156,6 @@
     padding: 8px 10px;
     font-size: 14px;
     outline: none;
-}
-.hero__search__form .site-btn {
-    background-color: #b30000;
-    color: #fff;
-    border: none;
-    padding: 8px 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 .hero__search__form .site-btn:hover {
     background-color: #990000;
