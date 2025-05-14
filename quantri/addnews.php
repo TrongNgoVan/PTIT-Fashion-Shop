@@ -1,66 +1,60 @@
 <?php
-
-// echo "xin chao";
-
-
 require('conn.php');
 
-//lay du lieu tu form
-$name = $_POST['name'];
-$slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
-$sumary = $_POST['sumary'];
-$description = $_POST['description'];
+// 1. Lấy & escape dữ liệu từ form
+$name        = mysqli_real_escape_string($conn, trim($_POST['name']));
+$slug        = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+$sumary      = trim($_POST['sumary']);
+$description = trim($_POST['description']);
+$danhmuc     = (int) $_POST['danhmuc'];
 
-$danhmuc = $_POST['danhmuc'];
+// 2. Xử lý upload ảnh
+$location = null;
+if (!empty($_FILES['anh']['name'])) {
+    $ext = strtolower(pathinfo($_FILES['anh']['name'], PATHINFO_EXTENSION));
+    $valid_extensions = ["jpg","jpeg","png"];
+    if (in_array($ext, $valid_extensions)) {
+        $newName  = uniqid('news_') . '.' . $ext;
+        $uploadDir = __DIR__ . '/uploads/news/';
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
-//xu ly hinh anh
-
-// $imgs = '';
-// for ($i = 0; $i < $countfiles; $i++) {
-$filename = $_FILES['anh']['name'];
-
-## Location
-$location = "uploads/news/" . uniqid() . $filename;
-//pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] ) : mixed
-$extension = pathinfo($location, PATHINFO_EXTENSION);
-$extension = strtolower($extension);
-
-## File upload allowed extensions
-$valid_extensions = array("jpg", "jpeg", "png");
-
-$response = 0;
-## Check file extension
-if (in_array(strtolower($extension), $valid_extensions)) {
-
-    // them vao CSDL - them thah cong moi upload anh len
-    ## Upload file
-    //$_FILES['file']['tmp_name']: $_FILES['file']['tmp_name'] - The temporary filename of the file in which the uploaded file was stored on the server.
-    if (move_uploaded_file($_FILES['anh']['tmp_name'], $location)) {
-
-        // $imgs .= $location . ";";
+        $fullPath = $uploadDir . $newName;
+        if (move_uploaded_file($_FILES['anh']['tmp_name'], $fullPath)) {
+            // Lưu đường dẫn tương đối để dùng trong web
+            $location = 'uploads/news/' . $newName;
+        }
     }
 }
 
-// }
-// $imgs = substr($imgs, 0, -1);
+// 3. Chuẩn bị & thực thi INSERT
+$sql = "
+    INSERT INTO `news`
+      (`title`, `avatar`, `slug`, `sumary`, `description`, `newscategory_id`, `created_at`, `updated_at`)
+    VALUES
+      (?, ?, ?, ?, ?, ?, NOW(), NOW())
+";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param(
+    $stmt,
+    'sssssi',
+    $name,
+    $location,
+    $slug,
+    $sumary,
+    $description,
+    $danhmuc
+);
 
-// echo substr($imgs, 0, -1); exit;
+if (mysqli_stmt_execute($stmt)) {
+    // Chèn thành công → redirect
+    header("Location: ./listnews.php");
+    exit;
+} else {
+    // Nếu lỗi, hiển thị để debug
+    echo "Lỗi khi thêm tin: " . mysqli_stmt_error($stmt);
+    exit;
+}
 
-// cau lenh them vao bang
-$sql_str = "INSERT INTO `news` (`title`, `avatar`, `slug`, `sumary`, `description`, `newscategory_id`, `created_at`, `updated_at`) VALUES 
-    ('$name', 
-    '$location',
-    '$slug', 
-    '$sumary',
-    '$description',  
-    $danhmuc,  NOW(), NOW());";
-
-// echo $sql_str;
-// exit;
-
-//thuc thi cau lenh
-mysqli_query($conn, $sql_str);
-
-//tro ve trang 
-header("location: ./listnews.php");
-?>
+// 4. Đóng kết nối
+mysqli_stmt_close($stmt);
+mysqli_close($conn);

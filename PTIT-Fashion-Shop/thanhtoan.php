@@ -140,7 +140,7 @@
                 $qty = $item['qty'];
                 $total = $item['qty'] * $item['disscounted_price'];
                 $sqli2 = "insert into order_details values 
-            (0, $last_order_id, $masp,  $disscounted_price, $qty, $total, now(), now())";
+            (0, $last_order_id, $masp,  $disscounted_price, $qty, $total,0, now(), now())";
 
                 // echo $sqli2, exit;
                 mysqli_query($conn, $sqli2);

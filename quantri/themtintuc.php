@@ -25,13 +25,13 @@ require('includes/header.php');
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Tóm tắt tin:</label>
-                                <textarea name="sumary" class="form-control" placeholder="Nhập...">
+                                <textarea id="summary-editor" name="sumary" class="form-control" placeholder="Nhập...">
 
                         </textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Nội dung tin:</label>
-                                <textarea name="description" class="form-control" placeholder="Nhập...">
+                                <textarea id="description-editor" name="description" class="form-control" placeholder="Nhập...">
 
                         </textarea>
                             </div>
@@ -67,6 +67,28 @@ require('includes/header.php');
     </div>
 
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+  function initCKEditor(textareaId) {
+    ClassicEditor
+      .create(document.querySelector('#' + textareaId), {
+        toolbar: [
+          'heading','|','bold','italic','underline','link',
+          'bulletedList','numberedList',
+          'insertTable','imageUpload','blockQuote',
+          'undo','redo'
+        ],
+        ckfinder: {
+          // phải trỏ đúng đến file PHP xử lý
+          uploadUrl: 'fileupload.php'
+        }
+      })
+      .catch(error => console.error(error));
+  }
+  // Gọi cho cả hai editor
+  initCKEditor('summary-editor');
+  initCKEditor('description-editor');
+</script>
 
 
 <?php

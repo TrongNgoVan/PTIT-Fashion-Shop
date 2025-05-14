@@ -3,7 +3,7 @@ require('conn.php'); // Kết nối CSDL
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Kiểm tra các trường bắt buộc
-    if (isset($_POST['name'], $_POST['sumary'], $_POST['description'], $_POST['stock'], $_POST['giagoc'], $_POST['giaban'], $_POST['danhmuc'], $_POST['thuonghieu']) &&
+    if (isset($_POST['name'], $_POST['summary'], $_POST['description'], $_POST['stock'], $_POST['giagoc'], $_POST['giaban'], $_POST['danhmuc'], $_POST['thuonghieu']) &&
         !empty(trim($_POST['name'])) &&
         is_numeric($_POST['stock']) &&
         is_numeric($_POST['giagoc']) &&
