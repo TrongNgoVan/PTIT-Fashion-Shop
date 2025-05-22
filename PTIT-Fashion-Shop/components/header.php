@@ -10,6 +10,7 @@
         padding-top: 10px;
         padding-bottom: 60px;
         border-bottom: 2px solid #ddd;
+        font-family: inherit;
     }
 
     #icon_acount {
@@ -164,13 +165,67 @@
         border-radius: 50%;
         cursor: pointer;
     }
+
+    .hero__search__form .input-group {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero__search__form button {
+        width: 100px;  
+        background:  #b30000;
+        border: #b30000;
+    }
+
+    .hero__search__form .btn:hover {
+        background-color: #990000;
+    }
+
+    .dm-border {
+        margin-top: 10px;
+    }
+
+    .dm-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #000;
+        border-bottom: 2px solid  #b30000;
+        padding-bottom: 8px;
+    }
+
+    .dm-item li {
+        margin-bottom: 10px;
+    }
+
+    .dm-item li a {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        background-color: #f8f9fa;
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .dm-item li a::before {
+        content: "•";
+        color: #007bff;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    .menu-header li {
+        margin-right: 5px;
+        margin-left: 10px;
+    }
+
 </style>
 
 
 <body>
-
-
-
     <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -225,74 +280,45 @@
             ?>
         </div>
 
-
-
-
-
-
-
         <div class="container">
             <div class="row">
-                <!-- <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.php"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div> -->
                 <div class="col-lg-6">
-                    <!-- <div class="hero__search"> -->
                     <div class="hero__search__form">
-                        <form action="timkiem.php" method="get">
-                      
-                            <select name="danhmuc">
-                                <option value='*'>Tất cả danh mục</option>
-                                <?php
-
-                                $sql_str = "select * from categories order by name";
-                                $result = mysqli_query($conn, $sql_str);
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                ?>
-                                    <option value=<?= $row['id'] ?>><?= $row['name'] ?></option>
-                                <?php } ?>
-                            </select>
-                            <!-- </div> -->
-                            <input type="text" name="tukhoa" placeholder="Bạn cần tìm gì?">
-                            <button type="submit" class="site-btn">Tìm</button>
+                        <form action="timkiem.php" method="get" class="d-flex">
+                            <!-- Thanh tìm kiếm -->
+                            <div class="input-group flex-grow-1">
+                                <input type="text" name="tukhoa" class="form-control" placeholder="Bạn cần tìm gì?">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Tìm</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-
-                    <!-- </div> -->
                 </div>
 
-
-                <div class="col-lg-3">
+                <div class="col-lg-3 ml-auto">
                     <div class="header__cart">
                         <ul>
-                            <!-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> -->
                             <li><a><b>Giỏ Hàng</b></a></li>
-
                             <li><a href="./cart.php"><i class="fa fa-shopping-cart"></i> <span id="cartCount">
-                                        <?php
-                                        $cart = [];
-                                        if (isset($_SESSION['cart'])) {
-                                            $cart = $_SESSION['cart'];
-                                        }
-                                        // print_r($cart);exit;
-                                        $count = 0;  //hien thi so luong san pham trong gio hang
-
-                                        foreach ($cart as $item) {
-                                            $count += 1;
-                                        }
-                                        //hien thi so luong
-                                        echo $count;
-                                        ?>
-                                    </span></a></li>
+                                <?php
+                                $cart = [];
+                                if (isset($_SESSION['cart'])) {
+                                    $cart = $_SESSION['cart'];
+                                }
+                                $count = 0;  // Hiển thị số lượng sản phẩm trong giỏ hàng
+                                foreach ($cart as $item) {
+                                    $count += 1;
+                                }
+                                echo $count;
+                                ?>
+                            </span></a></li>
                         </ul>
-
                     </div>
                 </div>
             </div>
-
         </div>
+
     </header>
     <!-- Header Section End -->
 
@@ -307,41 +333,41 @@
     <!-- <section class="hero"> -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all">
-                        <i class="fa fa-bars"></i>
-                        <span>Danh mục thời trang</span>
-                    </div>
-                    <ul>
-                        <?php
+            <div class="col-lg-3 mb-3 mb-lg-3 dm-border">
+                <div class="p-3 bg-light rounded shadow-sm">
+                    <h5 class="mb-3 dm-title"><i class="fa fa-bars me-2"></i> Danh mục sản phẩm</h5>
 
-                        $sql_str = "select * from categories order by name";
-                        $result = mysqli_query($conn, $sql_str);
-                        while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                            <li><a href="#"><?= $row['name'] ?></a></li>
-
-                        <?php } ?>
-
-                    </ul>
+                    <?php
+                    // Kiểm tra nếu là trang chủ (index.php)
+                    if (basename($_SERVER['PHP_SELF']) == 'index.php') {
+                        echo '<ul class="list-unstyled dm-item">';
+                        $category_sql = "SELECT * FROM categories ORDER BY name";
+                        $category_result = mysqli_query($conn, $category_sql);
+                        while ($category = mysqli_fetch_assoc($category_result)) {
+                            echo '<li href="?category=' . $category['id'] . '">' . $category['name'] . '</li>';
+                        }
+                        echo '</ul>';
+                    }
+                    ?>
                 </div>
+
             </div>
             <div class="col-lg-9">
-
-                <nav class="header__menu">
-                    <ul>
+                <nav class="header__menu mb-3">
+                    <ul class="menu-header d-flex justify-content-between flex-wrap list-unstyled m-0 p-0">
                         <li class="active"><a href="./index.php">Trang chủ</a></li>
                         <li><a href="./shop.php">Cửa hàng</a></li>
                         <li><a href="magiamgia.php">Mã giảm giá</a>
                         </li>
+<<<<<<< HEAD
+=======
+                        <!-- <li><a href="./tintuc.php?id=1">Tin tức</a></li> -->
+>>>>>>> dda8c5732a37c78b7eaf48c9eba3a0e59cba8125
                         <li><a href="./rank.php">Xếp hạng</a></li>
                         <li><a href="./list_order.php">Đơn Hàng của bạn</a></li>
                         <li><a href="./thongtinnhanhang.php">Thông tin nhận hàng</a></li>
                     </ul>
                 </nav>
-
-
                 <?php
                 if ($is_homepage) {
                     if ($banner) {
