@@ -22,9 +22,21 @@ if (isset($_POST['btSubmit'])) {
         if ($response_data->success) {
             require_once("db/conn.php");
             //cau lenh truy van
-            $sql = "select * from users where email='$email' and password='$password'";
-            //thuc thi cau lenh
-            $result = mysqli_query($conn, $sql);
+            // Câu lệnh SQL có dấu ?
+            $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+            // Chuẩn bị câu lệnh
+            $stmt = mysqli_prepare($conn, $sql);
+
+            // Gán dữ liệu người dùng vào câu lệnh
+            mysqli_stmt_bind_param($stmt, "ss", $email, $password);
+
+            // Thực thi
+            mysqli_stmt_execute($stmt);
+
+            // Lấy kết quả
+            $result = mysqli_stmt_get_result($stmt);
+
             //kiem tra so luong record trả về: > 0: đăng nhập thành công
             if (mysqli_num_rows($result) > 0) {
                 // echo "<h4>Dang nhap thanh cong</h4>";

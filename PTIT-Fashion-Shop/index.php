@@ -230,17 +230,198 @@ code rất loạn, logic các thứ đang rất rối loạn, không theo 1 ki�
                 class="contact-icon blink"
                 style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
         </a>
-    </div>
 
-    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-        <df-messenger
-            intent="WELCOME"
-            chat-title="tuvanbanhang"
-            agent-id="64413262-5f38-4669-b5c3-03978e880987"
-            language-code="en"></df-messenger>
 
     </div>
+    <!-- Chatbot icon và khung chat -->
+<style>
+  /* General Chatbot Styling */
+  #chat-container {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 400px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-family: 'Poppins', sans-serif;
+    flex-direction: column;
+    z-index: 1100;
+  }
+
+  #chat-container h2 {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+    text-align: center;
+  }
+
+  #chat-box {
+    height: 350px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-message {
+    background: #B6B6B6;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    text-align: right;
+    max-width: 75%;
+    align-self: flex-end;
+  }
+
+  .bot-message {
+    background: #8D8D8D;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    text-align: left;
+    max-width: 75%;
+    align-self: flex-start;
+  }
+
+  .input-container {
+    display: flex;
+    margin-top: 15px;
+  }
+
+  #user-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  #user-input:focus {
+    border-color: #007bff;
+  }
+
+  button {
+    padding: 12px 20px;
+    margin-left: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  /* Scrollbar */
+  #chat-box::-webkit-scrollbar {
+    width: 8px;
+  }
+  #chat-box::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+  }
+
+  /* Icon chatbot */
+  #chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 1101;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #chatbot-icon svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
+  }
+</style>
+
+<div id="chatbot-icon" title="Chat với AI">
+  <img src="uploads/chatbot.gif" alt="Chatbot Icon" style="width: 150%; height: 150%; border-radius: 50%;">
+</div>
+
+
+<div id="chat-container">
+  <h2>10 vạn câu hỏi vì sao!!!</h2>
+  <div id="chat-box"></div>
+  <div class="input-container">
+    <input type="text" id="user-input" placeholder="Trò chuyện phiếm cùng tôi nhé!!!">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatbotIcon = document.getElementById('chatbot-icon');
+  const chatContainer = document.getElementById('chat-container');
+
+  chatbotIcon.addEventListener('click', () => {
+    if (chatContainer.style.display === 'flex') {
+      chatContainer.style.display = 'none';
+    } else {
+      chatContainer.style.display = 'flex';
+      document.getElementById('user-input').focus();
+    }
+  });
+
+  // Xử lý gửi tin nhắn đơn giản
+  function sendMessage(){
+	const userInput = document.getElementById('user-input').value.trim();
+
+    if (userInput === "") return;
+
+    const chatBox = document.getElementById('chat-box');
+    // append user message
+    const userMessage = document.createElement('div');
+    userMessage.className = 'user-message';
+    userMessage.textContent = userInput;
+    chatBox.appendChild(userMessage);
+
+    fetch("chatbot.php", {
+    	method: 'POST',
+    	headers: {'Content-Type': 'application/json'},
+    	body: JSON.stringify({message: userInput})
+    }).then(respose=> respose.json())
+      .then(data => {
+      	const botMessage = document.createElement('div');
+      	botMessage.className = 'bot-message';
+        botMessage.textContent = data.error ? `Bot: ${data.error}`:  `PTIT_Shop: ${data.response}`;
+       chatBox.appendChild(botMessage);
+       document.getElementById('user-input').value='';
+       chatBox.scrollTop = chatBox.scrollHeight;
+    }).catch(error=> {
+    	const errorMessage = document.createElement('div');
+      	errorMessage.className = 'bot-message';
+        errorMessage.textContent = 'Bot: Failed to fetch  respose.';
+       chatBox.appendChild(errorMessage);
+    });
+}
+</script>
+
+
+   
 
 
     <?php

@@ -335,7 +335,6 @@
                         <li><a href="./shop.php">Cửa hàng</a></li>
                         <li><a href="magiamgia.php">Mã giảm giá</a>
                         </li>
-                        <li><a href="#">Tin tức</a></li>
                         <li><a href="./rank.php">Xếp hạng</a></li>
                         <li><a href="./list_order.php">Đơn Hàng của bạn</a></li>
                         <li><a href="./thongtinnhanhang.php">Thông tin nhận hàng</a></li>
